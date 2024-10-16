@@ -22,7 +22,7 @@ export default function Navbar() {
                 Dashboard
               </button>
             </Link>
-            <Link href="/admin-login">
+            <Link href="/admin">
               <button className="px-4 py-2 text-sm font-semibold text-gray-700 bg-gray-100 rounded-md hover:bg-gray-200 transition">
                 Admin Login
               </button>
@@ -82,7 +82,7 @@ export default function Navbar() {
                 Dashboard
               </button>
             </Link>
-            <Link href="/admin-login">
+            <Link href="/admin">
               <button className="w-full px-4 py-2 text-left text-gray-700 hover:bg-gray-100 block">
                 Admin Login
               </button>

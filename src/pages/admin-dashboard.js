@@ -6,6 +6,24 @@ export default function AdminDashboard() {
     const [isModalOpen, setIsModalOpen] = useState(false); // Modal state
     const [isUpdating, setIsUpdating] = useState(false); // Track if updating
 
+    const [formData, setFormData] = useState({
+        id: users.id,
+        name: '',
+        address: '',
+        email: '',
+        mobile: '',
+        whatsapp: '',
+        facebook: '',
+        instagram: '',
+        twitter: '',
+        designation: '',
+        companyName: '',
+        website: '',
+        linkedin: '',
+        profilePicture: null,
+        backgroundPhoto: null,
+    });
+
     // Fetch users on component load
     useEffect(() => {
         const fetchUsers = async () => {
@@ -40,30 +58,41 @@ export default function AdminDashboard() {
     // Show more info modal with selected user data
     const handleShowMoreInfo = (user) => {
         setSelectedUser({ ...user }); // Copy user data for editing
+        setFormData({
+            id: user.id,
+            name: user.name,
+            address: user.address,
+            email: user.email,
+            mobile: user.mobile,
+            whatsapp: user.whatsapp,
+            facebook: user.facebook,
+            instagram: user.instagram,
+            twitter: user.twitter,
+            designation: user.designation,
+            companyName: user.companyName,
+            website: user.website,
+            linkedin: user.linkedin,
+            profilePicture: null,
+            backgroundPhoto: null,
+        });
         setIsModalOpen(true);  // Open the modal
-    };
-
-    // Update the selectedUser state on input change
-    const handleInputChange = (e) => {
-        const { name, value } = e.target;
-        setSelectedUser(prevState => ({ ...prevState, [name]: value }));
-        setIsUpdating(true); // Mark as updating if any change happens
     };
 
     // Update user data in the database
     const handleUpdateUser = async () => {
+        const data = new FormData();
+        for (let key in formData) {
+            data.append(key, formData[key]);
+        }
+
         const response = await fetch('/api/update-user', {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(selectedUser), // Send the updated user data
+            body: data,
         });
 
         if (response.ok) {
             const updatedUser = await response.json();
             setUsers(users.map(user => user.id === updatedUser.id ? updatedUser : user));
-            setIsUpdating(false);
             setIsModalOpen(false); // Close the modal after update
             handleRefresh()
         } else {
@@ -71,29 +100,52 @@ export default function AdminDashboard() {
         }
     };
 
-    // Delete user from the database
+    // Handle input change for both text inputs and file uploads
+    const handleInputChange = (e) => {
+        const { name, type } = e.target;
+
+        if (type === 'file') {
+            // Handle file upload
+            if (e.target.files && e.target.files.length > 0) {
+                const file = e.target.files[0];
+                const reader = new FileReader();
+                reader.onloadend = () => {
+                    setSelectedUser(prevState => ({
+                        ...prevState,
+                        [name]: reader.result // Base64 string for image
+                    }));
+                    setFormData(prevState => ({
+                        ...prevState,
+                        [name]: file,
+                    }));
+                };
+                reader.readAsDataURL(file); // Read file as base64 encoded URL
+            }
+        } else {
+            // Handle text inputs
+            setFormData({ ...formData, [name]: e.target.value });
+            setSelectedUser(prevState => ({ ...prevState, [name]: e.target.value }));
+            setIsUpdating(true)
+        }
+    };
+
     const handleDeleteUser = async (userId) => {
-        console.log("user id ", userId);
         const response = await fetch(`/api/delete-user`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ userId }),
+            body: JSON.stringify({ userId }), // Stringify the object
         });
-        console.log("responseeeee ===> ", response);
-
+        handleRefresh()
         if (response.ok) {
-            console.log("user deleted");
-            alert("User is deleted"); // Show confirmation message
+            const result = await response.json(); // Parse the response
             setUsers(users.filter(user => user.id !== userId)); // Remove user from state
             setIsModalOpen(false); // Close modal if user was deleted
-            window.location.reload(); // Refresh the page
-            handleRefresh()
+            console.log(result.message); // Optionally log success message
         } else {
-            console.log("failed  to user deleted");
-            console.error('Failed to delete user');
-            handleRefresh()
+            const error = await response.json(); // Parse the error response
+            console.error('Failed to delete user:', error.error);
         }
     };
 
@@ -164,9 +216,10 @@ export default function AdminDashboard() {
             {/* Modal for showing and updating user information */}
             {isModalOpen && selectedUser && (
                 <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center z-50">
-                    <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-3xl">
+                    <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-3xl overflow-y-auto max-h-screen">
                         <h2 className="text-2xl font-bold mb-4">User Information</h2>
                         <form className="space-y-4">
+                            {/* Form fields */}
                             <div>
                                 <label className="block font-medium">Name:</label>
                                 <input
@@ -207,47 +260,47 @@ export default function AdminDashboard() {
                                     onChange={handleInputChange}
                                 />
                             </div>
-                            {/* Add more fields as needed */}
                             <div>
-                                <label className="block font-medium">Company Name:</label>
+                                <label className="block font-medium">Profile Picture:</label>
                                 <input
-                                    type="text"
-                                    name="companyName"
+                                    type="file"
+                                    name="profilePicture"
+                                    accept="image/*"
                                     className="border border-gray-300 rounded-md p-2 w-full"
-                                    value={selectedUser.companyName}
                                     onChange={handleInputChange}
                                 />
                             </div>
                             <div>
-                                <label className="block font-medium">Website:</label>
+                                <label className="block font-medium">Background Photo:</label>
                                 <input
-                                    type="url"
-                                    name="website"
+                                    type="file"
+                                    name="backgroundPhoto"
+                                    accept="image/*"
                                     className="border border-gray-300 rounded-md p-2 w-full"
-                                    value={selectedUser.website}
                                     onChange={handleInputChange}
                                 />
                             </div>
                         </form>
                         <div className="mt-4 flex justify-end">
                             <button
-                                onClick={handleCloseModal}
-                                className="mr-2 px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400 transition duration-200"
-                            >
-                                Cancel
-                            </button>
+    onClick={handleUpdateUser}
+    disabled={isUpdating} // Disable button if isUpdating is true
+    className={` ${isUpdating ? 'bg-yellow-400 text-black rounded hover:bg-yellow-600   hover:text-white' : 'bg-green-500 text-white rounded hover:bg-green-600'} px-4 py-2 transition duration-200`}
+>
+    {isUpdating ? 'Update User' : 'Update User'}
+</button>
+
                             <button
-                                onClick={handleUpdateUser}
-                                className={`px-4 py-2 rounded transition duration-200 ${isUpdating ? 'bg-yellow-500 text-white' : 'bg-green-500 text-white hover:bg-green-600'}`}
-                                // disabled={isUpdating}
-                            >
-                                {isUpdating ? 'Update User' : 'Update User'}
-                            </button>
-                            <button
-                                onClick={() => handleDeleteUser(selectedUser.id)}
-                                className="ml-2 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition duration-200"
+                                onClick={() => handleDeleteUser(selectedUser.id)} // Pass function reference
+                                className="ml-2 bg-red-500 text-white rounded px-4 py-2 hover:bg-red-600 transition duration-200"
                             >
                                 Delete User
+                            </button>
+                            <button
+                                onClick={handleCloseModal}
+                                className="ml-2 bg-gray-300 text-gray-700 rounded px-4 py-2 hover:bg-gray-400 transition duration-200"
+                            >
+                                Close
                             </button>
                         </div>
                     </div>

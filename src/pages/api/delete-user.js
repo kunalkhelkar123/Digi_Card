@@ -1,7 +1,7 @@
 import connection from '../../lib/db'; // Ensure your DB connection is properly configured
 
 export default async function handler(req, res) {
-    console.log("API call initiated");
+    console.log("Delete user API call initiated");
 
     try {
         // Only handle POST requests
@@ -28,7 +28,7 @@ export default async function handler(req, res) {
                 // Check if any rows were affected (user deleted)
                 if (results.affectedRows > 0) {
                     console.log('User deleted successfully:', results);
-                    return res.status(200).json({ success: true });
+                    return res.status(200).json({ success: true, message: 'User deleted successfully' }); // Return success message
                 } else {
                     // If no rows were affected, user may not exist
                     console.warn('No user found with that ID');

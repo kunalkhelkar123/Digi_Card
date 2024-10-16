@@ -102,7 +102,13 @@ END:VCARD
                     width={200}
                     height={200}
                 />
-                
+                  <Image
+                    src={`/uploads/${user.backgroundPhoto}`}
+                    alt="Profile Picture"
+                    className="mb-4 rounded-full border-2 border-gray-200"
+                    width={200}
+                    height={200}
+                />
                 <h1 className="text-3xl font-bold mb-4">{user.name}&apos;s Profile</h1>
                 <p className="text-lg text-gray-800 mb-2">Email: <span className="font-semibold">{user.email}</span></p>
                 <p className="text-lg text-gray-800 mb-2">Address: <span className="font-semibold">{user.address}</span></p>
@@ -172,69 +178,7 @@ END:VCARD
                         className="text-blue-600 hover:underline ml-1">{user.linkedin}
                     </a>
                 </p>
-                <p className="text-lg text-gray-800 mb-2">
-                    Twitter: 
-                    <a 
-                        href={`https://twitter.com/${user.name}`} 
-                        target="_blank" 
-                        rel="noopener noreferrer" 
-                        className="text-blue-600 hover:underline ml-1">{user.twitter}
-                    </a>
-                </p>
-                <p className="text-lg text-gray-800 mb-2">
-                    Twitter: 
-                    <a 
-                        href={`https://twitter.com/${user.name}`} 
-                        target="_blank" 
-                        rel="noopener noreferrer" 
-                        className="text-blue-600 hover:underline ml-1">{user.twitter}
-                    </a>
-                </p>
-                <p className="text-lg text-gray-800 mb-2">
-                    Twitter: 
-                    <a 
-                        href={`https://twitter.com/${user.name}`} 
-                        target="_blank" 
-                        rel="noopener noreferrer" 
-                        className="text-blue-600 hover:underline ml-1">{user.twitter}
-                    </a>
-                </p>
-                <p className="text-lg text-gray-800 mb-2">
-                    Twitter: 
-                    <a 
-                        href={`https://twitter.com/${user.name}`} 
-                        target="_blank" 
-                        rel="noopener noreferrer" 
-                        className="text-blue-600 hover:underline ml-1">{user.twitter}
-                    </a>
-                </p>
-                <p className="text-lg text-gray-800 mb-2">
-                    Twitter: 
-                    <a 
-                        href={`https://twitter.com/${user.name}`} 
-                        target="_blank" 
-                        rel="noopener noreferrer" 
-                        className="text-blue-600 hover:underline ml-1">{user.twitter}
-                    </a>
-                </p>
-                <p className="text-lg text-gray-800 mb-2">
-                    Twitter: 
-                    <a 
-                        href={`https://twitter.com/${user.name}`} 
-                        target="_blank" 
-                        rel="noopener noreferrer" 
-                        className="text-blue-600 hover:underline ml-1">{user.twitter}
-                    </a>
-                </p>
-                <p className="text-lg text-gray-800 mb-2">
-                    Twitter: 
-                    <a 
-                        href={`https://twitter.com/${user.name}`} 
-                        target="_blank" 
-                        rel="noopener noreferrer" 
-                        className="text-blue-600 hover:underline ml-1">{user.twitter}
-                    </a>
-                </p>
+                
 
             </div>
             

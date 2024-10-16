@@ -22,7 +22,7 @@ export default function Home() {
                 <Link href="/create-profile" className="py-2 px-6 bg-blue-500 text-white text-center font-semibold rounded-lg hover:bg-blue-600">
                     Create Profile
                 </Link>
-                <Link href="/admin-login" className="py-2 px-6 bg-green-500 text-white text-center font-semibold rounded-lg hover:bg-green-600">
+                <Link href="/admin" className="py-2 px-6 bg-green-500 text-white text-center font-semibold rounded-lg hover:bg-green-600">
                     Admin
                 </Link>
                 <Link href="/contact" className="py-2 px-6 bg-red-500 text-white text-center font-semibold rounded-lg hover:bg-red-600">
