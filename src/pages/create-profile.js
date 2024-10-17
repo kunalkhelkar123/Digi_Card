@@ -18,6 +18,7 @@ export default function CreateProfile() {
         profilePicture: null,
         backgroundPhoto: null,
     });
+    const [showSuccessPopup, setShowSuccessPopup] = useState(false);
 
     const handleInputChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -39,8 +40,12 @@ export default function CreateProfile() {
             body: data,
         })
         .then(
-            alert('Profile created successfully!'),
-            window.location.reload()
+            // alert('Profile created successfully!'),
+            // // window.location.reload() 
+            // setTimeout(() => {
+            //     window.location.reload(); // or router.back();
+            // }, 3000)
+            setShowSuccessPopup(true)
         )
        
 
@@ -228,6 +233,28 @@ export default function CreateProfile() {
                             Submit
                         </button>
                     </form>
+
+                    {showSuccessPopup && (
+                <div className="fixed inset-0 bg-gray-800 bg-opacity-75 flex items-center justify-center z-50">
+                    <div className="bg-white p-6 rounded-lg shadow-lg text-center">
+                        <h2 className="text-lg font-bold mb-4 text-black">Profile Created Successfully!</h2>
+                        <p className="mb-4 text-black">
+                            Your profile has been created successfully. Please contact the admin to activate your account.
+                        </p>
+
+                        <a href="/contact" className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+                            Contact Admin
+                        </a>
+                        <button
+                            onClick={() => setShowSuccessPopup(false)}
+                            className="bg-red-500 text-white px-6 py-2 ml-12 rounded hover:bg-red-600"
+                        >
+                            Close
+                        </button>
+
+                    </div>
+                </div>
+            )}
                 </div>
             </div>
         </>

@@ -3,7 +3,8 @@ import Link from 'next/link'; // Import Link from Next.js
 import Image from 'next/image'; // Import Image from Next.js for optimized images
 import connection from '../lib/db';
 import Navbar from './NavbarTwo';
-import { FaPhone, FaUserPlus, FaFacebookF, FaInstagram, FaTwitter, FaWhatsapp, FaMapMarkerAlt, FaEnvelope, FaGlobe } from 'react-icons/fa';
+import UserFooter from './UserFooter';
+import { FaPhone, FaUserPlus, FaFacebookF, FaInstagram, FaTwitter, FaWhatsapp, FaShareAlt, FaQrcode, FaMapMarkerAlt, FaEnvelope, FaGlobe } from 'react-icons/fa';
 import { useState } from 'react';
 
 export async function getServerSideProps({ query }) {
@@ -17,7 +18,7 @@ export async function getServerSideProps({ query }) {
 }
 
 export default function UserProfile({ user, isVCF }) {
-
+    const [showQrCode, setShowQrCode] = useState(false);
     const [phone, setPhone] = useState('');
     const handleWhatsAppShare = () => {
         if (phone) {
@@ -27,6 +28,20 @@ export default function UserProfile({ user, isVCF }) {
             alert('Please enter a valid phone number');
         }
     };
+
+
+
+    const handleDownload = () => {
+        // Create an anchor element to download the QR code
+        const link = document.createElement('a');
+        link.href = `/${user.qrCode}` // Using the path from the user object
+        link.download = 'qr_code.png'; // Name of the downloaded file
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      };
+
+
     // Function to generate and download vCard
     const downloadVCard = useCallback(() => {
         if (!user) return; // Guard clause for no user
@@ -59,7 +74,9 @@ END:VCARD
             downloadVCard();
         }
     }, [isVCF, user, downloadVCard]);
-
+    const handleQrCodeClick = () => {
+        setShowQrCode(true);
+    };
     // Handle conditional rendering instead of conditional hook calls
     if (!user && !isVCF) {
         return (
@@ -97,9 +114,13 @@ END:VCARD
     }
 
     // If the user is requesting a VCF file, don't render profile information
-    // if (isVCF) {
-    //     return <h1>Downloading your vCard...</h1>; // Optional loading message
-    // }
+    if (isVCF) {
+        // window.location.reload();
+        setTimeout(() => {
+            window.history.back(); // or router.back();
+        }, 1);
+        return ; // Optional loading message
+    }
 
     // Render user profile information if not a VCF request
     return (
@@ -169,7 +190,7 @@ END:VCARD
                             </div>
                             <div className="flex-shrink-0">
                                 <a
-                                    href="https://maps.app.goo.gl/bmsurFuBF3YVB2TB7"
+                                    href="https://maps.app.goo.gl/aM2JAq6nMGER83H56"
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="text-red-500 border-2 border-red-500 rounded-full p-2 transition-transform transform hover:scale-110 hover:bg-red-500 hover:text-white flex items-center justify-center"
@@ -225,11 +246,11 @@ END:VCARD
                         <div className="flex justify-center mt-2">
                             <a
                                 href={`/${user.name}.vcf`}
-                                target="_blank"
+                                // target="_blank"
                                 rel="noopener noreferrer"
                             >
                                 <button
-                                    className="bg-gray-700 text-white px-4 py-2 rounded-lg flex items-center hover:bg-black transition-transform transform hover:scale-110"
+                                    className="bg-black text-white px-4 py-2 rounded-lg flex items-center hover:bg-black "
                                 >
                                     <FaUserPlus className="mr-2" />
                                     Save contact
@@ -266,22 +287,89 @@ END:VCARD
                                 <FaTwitter />
                             </a>
                         </div>
-                        <div className="fixed bottom-0 right-0 z-10">
-    <a
-        href={`/${user.name}.vcf`}
-        className="relative bg-black text-white px-4 py-2 rounded-full flex items-center justify-center transition duration-200 overflow-hidden"
-    >
-        <FaUserPlus className="mr-2" /> {/* Icon added here */}
-        <div className="text-center">
-            <span className="block text-xxs md:text-xs">Save</span>
-            <span className="block text-xxs md:text-xs">Contact</span>
-        </div>
-        <span className="pulse-ring absolute inset-0"></span>
-    </a>
-</div>
+                        <div className="fixed bottom-1 right-0 z-10">
+                            <a
+                                href={`/${user.name}.vcf`}
+                                className="relative bg-black text-white px-4 py-2 rounded-full flex items-center justify-center transition duration-200 overflow-hidden"
+                            >
+                                <FaUserPlus className="mr-2 " /> {/* Icon added here */}
+                                <div className="text-center">
+                                    <span className="block text-xxs md:text-xs">Save</span>
+                                    <span className="block text-xxs md:text-xs">Contact</span>
+                                </div>
+                                <span className="pulse-ring absolute inset-0"></span>
+                            </a>
+                        </div>
 
 
 
+                    </div>
+                </div>
+                {/* <UserFooter/> */}
+                <div className="bg-gray-200 text-white py-2 fixed bottom-0 left-0 right-0">
+                    <div className="container mx-auto flex justify-around items-center">
+                        <div className="menu_item">
+                            <a href={`tel:+91${user.mobile}`} target="_blank" rel="noopener noreferrer" className="flex flex-col items-center">
+                                <FaPhone className="text-xl  text-black" />
+                                <div className="link_btn  text-sm  text-black">Call Now</div>
+                            </a>
+                        </div>
+                        <div className="menu_item">
+                            <a
+                                href={`https://api.whatsapp.com/send?text=Hi, ${user.name},&phone=91${user.mobile}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="flex flex-col items-center"
+                            >
+                                <FaWhatsapp className="text-xl  text-black" />
+                                <div className="link_btn  text-l  text-black">Whatsapp</div>
+                            </a>
+                        </div>
+                        {/* <div 
+          className="menu_item cursor-pointer flex flex-col items-center" 
+          onClick={() => window.location.hash = '#home'} 
+          id="share_box_pop"
+        >
+          <FaShareAlt className="text-xl" /> 
+          Share
+        </div> */}
+                        {/* <div
+                            className="menu_item cursor-pointer flex flex-col items-center"
+                            onClick={() => window.location.hash = '#home'}
+                        >
+                            <FaQrcode className="text-xl  text-black" id="qr_box_pop" />
+                                <div className="link_btn text-l  text-black">QR Code</div>
+                                
+                        </div> */}
+
+                        <div
+                            className="menu_item cursor-pointer flex flex-col items-center"
+                            onClick={handleQrCodeClick} // Show QR code on click
+                        >
+                            <FaQrcode className="text-xl text-black" id="qr_box_pop" />
+                            <div className="link_btn text-l text-black">QR Code</div>
+                        </div>
+
+                        {showQrCode && (
+                            <div className="qr-code-modal  fixed top-0 left-0 right-0 bottom-0 bg-gray-900 bg-opacity-75 flex justify-center items-center">
+                                <div className="bg-white p-4 rounded ">
+                                    {/* <h2 className="text-lg qrcode  text-black">Your QR Code</h2> */}
+                                    <img src={`/${user.qrCode}`} alt="QR Code" className="mb-4 qrcode" />
+                                    <button
+                                        onClick={handleDownload}
+                                        className="bg-blue-500 ml-8 text-white px-4 py-2 rounded"
+                                    >
+                                        Download QR Code
+                                    </button>
+                                    <button
+                                        onClick={() => setShowQrCode(false)}
+                                        className="ml-12 bg-red-500 text-white px-4 py-2 rounded"
+                                    >
+                                        Close
+                                    </button>
+                                </div>
+                            </div>
+                        )}
                     </div>
                 </div>
             </div ></>
@@ -293,107 +381,6 @@ END:VCARD
 
 
 
-        //     <>
-        //     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
-        //         <div className="bg-white p-6 rounded-lg shadow-md max-w-md text-center">
-        //             {/* Profile Picture at the Top, Centered */}
-        //             <Image
-        //                 src={`/uploads/${user.profilePicture}`}
-        //                 alt="Profile Picture"
-        //                 className="mb-4 rounded-full border-2 border-gray-200"
-        //                 width={200}
-        //                 height={200}
-        //             />
-        //               <Image
-        //                 src={`/uploads/${user.backgroundPhoto}`}
-        //                 alt="Profile Picture"
-        //                 className="mb-4 rounded-full border-2 border-gray-200"
-        //                 width={200}
-        //                 height={200}
-        //             />
-        //             <h1 className="text-3xl font-bold mb-4">{user.name}&apos;s Profile</h1>
-        //             <p className="text-lg text-gray-800 mb-2">Email: <span className="font-semibold">{user.email}</span></p>
-        //             <p className="text-lg text-gray-800 mb-2">Address: <span className="font-semibold">{user.address}</span></p>
-        //             <p className="text-lg text-gray-800 mb-2">Mobile: <a href={`tel:${user.mobile}`} className="text-blue-600 hover:underline">{user.mobile}</a></p>
-        //             <p className="text-lg text-gray-800 mb-2">WhatsApp: <a href={`https://wa.me/${user.whatsapp}`} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">{user.whatsapp}</a></p>
 
-        //             {/* Social Media Links */}
-        //             <p className="text-lg text-gray-800 mb-2">
-        //                 Facebook: 
-        //                 <a 
-        //                     href={`https://facebook.com/${user.name}`} 
-        //                     target="_blank" 
-        //                     rel="noopener noreferrer" 
-        //                     className="text-blue-600 hover:underline ml-1">{user.facebook}
-        //                 </a>
-        //             </p>
-        //             <p className="text-lg text-gray-800 mb-2">
-        //                 Instagram: 
-        //                 <a 
-        //                     href={`https://instagram.com/${user.name}`} 
-        //                     target="_blank" 
-        //                     rel="noopener noreferrer" 
-        //                     className="text-blue-600 hover:underline ml-1">{user.instagram}
-        //                 </a>
-        //             </p>
-        //             <p className="text-lg text-gray-800 mb-2">
-        //                 Twitter: 
-        //                 <a 
-        //                     href={`https://twitter.com/${user.name}`} 
-        //                     target="_blank" 
-        //                     rel="noopener noreferrer" 
-        //                     className="text-blue-600 hover:underline ml-1">{user.twitter}
-        //                 </a>
-        //             </p>
-        //             <p className="text-lg text-gray-800 mb-2">
-        //             designation: 
-        //                 <a 
-        //                     href={`https://twitter.com/${user.name}`} 
-        //                     target="_blank" 
-        //                     rel="noopener noreferrer" 
-        //                     className="text-blue-600 hover:underline ml-1">{user.designation}
-        //                 </a>
-        //             </p><p className="text-lg text-gray-800 mb-2">
-        //             companyName: 
-        //                 <a 
-        //                     href={`https://twitter.com/${user.name}`} 
-        //                     target="_blank" 
-        //                     rel="noopener noreferrer" 
-        //                     className="text-blue-600 hover:underline ml-1">{user.companyName}
-        //                 </a>
-        //             </p>
-        //             <p className="text-lg text-gray-800 mb-2">
-        //             website: 
-        //                 <a 
-        //                     href={`https://twitter.com/${user.name}`} 
-        //                     target="_blank" 
-        //                     rel="noopener noreferrer" 
-        //                     className="text-blue-600 hover:underline ml-1">{user.website}
-        //                 </a>
-        //             </p>
-        //             <p className="text-lg text-gray-800 mb-2">
-        //             linkedin: 
-        //                 <a 
-        //                     href={`https://twitter.com/${user.name}`} 
-        //                     target="_blank" 
-        //                     rel="noopener noreferrer" 
-        //                     className="text-blue-600 hover:underline ml-1">{user.linkedin}
-        //                 </a>
-        //             </p>
-
-
-        //         </div>
-
-        //     </div>
-        //     <div>
-        //     <h2>Your QR Code:</h2>
-        //     <img src={`/${user.qrCode}`} alt="QR Code" width="200" />
-
-        //     {/* Download QR Code Button */}
-        //     <a href={`/${user.qrCode}`} download={`${user.name}-qr.png`}>
-        //         <button>Download QR Code</button>
-        //     </a>
-        // </div>
-        // </>
     );
 }
