@@ -22,7 +22,7 @@ export default function UserProfile({ user, isVCF }) {
     const [phone, setPhone] = useState('');
     const handleWhatsAppShare = () => {
         if (phone) {
-            const whatsappUrl = `https://api.whatsapp.com/send?phone=91${phone}&text=Hello%2C%0D%0APleasure+connecting+with+you%21%21+Below+are+my+details%3A%0D%0A%0D%0ADigital+Business+Card%2FProfile%3A%0D%0Ahttps%3A%2F%2Fdigicarda.com%2Fsagirgolandaj%0D%0A%0D%0ASave+to+Contacts+Directly%3A%0D%0Ahttps%3A%2F%2Fdigicarda.com%2Fsagirgolandaj.vcf+%0D%0A%0D%0A%2ANote%3A+If+this+is+our+first+chat%2C+reply+hi+and+then+click+the+links+above.+%28Wapp+Policy%29%2A+%0D%0A%0D%0ARegards%2C+%0D%0ASagir+Golandaj+%0D%0ACo-Founder%0D%0AFuture+Spaces+Realty+%0D%0A%0D%0APowered+by%3A+digicarda.com`;
+            const whatsappUrl = `https://api.whatsapp.com/send?text=Hi, ${user.name},&phone=91${user.mobile}`
             window.open(whatsappUrl, '_blank');
         } else {
             alert('Please enter a valid phone number');
@@ -180,7 +180,8 @@ END:VCARD
                             </div>
                             <div className="flex-shrink-0">
                                 <a
-                                    href={`https://api.whatsapp.com/send?phone=+91${user.whatsapp}`}
+                                     href={`https://api.whatsapp.com/send?text=Hi, ${user.name},&phone=91${user.mobile}`}
+                                    //https://api.whatsapp.com/send?text=Hi,%20Kunal%20Gajananrao%20Khelkar,&phone=919146219186
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="text-green-500 border-2 border-green-500 rounded-full p-2 transition-transform transform hover:scale-110 hover:bg-green-500 hover:text-white flex items-center justify-center"
