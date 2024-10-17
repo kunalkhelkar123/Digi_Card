@@ -251,6 +251,16 @@ export default function AdminDashboard() {
                                 />
                             </div>
                             <div>
+                                <label className="block font-medium">Whatsapp Number:</label>
+                                <input
+                                    type="text"
+                                    name="whatsapp"
+                                    className="border border-gray-300 rounded-md p-2 w-full"
+                                    value={selectedUser.whatsapp}
+                                    onChange={handleInputChange}
+                                />
+                            </div>
+                            <div>
                                 <label className="block font-medium">Email:</label>
                                 <input
                                     type="email"
@@ -260,6 +270,27 @@ export default function AdminDashboard() {
                                     onChange={handleInputChange}
                                 />
                             </div>
+                            <div>
+                                <label className="block font-medium">Designation:</label>
+                                <input
+                                    type="text"
+                                    name="designation"
+                                    className="border border-gray-300 rounded-md p-2 w-full"
+                                    value={selectedUser.designation}
+                                    onChange={handleInputChange}
+                                />
+                            </div>
+                            <div>
+                                <label className="block font-medium">Company Name:</label>
+                                <input
+                                    type="text"
+                                    name="companyName"
+                                    className="border border-gray-300 rounded-md p-2 w-full"
+                                    value={selectedUser.companyName}
+                                    onChange={handleInputChange}
+                                />
+                            </div>
+
                             <div>
                                 <label className="block font-medium">Profile Picture:</label>
                                 <input
@@ -283,12 +314,12 @@ export default function AdminDashboard() {
                         </form>
                         <div className="mt-4 flex justify-end">
                             <button
-    onClick={handleUpdateUser}
-    disabled={isUpdating} // Disable button if isUpdating is true
-    className={` ${isUpdating ? 'bg-yellow-400 text-black rounded hover:bg-yellow-600   hover:text-white' : 'bg-green-500 text-white rounded hover:bg-green-600'} px-4 py-2 transition duration-200`}
->
-    {isUpdating ? 'Update User' : 'Update User'}
-</button>
+                                onClick={handleUpdateUser}
+                                disabled={isUpdating} // Disable button if isUpdating is true
+                                className={` ${isUpdating ? 'bg-yellow-400 text-black rounded hover:bg-yellow-600   hover:text-white' : 'bg-green-500 text-white rounded hover:bg-green-600'} px-4 py-2 transition duration-200`}
+                            >
+                                {isUpdating ? 'Update User' : 'Update User'}
+                            </button>
 
                             <button
                                 onClick={() => handleDeleteUser(selectedUser.id)} // Pass function reference

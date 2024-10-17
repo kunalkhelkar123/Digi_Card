@@ -18,12 +18,12 @@
 /* Add this to your Navbar CSS */
 
 
-.h-10 {
+/* .h-10 {
   height: 4rem;
   width: 7rem;
   margin-bottom: 20px;
   margin-top: 20px;
-} 
+}  */
 
 body {
   color: var(--foreground);
@@ -34,5 +34,68 @@ body {
 @layer utilities {
   .text-balance {
     text-wrap: balance;
+  }
+}
+
+/* .container{
+  max-width: 599px;
+  
+} */
+/* .container2{
+margin-left: -25px;
+margin-right: -25px;
+margin-top: -83px;
+
+  background-image: url(/images/about-banner.jpg);
+  background-repeat: no-repeat;
+} */
+/* .w-24 {
+  margin-top: 60px;
+  width: 15rem;
+}
+.h-24 {
+  height: 15rem;
+} */
+/* .container3{
+
+  margin-top: 100px;
+} */
+@keyframes pulse-animation {
+  0% {
+    transform: scale(0.75);
+    opacity: 0.5;
+  }
+  50% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(0.75);
+    opacity: 0.5;
+  }
+}
+
+.pulse-ring {
+  animation: pulse-animation 1s infinite;
+  border: 3px solid rgba(255, 255, 255, 0.75); /* Adjust border width and color */
+  border-radius: 50%; /* Make it circular */
+  position: absolute; /* Position it absolutely within the parent */
+  inset: 0; /* Fill the parent container */
+  pointer-events: none; /* Allow clicks to go through */
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.5); /* Optional: Add a glow effect */
+}
+
+@keyframes pulse-animation {
+  0% {
+      transform: translate(-50%, -50%) scale(0.9);
+      opacity: 1;
+  }
+  50% {
+      transform: translate(-50%, -50%) scale(1);
+      opacity: 0;
+  }
+  100% {
+      transform: translate(-50%, -50%) scale(0.9);
+      opacity: 1;
   }
 }

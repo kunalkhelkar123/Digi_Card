@@ -3,6 +3,8 @@ import Link from 'next/link'; // Import Link from Next.js
 import Image from 'next/image'; // Import Image from Next.js for optimized images
 import connection from '../lib/db';
 import Navbar from './NavbarTwo';
+import { FaPhone, FaUserPlus, FaFacebookF, FaInstagram, FaTwitter, FaWhatsapp, FaMapMarkerAlt, FaEnvelope, FaGlobe } from 'react-icons/fa';
+import { useState } from 'react';
 
 export async function getServerSideProps({ query }) {
     const { username } = query;
@@ -15,6 +17,16 @@ export async function getServerSideProps({ query }) {
 }
 
 export default function UserProfile({ user, isVCF }) {
+
+    const [phone, setPhone] = useState('');
+    const handleWhatsAppShare = () => {
+        if (phone) {
+            const whatsappUrl = `https://api.whatsapp.com/send?phone=91${phone}&text=Hello%2C%0D%0APleasure+connecting+with+you%21%21+Below+are+my+details%3A%0D%0A%0D%0ADigital+Business+Card%2FProfile%3A%0D%0Ahttps%3A%2F%2Fdigicarda.com%2Fsagirgolandaj%0D%0A%0D%0ASave+to+Contacts+Directly%3A%0D%0Ahttps%3A%2F%2Fdigicarda.com%2Fsagirgolandaj.vcf+%0D%0A%0D%0A%2ANote%3A+If+this+is+our+first+chat%2C+reply+hi+and+then+click+the+links+above.+%28Wapp+Policy%29%2A+%0D%0A%0D%0ARegards%2C+%0D%0ASagir+Golandaj+%0D%0ACo-Founder%0D%0AFuture+Spaces+Realty+%0D%0A%0D%0APowered+by%3A+digicarda.com`;
+            window.open(whatsappUrl, '_blank');
+        } else {
+            alert('Please enter a valid phone number');
+        }
+    };
     // Function to generate and download vCard
     const downloadVCard = useCallback(() => {
         if (!user) return; // Guard clause for no user
@@ -51,147 +63,337 @@ END:VCARD
     // Handle conditional rendering instead of conditional hook calls
     if (!user && !isVCF) {
         return (
-<>
-            <Navbar/>
-            <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
-                <h1 className="text-3xl font-bold text-red-600">User Not Found!</h1>
-                
-                <br/>
-                
-                <Link href="/contact" className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-200">
+            <>
+                <Navbar />
+                <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
+                    <h1 className="text-3xl font-bold text-red-600">User Not Found!</h1>
+
+                    <br />
+
+                    <Link href="/contact" className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-200">
                         Contact Us
                     </Link>
-            </div></>
+                </div></>
         );
     }
 
     if (user && !user.active) {
         return (
             <>
-            <Navbar/>
-            <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
-                <div className="bg-white p-6 rounded-lg shadow-md max-w-md text-center">
-                    <h1 className="text-2xl font-bold text-red-600 mb-4">Account Inactive</h1>
-                    <p className="text-gray-700 mb-4">
-                        This account is inactive. Please contact the admin for assistance.
-                    </p>
-                    <Link href="/contact" className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-200">
-                        Contact Us
-                    </Link>
+                <Navbar />
+                <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
+                    <div className="bg-white p-6 rounded-lg shadow-md max-w-md text-center">
+                        <h1 className="text-2xl font-bold text-red-600 mb-4">Account Inactive</h1>
+                        <p className="text-gray-700 mb-4">
+                            This account is inactive. Please contact the admin for assistance.
+                        </p>
+                        <Link href="/contact" className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-200">
+                            Contact Us
+                        </Link>
+                    </div>
                 </div>
-            </div>
             </>
         );
     }
 
     // If the user is requesting a VCF file, don't render profile information
-    if (isVCF) {
-        return <h1>Downloading your vCard...</h1>; // Optional loading message
-    }
+    // if (isVCF) {
+    //     return <h1>Downloading your vCard...</h1>; // Optional loading message
+    // }
 
     // Render user profile information if not a VCF request
     return (
         <>
-        <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
-            <div className="bg-white p-6 rounded-lg shadow-md max-w-md text-center">
-                {/* Profile Picture at the Top, Centered */}
-                <Image
-                    src={`/uploads/${user.profilePicture}`}
-                    alt="Profile Picture"
-                    className="mb-4 rounded-full border-2 border-gray-200"
-                    width={200}
-                    height={200}
-                />
-                  <Image
-                    src={`/uploads/${user.backgroundPhoto}`}
-                    alt="Profile Picture"
-                    className="mb-4 rounded-full border-2 border-gray-200"
-                    width={200}
-                    height={200}
-                />
-                <h1 className="text-3xl font-bold mb-4">{user.name}&apos;s Profile</h1>
-                <p className="text-lg text-gray-800 mb-2">Email: <span className="font-semibold">{user.email}</span></p>
-                <p className="text-lg text-gray-800 mb-2">Address: <span className="font-semibold">{user.address}</span></p>
-                <p className="text-lg text-gray-800 mb-2">Mobile: <a href={`tel:${user.mobile}`} className="text-blue-600 hover:underline">{user.mobile}</a></p>
-                <p className="text-lg text-gray-800 mb-2">WhatsApp: <a href={`https://wa.me/${user.whatsapp}`} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">{user.whatsapp}</a></p>
+            <div
+                style={{
+                    // height: '100vh', // Full height of the viewport
+                    background: 'repeating-linear-gradient(45deg, black, #413d48 100px)', // Corrected syntax for background
+                    // backgroundPosition: 'center', // Centers the image (not necessary for gradients, but included if needed)
+                    // backgroundRepeat: 'no-repeat', // Not applicable for gradients but can be kept
+                }}
+            >
 
-                {/* Social Media Links */}
-                <p className="text-lg text-gray-800 mb-2">
-                    Facebook: 
-                    <a 
-                        href={`https://facebook.com/${user.name}`} 
-                        target="_blank" 
-                        rel="noopener noreferrer" 
-                        className="text-blue-600 hover:underline ml-1">{user.facebook}
-                    </a>
-                </p>
-                <p className="text-lg text-gray-800 mb-2">
-                    Instagram: 
-                    <a 
-                        href={`https://instagram.com/${user.name}`} 
-                        target="_blank" 
-                        rel="noopener noreferrer" 
-                        className="text-blue-600 hover:underline ml-1">{user.instagram}
-                    </a>
-                </p>
-                <p className="text-lg text-gray-800 mb-2">
-                    Twitter: 
-                    <a 
-                        href={`https://twitter.com/${user.name}`} 
-                        target="_blank" 
-                        rel="noopener noreferrer" 
-                        className="text-blue-600 hover:underline ml-1">{user.twitter}
-                    </a>
-                </p>
-                <p className="text-lg text-gray-800 mb-2">
-                designation: 
-                    <a 
-                        href={`https://twitter.com/${user.name}`} 
-                        target="_blank" 
-                        rel="noopener noreferrer" 
-                        className="text-blue-600 hover:underline ml-1">{user.designation}
-                    </a>
-                </p><p className="text-lg text-gray-800 mb-2">
-                companyName: 
-                    <a 
-                        href={`https://twitter.com/${user.name}`} 
-                        target="_blank" 
-                        rel="noopener noreferrer" 
-                        className="text-blue-600 hover:underline ml-1">{user.companyName}
-                    </a>
-                </p>
-                <p className="text-lg text-gray-800 mb-2">
-                website: 
-                    <a 
-                        href={`https://twitter.com/${user.name}`} 
-                        target="_blank" 
-                        rel="noopener noreferrer" 
-                        className="text-blue-600 hover:underline ml-1">{user.website}
-                    </a>
-                </p>
-                <p className="text-lg text-gray-800 mb-2">
-                linkedin: 
-                    <a 
-                        href={`https://twitter.com/${user.name}`} 
-                        target="_blank" 
-                        rel="noopener noreferrer" 
-                        className="text-blue-600 hover:underline ml-1">{user.linkedin}
-                    </a>
-                </p>
-                
+                <div className="container mx-auto p-9 "
+                    style={{
+                        maxWidth: '530px', // You can keep this for maximum width
+                        // height: '100vh', // Full height of the viewport
+                    }}>
+                    <div className="bg-white shadow-lg  p-6 text-center " >
+                        <div className="mb-4 container2"
+                            style={{
+                                marginLeft: '-25px',
+                                marginRight: '-25px',
+                                marginTop: '-84px',
+                                backgroundImage: `url(/uploads/${user.backgroundPhoto})`, // Corrected syntax for backgroundImage
+                                backgroundRepeat: 'no-repeat',
+                                backgroundSize: 'cover', // Optional: Ensure the background image covers the entire div
+                            }}>
+                            <img
+                                src={`/uploads/${user.profilePicture}`}
+                                alt="Profile"
+                                className="w-24 h-24 mx-auto rounded-full container3"
+                                style={{
+                                    marginTop: '60px',
+                                    width: '15rem',
+                                    height: '15rem',
+                                }}
+                            />
+                        </div>
+                        <div className="mb-6 mt-10">
+                            <h2 className="text-2xl font-bold">{user.name}&apos;s Profile</h2>
+                            <p className="text-gray-600 font-bold  textxl">{user.designation}</p>
+                            <p className="text-gray-600 font-bold  text-xl ">{user.companyName}</p>
+                        </div>
 
-            </div>
-            
+
+                        <div className="flex flex-wrap justify-center space-x-5 mb-6 mt-10">
+                            <div className="flex-shrink-0">
+                                <a
+                                    href={`tel:+91${user.mobile}`}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="text-blue-600 border-2 border-blue-600 rounded-full p-2 transition-transform transform hover:scale-110 hover:bg-blue-600 hover:text-white flex items-center justify-center"
+                                >
+                                    <FaPhone className="w-6 h-6 md:w-8 md:h-8" title="Call" />
+                                </a>
+                            </div>
+                            <div className="flex-shrink-0">
+                                <a
+                                    href={`https://api.whatsapp.com/send?phone=+91${user.whatsapp}`}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="text-green-500 border-2 border-green-500 rounded-full p-2 transition-transform transform hover:scale-110 hover:bg-green-500 hover:text-white flex items-center justify-center"
+                                >
+                                    <FaWhatsapp className="w-6 h-6 md:w-8 md:h-8" title="WhatsApp" />
+                                </a>
+                            </div>
+                            <div className="flex-shrink-0">
+                                <a
+                                    href="https://maps.app.goo.gl/bmsurFuBF3YVB2TB7"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="text-red-500 border-2 border-red-500 rounded-full p-2 transition-transform transform hover:scale-110 hover:bg-red-500 hover:text-white flex items-center justify-center"
+                                >
+                                    <FaMapMarkerAlt className="w-6 h-6 md:w-8 md:h-8" title="Location" />
+                                </a>
+                            </div>
+                            <div className="flex-shrink-0">
+                                <a
+                                    href={`mailto:${user.email}`}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="text-gray-600 border-2 border-gray-600 rounded-full p-2 transition-transform transform hover:scale-110 hover:bg-gray-600 hover:text-white flex items-center justify-center"
+                                >
+                                    <FaEnvelope className="w-6 h-6 md:w-8 md:h-8" title="Email" />
+                                </a>
+                            </div>
+                            <div className="flex-shrink-0">
+                                <a
+                                    href={`${user.website}`}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="text-blue-600 border-2 border-blue-600 rounded-full p-2 transition-transform transform hover:scale-110 hover:bg-blue-600 hover:text-white flex items-center justify-center"
+                                >
+                                    <FaGlobe className="w-6 h-6 md:w-8 md:h-8" title="Website" />
+                                </a>
+                            </div>
+                        </div>
+
+
+
+                        {/* <div className="whatsapp_share mb-6 ml-5 mt-10">
+                            <form onSubmit={(e) => e.preventDefault()} className="flex flex-col md:flex-row items-center">
+                                <label className="mr-2 text-l font-semibold">+91</label>
+                                <input
+                                    type="number"
+                                    value={phone}
+                                    onChange={(e) => setPhone(e.target.value)}
+                                    placeholder="Enter phone number"
+                                    className="p-1 border border-gray-300 rounded-lg mr-2 w-full md:w-44 focus:outline-none focus:ring-2 focus:ring-green-500 transition duration-200"
+                                    maxLength="10"
+                                />
+                                <button
+                                    type="button"
+                                    className="bg-green-600 text-white px-4 py-2 rounded-lg flex items-center mt-2 md:mt-0 hover:bg-green-700 transition duration-200"
+                                    onClick={handleWhatsAppShare}
+                                >
+                                    <FaWhatsapp className="mr-2" /> Share via WhatsApp
+                                </button>
+                            </form>
+                        </div> */}
+
+                        <div className="flex justify-center mt-2">
+                            <a
+                                href={`/${user.name}.vcf`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                <button
+                                    className="bg-gray-700 text-white px-4 py-2 rounded-lg flex items-center hover:bg-black transition-transform transform hover:scale-110"
+                                >
+                                    <FaUserPlus className="mr-2" />
+                                    Save contact
+                                </button>
+                            </a>
+                        </div>
+
+
+
+
+                        <div className="flex justify-center space-x-4 text-2xl mt-8">
+                            <a
+                                href={`https://www.facebook.com/${user.facebook}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-blue-600 border-2 border-blue-600 rounded-full p-2 transition-transform transform hover:scale-110 hover:bg-blue-600 hover:text-white"
+                            >
+                                <FaFacebookF />
+                            </a>
+                            <a
+                                href={`https://www.instagram.com/${user.instagram}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-pink-600 border-2 border-pink-600 rounded-full p-2 transition-transform transform hover:scale-110 hover:bg-pink-600 hover:text-white"
+                            >
+                                <FaInstagram />
+                            </a>
+                            <a
+                                href={`https://twitter.com/${user.twitter}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-blue-400 border-2 border-blue-400 rounded-full p-2 transition-transform transform hover:scale-110 hover:bg-blue-600 hover:text-white"
+                            >
+                                <FaTwitter />
+                            </a>
+                        </div>
+                        <div className="fixed bottom-0 right-0 z-10">
+    <a
+        href={`/${user.name}.vcf`}
+        className="relative bg-black text-white px-4 py-2 rounded-full flex items-center justify-center transition duration-200 overflow-hidden"
+    >
+        <FaUserPlus className="mr-2" /> {/* Icon added here */}
+        <div className="text-center">
+            <span className="block text-xxs md:text-xs">Save</span>
+            <span className="block text-xxs md:text-xs">Contact</span>
         </div>
-        <div>
-        <h2>Your QR Code:</h2>
-        <img src={`/${user.qrCode}`} alt="QR Code" width="200" />
+        <span className="pulse-ring absolute inset-0"></span>
+    </a>
+</div>
 
-        {/* Download QR Code Button */}
-        <a href={`/${user.qrCode}`} download={`${user.name}-qr.png`}>
-            <button>Download QR Code</button>
-        </a>
-    </div>
-    </>
+
+
+                    </div>
+                </div>
+            </div ></>
+
+
+
+
+
+
+
+
+        //     <>
+        //     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
+        //         <div className="bg-white p-6 rounded-lg shadow-md max-w-md text-center">
+        //             {/* Profile Picture at the Top, Centered */}
+        //             <Image
+        //                 src={`/uploads/${user.profilePicture}`}
+        //                 alt="Profile Picture"
+        //                 className="mb-4 rounded-full border-2 border-gray-200"
+        //                 width={200}
+        //                 height={200}
+        //             />
+        //               <Image
+        //                 src={`/uploads/${user.backgroundPhoto}`}
+        //                 alt="Profile Picture"
+        //                 className="mb-4 rounded-full border-2 border-gray-200"
+        //                 width={200}
+        //                 height={200}
+        //             />
+        //             <h1 className="text-3xl font-bold mb-4">{user.name}&apos;s Profile</h1>
+        //             <p className="text-lg text-gray-800 mb-2">Email: <span className="font-semibold">{user.email}</span></p>
+        //             <p className="text-lg text-gray-800 mb-2">Address: <span className="font-semibold">{user.address}</span></p>
+        //             <p className="text-lg text-gray-800 mb-2">Mobile: <a href={`tel:${user.mobile}`} className="text-blue-600 hover:underline">{user.mobile}</a></p>
+        //             <p className="text-lg text-gray-800 mb-2">WhatsApp: <a href={`https://wa.me/${user.whatsapp}`} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">{user.whatsapp}</a></p>
+
+        //             {/* Social Media Links */}
+        //             <p className="text-lg text-gray-800 mb-2">
+        //                 Facebook: 
+        //                 <a 
+        //                     href={`https://facebook.com/${user.name}`} 
+        //                     target="_blank" 
+        //                     rel="noopener noreferrer" 
+        //                     className="text-blue-600 hover:underline ml-1">{user.facebook}
+        //                 </a>
+        //             </p>
+        //             <p className="text-lg text-gray-800 mb-2">
+        //                 Instagram: 
+        //                 <a 
+        //                     href={`https://instagram.com/${user.name}`} 
+        //                     target="_blank" 
+        //                     rel="noopener noreferrer" 
+        //                     className="text-blue-600 hover:underline ml-1">{user.instagram}
+        //                 </a>
+        //             </p>
+        //             <p className="text-lg text-gray-800 mb-2">
+        //                 Twitter: 
+        //                 <a 
+        //                     href={`https://twitter.com/${user.name}`} 
+        //                     target="_blank" 
+        //                     rel="noopener noreferrer" 
+        //                     className="text-blue-600 hover:underline ml-1">{user.twitter}
+        //                 </a>
+        //             </p>
+        //             <p className="text-lg text-gray-800 mb-2">
+        //             designation: 
+        //                 <a 
+        //                     href={`https://twitter.com/${user.name}`} 
+        //                     target="_blank" 
+        //                     rel="noopener noreferrer" 
+        //                     className="text-blue-600 hover:underline ml-1">{user.designation}
+        //                 </a>
+        //             </p><p className="text-lg text-gray-800 mb-2">
+        //             companyName: 
+        //                 <a 
+        //                     href={`https://twitter.com/${user.name}`} 
+        //                     target="_blank" 
+        //                     rel="noopener noreferrer" 
+        //                     className="text-blue-600 hover:underline ml-1">{user.companyName}
+        //                 </a>
+        //             </p>
+        //             <p className="text-lg text-gray-800 mb-2">
+        //             website: 
+        //                 <a 
+        //                     href={`https://twitter.com/${user.name}`} 
+        //                     target="_blank" 
+        //                     rel="noopener noreferrer" 
+        //                     className="text-blue-600 hover:underline ml-1">{user.website}
+        //                 </a>
+        //             </p>
+        //             <p className="text-lg text-gray-800 mb-2">
+        //             linkedin: 
+        //                 <a 
+        //                     href={`https://twitter.com/${user.name}`} 
+        //                     target="_blank" 
+        //                     rel="noopener noreferrer" 
+        //                     className="text-blue-600 hover:underline ml-1">{user.linkedin}
+        //                 </a>
+        //             </p>
+
+
+        //         </div>
+
+        //     </div>
+        //     <div>
+        //     <h2>Your QR Code:</h2>
+        //     <img src={`/${user.qrCode}`} alt="QR Code" width="200" />
+
+        //     {/* Download QR Code Button */}
+        //     <a href={`/${user.qrCode}`} download={`${user.name}-qr.png`}>
+        //         <button>Download QR Code</button>
+        //     </a>
+        // </div>
+        // </>
     );
 }

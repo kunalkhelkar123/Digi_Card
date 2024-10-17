@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import Navbar from './navbar';
+import Navbar from './Navbar';
 import Banner from './banner';
 import HowItWorks from './HowItWorks';
 import Footer from './Footer';

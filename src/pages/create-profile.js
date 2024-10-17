@@ -37,8 +37,13 @@ export default function CreateProfile() {
         await fetch('/api/save-profile', {
             method: 'POST',
             body: data,
-        });
-        alert('Profile created successfully!');
+        })
+        .then(
+            alert('Profile created successfully!'),
+            window.location.reload()
+        )
+       
+
     };
 
     return (

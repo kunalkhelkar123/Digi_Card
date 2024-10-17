@@ -17,7 +17,7 @@ export default function handler(req, res) {
         { name: 'backgroundPhoto', maxCount: 1 },
     ])(req, {}, async (err) => {
         if (err) return res.status(500).send(err);
-        
+
         const {
             name,
             address,
@@ -45,28 +45,31 @@ export default function handler(req, res) {
         const profilePicturePath = path.join(process.cwd(), 'public/uploads', profilePicture);
 
         try {
-            // Generate the QR code (raw version, without user info)
-            const qrCodeBuffer = await QRCode.toBuffer(profileUrl);
+            // Generate the QR code with enhanced clarity
+            const qrCodeBuffer = await QRCode.toBuffer(profileUrl, {
+                errorCorrectionLevel: 'H', // High error correction
+                width: 900, // Increase size for better clarity
+            });
 
-            // Create canvas for combining QR code, profile photo, and name
-            const canvas = createCanvas(400, 600); // Adjust the canvas size as needed
+            // Create canvas for combining QR code, name
+            const canvas = createCanvas(350, 350); // Adjust the canvas size as needed
             const ctx = canvas.getContext('2d');
 
-            // Load the profile picture and draw on the canvas
-            const profileImg = await loadImage(profilePicturePath);
-            ctx.drawImage(profileImg, 100, 20, 200, 200); // Draw profile picture (x, y, width, height)
+            // Set the background color (optional)
+            ctx.fillStyle = 'white';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-            // Add user name below profile picture
+            // Add user name
             ctx.font = 'bold 24px Arial';
             ctx.fillStyle = 'black';
             ctx.textAlign = 'center';
-            ctx.fillText(name, 200, 250); // Text position (centered)
+            ctx.fillText(name, canvas.width / 2, 80); // Text position (centered)
 
             // Draw the QR code on the canvas below the name
             const qrImg = await loadImage(qrCodeBuffer);
-            ctx.drawImage(qrImg, 100, 280, 200, 200); // Draw QR code (x, y, width, height)
+            ctx.drawImage(qrImg, 10, 80, 330, 285); // Draw QR code (x, y, width, height)
 
-            // Save the final image (QR code + profile picture + name)
+            // Save the final image (QR code + name)
             const finalImagePath = path.join(process.cwd(), 'public', qrCodePath);
             const out = fs.createWriteStream(finalImagePath);
             const stream = canvas.createPNGStream();
