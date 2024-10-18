@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import Link from 'next/link'; // Import for navigation in Next.js
+import Image from 'next/image';
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -11,7 +12,7 @@ export default function Navbar() {
           {/* Left side - Company Logo */}
           <div className="flex-shrink-0">
             <Link href="/">
-              <img className="h-16 w-auto" src="/images/mindlabzlogo.png" alt="Company Logo" />
+              <Image className="h-16 w-auto" src="/images/mindlabzlogo.png" alt="Company Logo" />
             </Link>
           </div>
           

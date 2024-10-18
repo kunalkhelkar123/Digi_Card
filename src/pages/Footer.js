@@ -1,6 +1,6 @@
 import React from 'react';
 import '@fortawesome/fontawesome-free/css/all.min.css';
-
+import Link from 'next/link';
 export default function Footer() {
     return (
         <div id="contact-us" className="ContactDetail py-12 bg-blue-800 text-white">
@@ -31,9 +31,11 @@ export default function Footer() {
                             </div>
                         </div>
                         <div className="md:w-1/2 flex items-center justify-center">
-                            <a href="/contact" className="bg-green-500 text-white px-6 py-2 rounded hover:bg-green-600 transition duration-200">
-                                Contact Us
-                            </a>
+                            <Link href="/contact" passHref>
+                                <a className="bg-green-500 text-white px-6 py-2 rounded hover:bg-green-600 transition duration-200">
+                                    Contact Us
+                                </a>
+                            </Link>
                         </div>
                     </div>
                 </div>

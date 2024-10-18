@@ -72,7 +72,7 @@ export default function Contact() {
 
                 <div className="mt-20 bg-white shadow-lg rounded-lg p-8 max-w-lg w-full space-y-6 bg-opacity-80">
                     <h1 className="text-3xl font-bold text-center text-gray-800">Contact Us</h1>
-                    <p className="text-gray-600 text-center mb-4">We'd love to hear from you! <br />Please fill out the form below.</p>
+                    <p className="text-gray-600 text-center mb-4">We&apos;d love to hear from you! <br />Please fill out the form below.</p>
                     <form onSubmit={handleSubmit} className="space-y-4">
                         <input
                             type="text"

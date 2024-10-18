@@ -41,7 +41,7 @@ export default function Contact() {
                             backgroundImage: 'url(/images/about-banner.jpg)',
                             backgroundRepeat: 'no-repeat',
                         }}>
-                        <img
+                        <Image
                             src="/images/BannerImage1.jpg"
                             alt="Profile"
                             className="w-24 h-24 mx-auto rounded-full container3"

@@ -1,3 +1,6 @@
+import Link from 'next/link';
+import Image from 'next/image';
+
 export default function Banner() {
     return (
         <div
@@ -12,7 +15,7 @@ export default function Banner() {
             {/* Content section */}
             <div className="relative z-10 w-full md:w-1/2 text-center md:text-left mt-12 md:mt-0">
                 <h1 className="mt-20 text-white text-3xl md:text-5xl font-bold mb-6">
-                    The Ultimate Business Card for Today’s Digital World
+                    The Ultimate Business Card for Todays Digital World
                 </h1>
 
                 <p className="text-white font-bold text-base md:text-lg mb-4">
@@ -25,18 +28,22 @@ export default function Banner() {
 
                 {/* Action buttons */}
                 <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4">
-                    <a href="/create-profile" className="bg-green-500 text-white px-6 py-2 rounded hover:bg-green-600 transition duration-200">
-                        Create Your Card
-                    </a>
-                    <a href="/Avinash%20Jadhav/" target="_blank" className="bg-green-500 text-white px-6 py-2 rounded hover:bg-green-600 transition duration-200">
-                        See Demo Card
-                    </a>
+                    <Link href="/create-profile" passHref>
+                        <a className="bg-green-500 text-white px-6 py-2 rounded hover:bg-green-600 transition duration-200">
+                            Create Your Card
+                        </a>
+                    </Link>
+                    <Link href="/Avinash%20Jadhav/" passHref>
+                        <a target="_blank" className="bg-green-500 text-white px-6 py-2 rounded hover:bg-green-600 transition duration-200">
+                            See Demo Card
+                        </a>
+                    </Link>
                 </div>
             </div>
 
             {/* Demo card image */}
             <div className="relative z-10 w-full md:w-1/2 flex justify-center mt-8 md:mt-0">
-                <img
+                <Image
                     src="/images/sliderimg.png" // Replace with your demo card image path
                     alt="Demo Business Card"
                     className="w-3/4 md:w-2/4 h-auto object-contain"
