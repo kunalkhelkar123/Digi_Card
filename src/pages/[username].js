@@ -202,7 +202,7 @@ END:VCARD
                             <div className="flex-shrink-0">
                                 <a
                                     href={`mailto:${user.email}`}
-                                    target="_blank"
+                                   
                                     rel="noopener noreferrer"
                                     className="text-gray-600 border-2 border-gray-600 rounded-full p-2 transition-transform transform hover:scale-110 hover:bg-gray-600 hover:text-white flex items-center justify-center"
                                 >
@@ -211,7 +211,7 @@ END:VCARD
                             </div>
                             <div className="flex-shrink-0">
                                 <a
-                                    href={`${user.website}`}
+                                    href={`https://${user.website}`}
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="text-blue-600 border-2 border-blue-600 rounded-full p-2 transition-transform transform hover:scale-110 hover:bg-blue-600 hover:text-white flex items-center justify-center"

@@ -1,10 +1,14 @@
 import { useEffect, useState } from 'react';
-
+import { useRouter } from 'next/router';
 export default function AdminDashboard() {
     const [users, setUsers] = useState([]);
     const [selectedUser, setSelectedUser] = useState(null); // For storing user info for the modal
     const [isModalOpen, setIsModalOpen] = useState(false); // Modal state
     const [isUpdating, setIsUpdating] = useState(false); // Track if updating
+
+
+
+
 
     const [formData, setFormData] = useState({
         id: users.id,
@@ -25,6 +29,24 @@ export default function AdminDashboard() {
     });
 
     // Fetch users on component load
+
+
+    const router = useRouter();
+
+    useEffect(() => {
+        // Check if the token is present in sessionStorage
+        const token = sessionStorage.getItem('token');
+        console.log("checking token ")
+        if (!token) {
+            console.log("not find checking token ")
+
+            // If no token is found, redirect to the login page
+            router.push('/admin');
+        }
+    }, [router]);
+
+
+
     useEffect(() => {
         const fetchUsers = async () => {
             const response = await fetch('/api/get-user-profiles');
@@ -37,7 +59,6 @@ export default function AdminDashboard() {
     // Toggle the active status of a user
     const toggleActiveStatus = async (userId, currentStatus) => {
         const newStatus = !currentStatus; // Toggle the current status
-
         const response = await fetch(`/api/update-user-status`, {
             method: 'POST',
             headers: {
@@ -84,6 +105,7 @@ export default function AdminDashboard() {
         for (let key in formData) {
             data.append(key, formData[key]);
         }
+        console.log("updating user data")
 
         const response = await fetch('/api/update-user', {
             method: 'POST',
@@ -91,6 +113,8 @@ export default function AdminDashboard() {
         });
 
         if (response.ok) {
+            console.log("updated user data")
+
             const updatedUser = await response.json();
             setUsers(users.map(user => user.id === updatedUser.id ? updatedUser : user));
             setIsModalOpen(false); // Close the modal after update
@@ -130,6 +154,10 @@ export default function AdminDashboard() {
     };
 
     const handleDeleteUser = async (userId) => {
+        // window.location.reload() 
+        setTimeout(() => {
+            window.location.reload(); // or router.back();
+        }, 4000)
         const response = await fetch(`/api/delete-user`, {
             method: 'POST',
             headers: {

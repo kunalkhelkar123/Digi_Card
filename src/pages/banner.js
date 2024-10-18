@@ -28,7 +28,7 @@ export default function Banner() {
                     <a href="/create-profile" className="bg-green-500 text-white px-6 py-2 rounded hover:bg-green-600 transition duration-200">
                         Create Your Card
                     </a>
-                    <a href="/demo-card" className="bg-green-500 text-white px-6 py-2 rounded hover:bg-green-600 transition duration-200">
+                    <a href="/Avinash%20Jadhav/" target="_blank" className="bg-green-500 text-white px-6 py-2 rounded hover:bg-green-600 transition duration-200">
                         See Demo Card
                     </a>
                 </div>
