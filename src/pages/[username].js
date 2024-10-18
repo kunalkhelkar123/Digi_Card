@@ -39,7 +39,7 @@ export default function UserProfile({ user, isVCF }) {
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
-      };
+    };
 
 
     // Function to generate and download vCard
@@ -119,7 +119,7 @@ END:VCARD
         setTimeout(() => {
             window.history.back(); // or router.back();
         }, 1);
-        return ; // Optional loading message
+        return; // Optional loading message
     }
 
     // Render user profile information if not a VCF request
@@ -128,7 +128,7 @@ END:VCARD
             <div
                 style={{
                     // height: '100vh', // Full height of the viewport
-                    background: 'repeating-linear-gradient(45deg, black, #413d48 100px)', // Corrected syntax for background
+                    background: 'repeating-linear-gradient(45deg, black, #413d48 70px)', // Corrected syntax for background
                     // backgroundPosition: 'center', // Centers the image (not necessary for gradients, but included if needed)
                     // backgroundRepeat: 'no-repeat', // Not applicable for gradients but can be kept
                 }}
@@ -136,7 +136,7 @@ END:VCARD
 
                 <div className="container mx-auto p-9 "
                     style={{
-                        maxWidth: '530px', // You can keep this for maximum width
+                        maxWidth: '480px', // You can keep this for maximum width
                         // height: '100vh', // Full height of the viewport
                     }}>
                     <div className="bg-white shadow-lg  p-6 text-center " >
@@ -144,7 +144,7 @@ END:VCARD
                             style={{
                                 marginLeft: '-25px',
                                 marginRight: '-25px',
-                                marginTop: '-84px',
+                                marginTop: '-114px',
                                 backgroundImage: `url(/uploads/${user.backgroundPhoto})`, // Corrected syntax for backgroundImage
                                 backgroundRepeat: 'no-repeat',
                                 backgroundSize: 'cover', // Optional: Ensure the background image covers the entire div
@@ -154,16 +154,26 @@ END:VCARD
                                 alt="Profile"
                                 className="w-24 h-24 mx-auto rounded-full container3"
                                 style={{
-                                    marginTop: '60px',
-                                    width: '15rem',
-                                    height: '15rem',
+                                    marginTop: '90px',
+                                    width: '13rem',
+                                    height: '13rem',
                                 }}
                             />
+
                         </div>
+
                         <div className="mb-6 mt-10">
-                            <h2 className="text-2xl font-bold">{user.name}&apos;s Profile</h2>
-                            <p className="text-gray-600 font-bold  textxl">{user.designation}</p>
-                            <p className="text-gray-600 font-bold  text-xl ">{user.companyName}</p>
+                            <h2 className="text-2xl font-bold mb-2">{user.name}</h2>
+                            <p className="text-gray-600 font-bold text-xl">
+                                {user.designation
+                                    // .toLowerCase() // Convert the string to lowercase first
+                                    .split(' ') // Split by spaces to get each word
+                                    .map(word => word.charAt(0).toUpperCase() + word.slice(1)) // Capitalize first letter of each word
+                                    .join(' ')}  {/* Join the words back with spaces */}
+                            </p>
+                            
+                            
+                            <a rel="noopener noreferrer"  target='_blank' href={`https://${user.website}`} ><p className="text-gray-600 font-bold hover:text-black  text-xl ">{user.companyName}</p></a>
                         </div>
 
 
@@ -173,20 +183,20 @@ END:VCARD
                                     href={`tel:+91${user.mobile}`}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="text-blue-600 border-2 border-blue-600 rounded-full p-2 transition-transform transform hover:scale-110 hover:bg-blue-600 hover:text-white flex items-center justify-center"
+                                    className="text-blue-600 border-2 border-blue-800 hover:border-blue-600  rounded-full p-2 transition-transform transform hover:scale-110 hover:bg-blue-600 hover:text-white flex items-center justify-center"
                                 >
-                                    <FaPhone className="w-6 h-6 md:w-8 md:h-8" title="Call" />
+                                    <FaPhone className="w-4 h-4 md:w-6 md:h-6 text-blue-800 hover:text-white" title="Call" />
                                 </a>
                             </div>
                             <div className="flex-shrink-0">
                                 <a
-                                     href={`https://api.whatsapp.com/send?text=Hi, ${user.name},&phone=91${user.mobile}`}
+                                    href={`https://api.whatsapp.com/send?text=Hi, ${user.name},&phone=91${user.mobile}`}
                                     //https://api.whatsapp.com/send?text=Hi,%20Kunal%20Gajananrao%20Khelkar,&phone=919146219186
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="text-green-500 border-2 border-green-500 rounded-full p-2 transition-transform transform hover:scale-110 hover:bg-green-500 hover:text-white flex items-center justify-center"
                                 >
-                                    <FaWhatsapp className="w-6 h-6 md:w-8 md:h-8" title="WhatsApp" />
+                                    <FaWhatsapp className="w-4 h-4 md:w-6 md:h-6" title="WhatsApp" />
                                 </a>
                             </div>
                             <div className="flex-shrink-0">
@@ -196,17 +206,17 @@ END:VCARD
                                     rel="noopener noreferrer"
                                     className="text-red-500 border-2 border-red-500 rounded-full p-2 transition-transform transform hover:scale-110 hover:bg-red-500 hover:text-white flex items-center justify-center"
                                 >
-                                    <FaMapMarkerAlt className="w-6 h-6 md:w-8 md:h-8" title="Location" />
+                                    <FaMapMarkerAlt className="w-4 h-4 md:w-6 md:h-6" title="Location" />
                                 </a>
                             </div>
                             <div className="flex-shrink-0">
                                 <a
                                     href={`mailto:${user.email}`}
-                                   
+
                                     rel="noopener noreferrer"
                                     className="text-gray-600 border-2 border-gray-600 rounded-full p-2 transition-transform transform hover:scale-110 hover:bg-gray-600 hover:text-white flex items-center justify-center"
                                 >
-                                    <FaEnvelope className="w-6 h-6 md:w-8 md:h-8" title="Email" />
+                                    <FaEnvelope className="w-4 h-4 md:w-6 md:h-6" title="Email" />
                                 </a>
                             </div>
                             <div className="flex-shrink-0">
@@ -216,7 +226,7 @@ END:VCARD
                                     rel="noopener noreferrer"
                                     className="text-blue-600 border-2 border-blue-600 rounded-full p-2 transition-transform transform hover:scale-110 hover:bg-blue-600 hover:text-white flex items-center justify-center"
                                 >
-                                    <FaGlobe className="w-6 h-6 md:w-8 md:h-8" title="Website" />
+                                    <FaGlobe className="w-4 h-4 md:w-6 md:h-6" title="Website" />
                                 </a>
                             </div>
                         </div>
@@ -251,7 +261,7 @@ END:VCARD
                                 rel="noopener noreferrer"
                             >
                                 <button
-                                    className="bg-black text-white px-4 py-2 rounded-lg flex items-center hover:bg-black "
+                                    className="bg-gray-700 text-white px-4 py-2 rounded-lg flex items-center hover:bg-black "
                                 >
                                     <FaUserPlus className="mr-2" />
                                     Save contact
@@ -264,7 +274,7 @@ END:VCARD
 
                         <div className="flex justify-center space-x-4 text-2xl mt-8">
                             <a
-                                href={`https://www.facebook.com/${user.facebook}`}
+                                href={`${user.facebook}`}
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="text-blue-600 border-2 border-blue-600 rounded-full p-2 transition-transform transform hover:scale-110 hover:bg-blue-600 hover:text-white"
@@ -272,7 +282,7 @@ END:VCARD
                                 <FaFacebookF />
                             </a>
                             <a
-                                href={`https://www.instagram.com/${user.instagram}`}
+                                href={`${user.instagram}`}
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="text-pink-600 border-2 border-pink-600 rounded-full p-2 transition-transform transform hover:scale-110 hover:bg-pink-600 hover:text-white"
@@ -280,7 +290,7 @@ END:VCARD
                                 <FaInstagram />
                             </a>
                             <a
-                                href={`https://twitter.com/${user.twitter}`}
+                                href={`${user.twitter}`}
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="text-blue-400 border-2 border-blue-400 rounded-full p-2 transition-transform transform hover:scale-110 hover:bg-blue-600 hover:text-white"
@@ -288,19 +298,21 @@ END:VCARD
                                 <FaTwitter />
                             </a>
                         </div>
-                        <div className="fixed bottom-1 right-0 z-10">
+                        <div className="fixed bottom-5 right-5 z-10 ">
                             <a
                                 href={`/${user.name}.vcf`}
-                                className="relative bg-black text-white px-4 py-2 rounded-full flex items-center justify-center transition duration-200 overflow-hidden"
+                                className="relative pulse-ring2 pulse-button bg-black text-white px-6 py-3 rounded-full flex items-center justify-center transition duration-200 overflow-hidden"
                             >
-                                <FaUserPlus className="mr-2 " /> {/* Icon added here */}
-                                <div className="text-center">
-                                    <span className="block text-xxs md:text-xs">Save</span>
-                                    <span className="block text-xxs md:text-xs">Contact</span>
+                                {/* Pulse ring */}
+                                <span className="absolute inset-0 pulse-ring"></span>
+                                <FaUserPlus className="mr-2 " />
+                                <div className="relative text-center z-10">
+                                    <span className="block text-sm md:text-base">Save</span>
+                                    <span className="block text-sm md:text-base">Contact</span>
                                 </div>
-                                <span className="pulse-ring absolute inset-0"></span>
                             </a>
                         </div>
+
 
 
 

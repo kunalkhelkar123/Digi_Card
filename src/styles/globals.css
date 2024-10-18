@@ -60,45 +60,23 @@ margin-top: -83px;
 
   margin-top: 100px;
 } */
-@keyframes pulse-animation {
-  0% {
-    transform: scale(0.75);
-    opacity: 0.5;
-  }
-  50% {
-    transform: scale(1);
-    opacity: 1;
-  }
-  100% {
-    transform: scale(0.75);
-    opacity: 0.5;
-  }
-}
+ 
+
 
 .pulse-ring {
   animation: pulse-animation 1s infinite;
-  border: 3px solid rgba(255, 255, 255, 0.75); /* Adjust border width and color */
+  /* border: 3px solid rgba(255, 255, 255, 0.75); Adjust border width and color */
   border-radius: 50%; /* Make it circular */
   position: absolute; /* Position it absolutely within the parent */
   inset: 0; /* Fill the parent container */
   pointer-events: none; /* Allow clicks to go through */
-  box-shadow: 0 0 15px rgba(255, 255, 255, 0.5); /* Optional: Add a glow effect */
+  /* box-shadow: 0 0 15px rgba(255, 255, 255, 0.5); Optional: Add a glow effect */
+}
+.pulse-ring2:hover{
+  font-weight: bolder;
 }
 
-@keyframes pulse-animation {
-  0% {
-      transform: translate(-50%, -50%) scale(0.9);
-      opacity: 1;
-  }
-  50% {
-      transform: translate(-50%, -50%) scale(1);
-      opacity: 0;
-  }
-  100% {
-      transform: translate(-50%, -50%) scale(0.9);
-      opacity: 1;
-  }
-}
+
 
 .qrcode{
 

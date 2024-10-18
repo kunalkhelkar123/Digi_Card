@@ -105,7 +105,6 @@ export default function AdminDashboard() {
         for (let key in formData) {
             data.append(key, formData[key]);
         }
-        console.log("updating user data")
 
         const response = await fetch('/api/update-user', {
             method: 'POST',
@@ -113,8 +112,6 @@ export default function AdminDashboard() {
         });
 
         if (response.ok) {
-            console.log("updated user data")
-
             const updatedUser = await response.json();
             setUsers(users.map(user => user.id === updatedUser.id ? updatedUser : user));
             setIsModalOpen(false); // Close the modal after update
@@ -157,7 +154,7 @@ export default function AdminDashboard() {
         // window.location.reload() 
         setTimeout(() => {
             window.location.reload(); // or router.back();
-        }, 4000)
+        }, 2000)
         const response = await fetch(`/api/delete-user`, {
             method: 'POST',
             headers: {
@@ -343,7 +340,7 @@ export default function AdminDashboard() {
                         <div className="mt-4 flex justify-end">
                             <button
                                 onClick={handleUpdateUser}
-                                disabled={isUpdating} // Disable button if isUpdating is true
+                                // disabled={isUpdating} // Disable button if isUpdating is true
                                 className={` ${isUpdating ? 'bg-yellow-400 text-black rounded hover:bg-yellow-600   hover:text-white' : 'bg-green-500 text-white rounded hover:bg-green-600'} px-4 py-2 transition duration-200`}
                             >
                                 {isUpdating ? 'Update User' : 'Update User'}

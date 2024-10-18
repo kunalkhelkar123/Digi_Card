@@ -126,33 +126,33 @@ export default function CreateProfile() {
                         </div>
 
                         <div>
-                            <label htmlFor="facebook" className="block text-sm font-medium text-gray-700">Facebook Profile Username</label>
+                            <label htmlFor="facebook" className="block text-sm font-medium text-gray-700">Facebook Profile URL</label>
                             <input
                                 id="facebook"
                                 name="facebook"
-                                placeholder="Facebook Profile Link"
+                                placeholder="Facebook Profile URL"
                                 onChange={handleInputChange}
                                 className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
                             />
                         </div>
 
                         <div>
-                            <label htmlFor="instagram" className="block text-sm font-medium text-gray-700">Instagram Profile Username</label>
+                            <label htmlFor="instagram" className="block text-sm font-medium text-gray-700">Instagram Profile URL</label>
                             <input
                                 id="instagram"
                                 name="instagram"
-                                placeholder="Instagram Profile Username"
+                                placeholder="Instagram Profile URL"
                                 onChange={handleInputChange}
                                 className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
                             />
                         </div>
 
                         <div>
-                            <label htmlFor="twitter" className="block text-sm font-medium text-gray-700">Twitter Profile Username</label>
+                            <label htmlFor="twitter" className="block text-sm font-medium text-gray-700">Twitter Profile URL</label>
                             <input
                                 id="twitter"
                                 name="twitter"
-                                placeholder="Twitter Profile Username"
+                                placeholder="Twitter Profile URL"
                                 onChange={handleInputChange}
                                 className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
                             />
@@ -192,11 +192,11 @@ export default function CreateProfile() {
                         </div>
 
                         <div>
-                            <label htmlFor="linkedin" className="block text-sm font-medium text-gray-700">LinkedIn Profile Username</label>
+                            <label htmlFor="linkedin" className="block text-sm font-medium text-gray-700">LinkedIn Profile URL</label>
                             <input
                                 id="linkedin"
                                 name="linkedin"
-                                placeholder="LinkedIn Profile Username"
+                                placeholder="LinkedIn Profile URL"
                                 onChange={handleInputChange}
                                 className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
                             />
