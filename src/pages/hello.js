@@ -2,7 +2,7 @@
 
 import { FaPhone, FaUserPlus, FaFacebookF, FaInstagram, FaTwitter, FaWhatsapp, FaMapMarkerAlt, FaEnvelope, FaGlobe } from 'react-icons/fa';
 import { useState } from 'react';
-
+import Image from 'next/image';
 export default function Contact() {
     const [phone, setPhone] = useState('');
 
