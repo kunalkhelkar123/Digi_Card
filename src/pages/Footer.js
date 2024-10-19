@@ -32,9 +32,9 @@ export default function Footer() {
                         </div>
                         <div className="md:w-1/2 flex items-center justify-center">
                             <Link href="/contact" passHref>
-                                <a className="bg-green-500 text-white px-6 py-2 rounded hover:bg-green-600 transition duration-200">
+                                <button className="bg-green-500 text-white px-6 py-2 rounded hover:bg-green-600 transition duration-200">
                                     Contact Us
-                                </a>
+                                </button>
                             </Link>
                         </div>
                     </div>

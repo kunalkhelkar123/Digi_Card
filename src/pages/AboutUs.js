@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 
 const AboutUs = () => {
     return (
@@ -20,9 +21,9 @@ const AboutUs = () => {
 
 
                         <Link href="/create-profile" passHref>
-                            <a className="ml-40 bg-green-500 text-white px-6 py-2 rounded hover:bg-green-600 transition duration-200">
+                            <button className="ml-40 bg-green-500 text-white px-6 py-2 rounded hover:bg-green-600 transition duration-200">
                                 <i className="fab fa-whatsapp mr-2"></i>Create Your Card
-                            </a>
+                            </button>
                         </Link>
 
                     </div>
@@ -30,13 +31,16 @@ const AboutUs = () => {
                     {/* Right Section */}
                     <div className="md:w-1/2">
                         <div className="video-container mb-6">
-                            <iframe
-                                className="w-full h-64 md:h-80 rounded-lg shadow-md"
-                                src="https://www.youtube.com/embed/kDZI7l9eNJA"
-                                frameBorder="0"
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                allowFullScreen
-                            ></iframe>
+
+                            <Image
+                                src="/images/dsfa.png" // Replace with your demo card image path
+                                alt="Demo Business Card"
+                                layout="responsive" // This will make the image responsive
+                                width={700} // Width in pixels for aspect ratio calculation
+                                height={400} // Height in pixels for aspect ratio calculation
+                                className="w-3/4 md:w-2/4 h-auto object-contain"
+                            />
+
                         </div>
                     </div>
                 </div>

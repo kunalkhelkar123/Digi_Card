@@ -29,25 +29,31 @@ export default function Banner() {
                 {/* Action buttons */}
                 <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4">
                     <Link href="/create-profile" passHref>
-                        <a className="bg-green-500 text-white px-6 py-2 rounded hover:bg-green-600 transition duration-200">
+                        <button className="bg-green-500 text-white px-6 py-2 rounded hover:bg-green-600 transition duration-200">
                             Create Your Card
-                        </a>
+                        </button>
                     </Link>
                     <Link href="/Avinash%20Jadhav/" passHref>
-                        <a target="_blank" className="bg-green-500 text-white px-6 py-2 rounded hover:bg-green-600 transition duration-200">
+                        <button target="_blank" className="bg-green-500 text-white px-6 py-2 rounded hover:bg-green-600 transition duration-200">
                             See Demo Card
-                        </a>
+                        </button>
                     </Link>
                 </div>
             </div>
 
             {/* Demo card image */}
             <div className="relative z-10 w-full md:w-1/2 flex justify-center mt-8 md:mt-0">
+             
+
                 <Image
                     src="/images/sliderimg.png" // Replace with your demo card image path
                     alt="Demo Business Card"
-                    className="w-3/4 md:w-2/4 h-auto object-contain"
+                    // layout="responsive" // This will make the image responsive
+                    width={-100} // Width in pixels for aspect ratio calculation
+                    height={-200} // Height in pixels for aspect ratio calculation
+                    className="mt-20"
                 />
+
             </div>
         </div>
     );

@@ -12,7 +12,7 @@ export default function Navbar() {
           {/* Left side - Company Logo */}
           <div className="flex-shrink-0">
             <Link href="/">
-              <Image className="h-16 w-auto" src="/images/mindlabzlogo.png" alt="Company Logo" />
+              {/* <Image className="h-16 w-auto" src="/images/mindlabzlogo.png" alt="Company Logo" /> */}
             </Link>
           </div>
 
