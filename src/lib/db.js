@@ -7,4 +7,17 @@ const connection = mysql.createPool({
     database: process.env.DB_NAME,
 });
 
+// Test the connection
+async function testConnection() {
+    try {
+        await connection.getConnection();
+        console.log("Connected to the database");
+    } catch (error) {
+        console.error("Failed to connect to the database ==>", error);
+    }
+}
+
+// Call the function to test the connection
+testConnection();
+
 export default connection;
