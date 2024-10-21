@@ -152,7 +152,10 @@ END:VCARD
                             <Image
                                 src={`/uploads/${user.profilePicture}`}
                                 alt="Profile"
-                                className="w-24 h-24 mx-auto rounded-full container3"
+                                className="w-24 h-24  mx-auto rounded-full container3"
+                                
+                                width={100}
+                                height={100}
                                 style={{
                                     marginTop: '90px',
                                     width: '13rem',
@@ -367,7 +370,7 @@ END:VCARD
                             <div className="qr-code-modal  fixed top-0 left-0 right-0 bottom-0 bg-gray-900 bg-opacity-75 flex justify-center items-center">
                                 <div className="bg-white p-4 rounded ">
                                     {/* <h2 className="text-lg qrcode  text-black">Your QR Code</h2> */}
-                                    <Image src={`/${user.qrCode}`} alt="QR Code" className="mb-4 qrcode" />
+                                    <Image src={`/${user.qrCode}`} alt="QR Code" height={500} width={500} className="mb-4 qrcode" />
                                     <button
                                         onClick={handleDownload}
                                         className="bg-blue-500 ml-8 text-white px-4 py-2 rounded"

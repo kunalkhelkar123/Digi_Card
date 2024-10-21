@@ -42,7 +42,7 @@ export default function Footer() {
                 {/* Copyright Section */}
                 <div className="text-center mt-12">
                     <p className="text-gray-300 mb-2">
-                        © {new Date().getFullYear()} <a href="https://www.mindlabzsoftware.com/" className="text-gray-300 hover:text-white">MindLabzs Software Solutions</a>. All rights reserved.
+                        © {new Date().getFullYear()} <a href="http://vjanalytics.com/" className="text-gray-300 hover:text-white">VJanalytics</a>. All rights reserved.
                     </p>
                 </div>
             </div>
