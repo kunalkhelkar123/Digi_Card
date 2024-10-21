@@ -8,10 +8,16 @@ import { FaPhone, FaUserPlus, FaFacebookF, FaInstagram, FaTwitter, FaWhatsapp, F
 import { useState } from 'react';
 
 export async function getServerSideProps({ query }) {
+    console.log("check 1")
     const { username } = query;
+    console.log("check 2")
+
     const sanitizedUsername = username.replace('.vcf', ''); // Remove .vcf for DB query
+    console.log("check 3")
 
     const [rows] = await connection.query('SELECT * FROM users WHERE name = ?', [sanitizedUsername]);
+    console.log("check 4")
+    
     const user = rows.length > 0 ? rows[0] : null;
 
     return { props: { user, isVCF: username.endsWith('.vcf') } }; // Pass the vCard flag
