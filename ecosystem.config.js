@@ -1,7 +1,7 @@
 module.exports = {
     apps : [
         {
-            name: "myapp",
+            name: "Digiswipe",
             script: "npm start",
             port: 3000
         }
