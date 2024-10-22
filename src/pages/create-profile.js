@@ -41,7 +41,7 @@ export default function CreateProfile() {
         e.preventDefault(); // Prevent default form submission
 
         // Show a success popup immediately upon submission
-        setShowSuccessPopup(true);
+        console.log("check inside create-profile 1")
 
         // Create a FormData object for file uploads
         const data = new FormData();
@@ -50,11 +50,15 @@ export default function CreateProfile() {
         }
 
         try {
+            console.log("check inside create-profile 2")
+
             // Send the form data to the API endpoint for processing
             const response = await fetch('/api/save-profile', {
                 method: 'POST',
                 body: data,
-            });
+            }).then(setShowSuccessPopup(true))
+
+            
 
             // Check if the request was successful
             if (response.ok) {
@@ -65,6 +69,7 @@ export default function CreateProfile() {
                 toast.error('Failed to create profile. Please try again.');
             }
         } catch (error) {
+            console.log("check inside create-profile 3")
             // Handle any errors that occurred during the API request
             toast.error('An error occurred. Please try again.');
             console.error(error); // Log the error for debugging
