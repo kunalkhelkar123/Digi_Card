@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import Navbar from './NavbarTwo';
-
+import toast from 'react-hot-toast';
 export default function CreateProfile() {
     const [formData, setFormData] = useState({
         name: '',
@@ -39,14 +39,19 @@ export default function CreateProfile() {
             method: 'POST',
             body: data,
         })
-            .then(
-                alert('Profile created successfully!'),
+            
+      
                 // window.location.reload() 
+                setTimeout(() => {
+                    toast.success('Profile created successfully!')
+                     
+                }, 1000),
+
                 setTimeout(() => {
                     window.location.reload(); // or router.back();
                 }, 3000),
                 setShowSuccessPopup(true)
-            )
+            
 
 
     };
