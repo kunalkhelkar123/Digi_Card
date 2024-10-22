@@ -156,7 +156,8 @@ END:VCARD
                                 backgroundSize: 'cover', // Optional: Ensure the background image covers the entire div
                             }}>
                             <Image
-                                src={`/uploads/${user.profilePicture}`}
+                                // src={`/uploads/${user.profilePicture}`}
+                                src={`${process.env.REACT_APP_BASE_URL}/uploads/${user.profilePicture}`}
                                 alt="Profile"
                                 className="w-24 h-24  mx-auto rounded-full container3"
                                 
