@@ -7,7 +7,7 @@ import { createCanvas, loadImage } from 'canvas';
 
 export const config = {
     api: {
-        bodyParser: false,
+        bodyParser: false, // Disable built-in body parsing to use multer for multipart data
     },
 };
 
@@ -15,8 +15,14 @@ export default function handler(req, res) {
     multer.fields([
         { name: 'profilePicture', maxCount: 1 },
         { name: 'backgroundPhoto', maxCount: 1 },
-    ])(req, {}, async (err) => {
-        if (err) return res.status(500).send(err);
+    ])(req, res, async (err) => {
+        if (err) {
+            console.error('Multer error:', err);
+            return res.status(500).send({ error: 'File upload error' });
+        }
+
+        // Log to check if files are uploaded
+        console.log('Uploaded files:', req.files);
 
         const {
             name,
@@ -34,9 +40,16 @@ export default function handler(req, res) {
             linkedin,
         } = req.body;
 
-        console.log("companyLocation ==> " , companyLocation)
-        const profilePicture = req.files['profilePicture'][0].filename;
-        const backgroundPhoto = req.files['backgroundPhoto'][0].filename;
+        console.log('companyLocation ==> ', companyLocation);
+
+        // Check if the files exist before accessing them
+        const profilePicture = req.files['profilePicture'] ? req.files['profilePicture'][0].filename : null;
+        const backgroundPhoto = req.files['backgroundPhoto'] ? req.files['backgroundPhoto'][0].filename : null;
+
+        // Handle missing files
+        if (!profilePicture || !backgroundPhoto) {
+            return res.status(400).json({ error: 'Profile picture and background photo are required' });
+        }
 
         // Create the profile URL
         const profileUrl = `${process.env.BASE_URL}/${name}`;
@@ -53,7 +66,7 @@ export default function handler(req, res) {
                 width: 900, // Increase size for better clarity
             });
 
-            // Create canvas for combining QR code, name
+            // Create canvas for combining QR code, name, etc.
             const canvas = createCanvas(350, 350); // Adjust the canvas size as needed
             const ctx = canvas.getContext('2d');
 
@@ -96,7 +109,7 @@ export default function handler(req, res) {
                         profilePicture, 
                         qrCode,
                         backgroundPhoto
-                    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)`,
+                    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
                     [
                         name, 
                         address, 
