@@ -311,7 +311,7 @@ END:VCARD
                                 <FaTwitter />
                             </a>
                         </div>
-                        <div className="fixed bottom-5 right-5 z-10 ">
+                        <div className="fixed bottom-16 right-2 z-10 ">
                             <a
                                 href={`/${user.name}.vcf`}
                                 className="relative pulse-ring2 pulse-button bg-black text-white px-6 py-3 rounded-full flex items-center justify-center transition duration-200 overflow-hidden"
