@@ -5,6 +5,15 @@ import fs from 'fs';
 import path from 'path';
 import { createCanvas, loadImage } from 'canvas';
 
+
+const upload = multer({
+    storage: storage,
+    limits: {
+      fileSize: 1024 * 1024 * 2.1, // Limit file size to 2.1MB
+      fieldSize: 1024 * 1024 // Limit field size to 1MB
+    }
+  })
+
 export const config = {
     api: {
         bodyParser: false, // Disable body parsing to use multer
@@ -14,7 +23,7 @@ export const config = {
 // Handler function for saving the profile
 export default function handler(req, res) {
     // Setup multer to handle file uploads
-    multer.fields([
+    upload.fields([
         { name: 'profilePicture', maxCount: 1 },
         { name: 'backgroundPhoto', maxCount: 1 }
     ])(req, res, async (err) => {
