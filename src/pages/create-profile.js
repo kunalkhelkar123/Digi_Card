@@ -253,7 +253,7 @@ export default function CreateProfile() {
                                 id="profilePicture"
                                 type="file"
                                 name="profilePicture"
-                                accept="image/jpeg, image/jpg, image/png, image/webp, image/gif, image/bmp"  // Accept only image types
+                                accept="image/jpeg, image/jpg, image/png, image/webp, image/bmp"  // Accept only image types
                                 onChange={handleFileChange}
                                 className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
                             />
@@ -266,7 +266,7 @@ export default function CreateProfile() {
                             <input
                                 id="backgroundPhoto"
                                 type="file"
-                                accept="image/jpeg, image/jpg, image/png, image/webp, image/gif, image/bmp"  // Accept only image types
+                                accept="image/jpeg, image/jpg, image/png, image/webp, image/bmp"  // Accept only image types
                                 name="backgroundPhoto"
                                 onChange={handleFileChange}
                                 className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"

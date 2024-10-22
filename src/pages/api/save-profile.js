@@ -6,13 +6,12 @@ import path from 'path';
 import { createCanvas, loadImage } from 'canvas';
 
 
-console.log("check inside save-profile 1")
 
 const upload = multer({
     storage: storage,
     limits: {
-      fileSize: 1024 * 1024 * 5, // Limit file size to 2.1MB
-      fieldSize: 1024 * 1024 * 5 // Limit field size to 1MB
+      fileSize: 1024 * 1024 * 5, // Limit file size to 5.1MB
+      fieldSize: 1024 * 1024 * 5 // Limit field size to 5MB
     }
   })
 
@@ -25,6 +24,8 @@ export const config = {
 // Handler function for saving the profile
 export default function handler(req, res) {
     // Setup multer to handle file uploads
+console.log("check inside save-profile 1")
+
     upload.fields([
         { name: 'profilePicture', maxCount: 1 },
         { name: 'backgroundPhoto', maxCount: 1 }
