@@ -16,10 +16,10 @@ export async function getServerSideProps({ query }) {
     console.log("check 3 sanitizedUsername ",sanitizedUsername)
 
     const [rows] = await connection.query('SELECT * FROM users WHERE name = ?', [sanitizedUsername]);
-    console.log("check 4")
+    console.log("check 4 ")
     
     const user = rows.length > 0 ? rows[0] : null;
-
+console.log("QR path ==> ",user.qrCode)
     return { props: { user, isVCF: username.endsWith('.vcf') } }; // Pass the vCard flag
 }
 
