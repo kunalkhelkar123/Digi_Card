@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import Navbar from './NavbarTwo';
 import toast from 'react-hot-toast';
+
 export default function CreateProfile() {
+    // State to hold form data including file uploads
     const [formData, setFormData] = useState({
         name: '',
         address: '',
@@ -11,50 +13,60 @@ export default function CreateProfile() {
         facebook: '',
         instagram: '',
         twitter: '',
-        companyLocation:'',
+        companyLocation: '',
         designation: '',
         companyName: '',
         website: '',
         linkedin: '',
-        profilePicture: null,
-        backgroundPhoto: null,
+        profilePicture: null, // For file upload
+        backgroundPhoto: null, // For file upload
     });
+
     const [showSuccessPopup, setShowSuccessPopup] = useState(false);
 
+    // Function to handle text inputs
     const handleInputChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
+    // Function to handle file inputs
     const handleFileChange = (e) => {
-        setFormData({ ...formData, [e.target.name]: e.target.files[0] });
+        setFormData({ ...formData, [e.target.name]: e.target.files[0] }); // Ensure correct file assignment
     };
 
+    // Function to handle form submission
     const handleSubmit = async (e) => {
-        e.preventDefault();
-        // setTimeout(() => {
-        //     toast.success('Profile created successfully!')
+        e.preventDefault(); // Prevent default form submission
 
-        // }, 1000),
+        // Show a success popup immediately upon submission
+        setShowSuccessPopup(true);
 
-        //     setTimeout(() => {
-        //         window.location.reload(); // or router.back();
-        //     }, 3000),
-            setShowSuccessPopup(true)
+        // Create a FormData object for file uploads
         const data = new FormData();
         for (let key in formData) {
-            data.append(key, formData[key]);
+            data.append(key, formData[key]); // Append both text and file inputs to FormData
         }
 
-        await fetch('/api/save-profile', {
-            method: 'POST',
-            body: data,
-        })
+        try {
+            // Send the form data to the API endpoint for processing
+            const response = await fetch('/api/save-profile', {
+                method: 'POST',
+                body: data,
+            });
 
-        // window.location.reload() 
-
-
-
-
+            // Check if the request was successful
+            if (response.ok) {
+                toast.success('Profile created successfully!'); // Success notification
+                // Optionally, you can reload the page or navigate to another route here
+                // setTimeout(() => window.location.reload(), 3000);
+            } else {
+                toast.error('Failed to create profile. Please try again.');
+            }
+        } catch (error) {
+            // Handle any errors that occurred during the API request
+            toast.error('An error occurred. Please try again.');
+            console.error(error); // Log the error for debugging
+        }
     };
 
     return (
@@ -71,6 +83,7 @@ export default function CreateProfile() {
                 <div className="mt-20 bg-white shadow-lg rounded-lg p-8 max-w-lg w-full bg-opacity-90">
                     <h2 className="text-3xl font-semibold text-center text-gray-800 mb-6">Create Your Digital Card</h2>
                     <form onSubmit={handleSubmit} className="space-y-4">
+                        {/* Name input */}
                         <div>
                             <label htmlFor="name" className="block text-sm font-medium text-gray-700">Name</label>
                             <input
@@ -83,6 +96,7 @@ export default function CreateProfile() {
                             />
                         </div>
 
+                        {/* Address input */}
                         <div>
                             <label htmlFor="address" className="block text-sm font-medium text-gray-700">Address</label>
                             <input
@@ -95,6 +109,7 @@ export default function CreateProfile() {
                             />
                         </div>
 
+                        {/* Email input */}
                         <div>
                             <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>
                             <input
@@ -108,6 +123,7 @@ export default function CreateProfile() {
                             />
                         </div>
 
+                        {/* Mobile input */}
                         <div>
                             <label htmlFor="mobile" className="block text-sm font-medium text-gray-700">Mobile</label>
                             <input
@@ -120,6 +136,7 @@ export default function CreateProfile() {
                             />
                         </div>
 
+                        {/* WhatsApp input */}
                         <div>
                             <label htmlFor="whatsapp" className="block text-sm font-medium text-gray-700">WhatsApp Number</label>
                             <input
@@ -131,6 +148,7 @@ export default function CreateProfile() {
                             />
                         </div>
 
+                        {/* Facebook input */}
                         <div>
                             <label htmlFor="facebook" className="block text-sm font-medium text-gray-700">Facebook Profile URL</label>
                             <input
@@ -142,6 +160,7 @@ export default function CreateProfile() {
                             />
                         </div>
 
+                        {/* Instagram input */}
                         <div>
                             <label htmlFor="instagram" className="block text-sm font-medium text-gray-700">Instagram Profile URL</label>
                             <input
@@ -153,6 +172,7 @@ export default function CreateProfile() {
                             />
                         </div>
 
+                        {/* Twitter input */}
                         <div>
                             <label htmlFor="twitter" className="block text-sm font-medium text-gray-700">Twitter Profile URL</label>
                             <input
@@ -164,6 +184,7 @@ export default function CreateProfile() {
                             />
                         </div>
 
+                        {/* Designation input */}
                         <div>
                             <label htmlFor="designation" className="block text-sm font-medium text-gray-700">Designation</label>
                             <input
@@ -175,6 +196,7 @@ export default function CreateProfile() {
                             />
                         </div>
 
+                        {/* Company Name input */}
                         <div>
                             <label htmlFor="companyName" className="block text-sm font-medium text-gray-700">Company Name</label>
                             <input
@@ -185,6 +207,8 @@ export default function CreateProfile() {
                                 className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
                             />
                         </div>
+
+                        {/* Company Location input */}
                         <div>
                             <label htmlFor="companyLocation" className="block text-sm font-medium text-gray-700">Company Location</label>
                             <input
@@ -196,6 +220,7 @@ export default function CreateProfile() {
                             />
                         </div>
 
+                        {/* Website input */}
                         <div>
                             <label htmlFor="website" className="block text-sm font-medium text-gray-700">Website</label>
                             <input
@@ -207,6 +232,7 @@ export default function CreateProfile() {
                             />
                         </div>
 
+                        {/* LinkedIn input */}
                         <div>
                             <label htmlFor="linkedin" className="block text-sm font-medium text-gray-700">LinkedIn Profile URL</label>
                             <input
@@ -218,6 +244,7 @@ export default function CreateProfile() {
                             />
                         </div>
 
+                        {/* Profile Picture upload */}
                         <div>
                             <label htmlFor="profilePicture" className="block text-sm font-medium text-gray-700">Profile Picture</label>
                             <input
@@ -225,11 +252,11 @@ export default function CreateProfile() {
                                 type="file"
                                 name="profilePicture"
                                 onChange={handleFileChange}
-                                required
-                                className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+                                className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
                             />
                         </div>
 
+                        {/* Background Photo upload */}
                         <div>
                             <label htmlFor="backgroundPhoto" className="block text-sm font-medium text-gray-700">Background Photo</label>
                             <input
@@ -237,38 +264,31 @@ export default function CreateProfile() {
                                 type="file"
                                 name="backgroundPhoto"
                                 onChange={handleFileChange}
-                                required
-                                className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+                                className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
                             />
                         </div>
 
+                        {/* Submit button */}
                         <button
                             type="submit"
-                            className="w-full p-3 bg-blue-600 text-white font-semibold rounded-md hover:bg-blue-500 transition duration-200"
+                            className="w-full bg-blue-600 text-white p-3 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400"
                         >
                             Submit
                         </button>
                     </form>
 
+                    {/* Success Popup */}
                     {showSuccessPopup && (
-                        <div className="fixed inset-0 bg-gray-800 bg-opacity-75 flex items-center justify-center z-50">
-                            <div className="bg-white p-6 rounded-lg shadow-lg text-center">
-                                <h2 className="text-lg font-bold mb-4 text-black">Profile Created Successfully!</h2>
-                                <p className="mb-4 text-black">
-                                    Your profile has been created successfully. Please contact the admin to activate your account.
-                                </p>
-
-                                <a href={`https://api.whatsapp.com/send?&phone=919960044986`} target='_blank'
-                                    className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
-                                    Contact Admin
-                                </a>
+                        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+                            <div className="bg-white p-6 rounded-lg shadow-lg">
+                                <h3 className="text-2xl font-semibold mb-4">Profile Created Successfully!</h3>
+                                <p>Thank you for submitting your profile information.</p>
                                 <button
+                                    className="mt-4 bg-blue-600 text-white p-3 rounded-md hover:bg-blue-700 focus:outline-none"
                                     onClick={() => setShowSuccessPopup(false)}
-                                    className="bg-red-500 text-white px-6 py-2 ml-12 rounded hover:bg-red-600"
                                 >
                                     Close
                                 </button>
-
                             </div>
                         </div>
                     )}

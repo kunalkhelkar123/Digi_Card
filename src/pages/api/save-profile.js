@@ -1,5 +1,5 @@
 import connection from '../../lib/db';
-import multer from '../../../multer-config';
+import multer from '../../../multer-config'; // Assuming you have a configured multer file
 import QRCode from 'qrcode';
 import fs from 'fs';
 import path from 'path';
@@ -7,21 +7,22 @@ import { createCanvas, loadImage } from 'canvas';
 
 export const config = {
     api: {
-        bodyParser: false, // Disable built-in body parsing to use multer for multipart data
+        bodyParser: false, // Disable body parsing to use multer
     },
 };
 
 export default function handler(req, res) {
+    // Setup multer to handle file uploads
     multer.fields([
         { name: 'profilePicture', maxCount: 1 },
-        { name: 'backgroundPhoto', maxCount: 1 },
+        { name: 'backgroundPhoto', maxCount: 1 }
     ])(req, res, async (err) => {
         if (err) {
             console.error('Multer error:', err);
             return res.status(500).send({ error: 'File upload error' });
         }
 
-        // Log to check if files are uploaded
+        // Log files to confirm upload
         console.log('Uploaded files:', req.files);
 
         const {
@@ -42,98 +43,110 @@ export default function handler(req, res) {
 
         console.log('companyLocation ==> ', companyLocation);
 
-        // Check if the files exist before accessing them
+        // Check if files exist
         const profilePicture = req.files['profilePicture'] ? req.files['profilePicture'][0].filename : null;
         const backgroundPhoto = req.files['backgroundPhoto'] ? req.files['backgroundPhoto'][0].filename : null;
 
-        // Handle missing files
+        // Ensure both files are uploaded
         if (!profilePicture || !backgroundPhoto) {
             return res.status(400).json({ error: 'Profile picture and background photo are required' });
         }
 
-        // Create the profile URL
-        const profileUrl = `${process.env.BASE_URL}/${name}`;
+        // Sanitize name input to avoid issues with the profile URL
+        const sanitizedProfileName = name.trim().replace(/\s+/g, '-').toLowerCase();
 
-        // Generate QR Code path and final image path
+        // Create the profile URL dynamically based on sanitized name
+        const profileUrl = `${process.env.BASE_URL}/${sanitizedProfileName}`;
+
+        // Set paths for QR code and images
         const qrCodePath = `${Date.now()}-qr.png`;
         const qrCodeFullPath = path.join(process.cwd(), 'public', qrCodePath);
         const profilePicturePath = path.join(process.cwd(), '/uploads', profilePicture);
+        const backgroundPhotoPath = path.join(process.cwd(), '/uploads', backgroundPhoto); // For future use if needed
 
         try {
-            // Generate the QR code with enhanced clarity
+            // Generate the QR code with enhanced clarity and size
             const qrCodeBuffer = await QRCode.toBuffer(profileUrl, {
-                errorCorrectionLevel: 'H', // High error correction
-                width: 900, // Increase size for better clarity
+                errorCorrectionLevel: 'H', // High error correction for better scanability
+                width: 900 // Larger size for improved readability
             });
 
-            // Create canvas for combining QR code, name, etc.
-            const canvas = createCanvas(350, 350); // Adjust the canvas size as needed
+            // Create a canvas to add the QR code and the user's name
+            const canvas = createCanvas(350, 350); // Adjusted canvas size
             const ctx = canvas.getContext('2d');
 
             // Set the background color (optional)
             ctx.fillStyle = 'white';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-            // Add user name
+            // Add user name to the canvas
             ctx.font = 'bold 24px Arial';
             ctx.fillStyle = 'black';
             ctx.textAlign = 'center';
-            ctx.fillText(name, canvas.width / 2, 80); // Text position (centered)
+            ctx.fillText(name, canvas.width / 2, 80); // Center text
 
-            // Draw the QR code on the canvas below the name
+            // Draw the QR code below the name on the canvas
             const qrImg = await loadImage(qrCodeBuffer);
-            ctx.drawImage(qrImg, 10, 80, 330, 285); // Draw QR code (x, y, width, height)
+            ctx.drawImage(qrImg, 10, 80, 330, 285); // Adjust QR code size and position
 
-            // Save the final image (QR code + name)
+            // Save the final combined image (QR code + name)
             const finalImagePath = path.join(process.cwd(), 'public', qrCodePath);
             const out = fs.createWriteStream(finalImagePath);
             const stream = canvas.createPNGStream();
             stream.pipe(out);
+
+            // When finished saving the canvas image
             out.on('finish', async () => {
-                // Insert user data into the database, including the generated QR code path
-                await connection.query(
-                    `INSERT INTO users (
-                        name, 
-                        address, 
-                        email, 
-                        mobile, 
-                        whatsapp, 
-                        facebook, 
-                        instagram, 
-                        twitter, 
-                        designation, 
-                        companyName, 
-                        companyLocation,
-                        website, 
-                        linkedin, 
-                        profilePicture, 
-                        qrCode,
-                        backgroundPhoto
-                    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-                    [
-                        name, 
-                        address, 
-                        email, 
-                        mobile, 
-                        whatsapp, 
-                        facebook, 
-                        instagram, 
-                        twitter, 
-                        designation, 
-                        companyName, 
-                        companyLocation,
-                        website, 
-                        linkedin, 
-                        profilePicture, 
-                        qrCodePath,
-                        backgroundPhoto,
-                    ]
-                );
-                
-                res.status(200).json({ message: 'Profile saved and QR code generated!' });
+                try {
+                    // Insert user data into the database, including the generated QR code path
+                    await connection.query(
+                        `INSERT INTO users (
+                            name, 
+                            address, 
+                            email, 
+                            mobile, 
+                            whatsapp, 
+                            facebook, 
+                            instagram, 
+                            twitter, 
+                            designation, 
+                            companyName, 
+                            companyLocation,
+                            website, 
+                            linkedin, 
+                            profilePicture, 
+                            qrCode,
+                            backgroundPhoto
+                        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+                        [
+                            name, 
+                            address, 
+                            email, 
+                            mobile, 
+                            whatsapp, 
+                            facebook, 
+                            instagram, 
+                            twitter, 
+                            designation, 
+                            companyName, 
+                            companyLocation,
+                            website, 
+                            linkedin, 
+                            profilePicture, 
+                            qrCodePath,
+                            backgroundPhoto,
+                        ]
+                    );
+
+                    // Return success response
+                    res.status(200).json({ message: 'Profile saved and QR code generated successfully!' });
+                } catch (dbError) {
+                    console.error('Database Insertion Error:', dbError);
+                    res.status(500).json({ error: 'Error saving profile to the database' });
+                }
             });
         } catch (error) {
-            console.error(error);
+            console.error('QR Code/Canvas Generation Error:', error);
             res.status(500).json({ error: 'Error generating QR code or saving profile' });
         }
     });
