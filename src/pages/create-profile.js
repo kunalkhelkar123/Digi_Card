@@ -11,6 +11,7 @@ export default function CreateProfile() {
         facebook: '',
         instagram: '',
         twitter: '',
+        companyLocation:'',
         designation: '',
         companyName: '',
         website: '',
@@ -180,6 +181,16 @@ export default function CreateProfile() {
                                 id="companyName"
                                 name="companyName"
                                 placeholder="Company Name"
+                                onChange={handleInputChange}
+                                className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+                            />
+                        </div>
+                        <div>
+                            <label htmlFor="companyLocation" className="block text-sm font-medium text-gray-700">Company Location</label>
+                            <input
+                                id="companyLocation"
+                                name="companyLocation"
+                                placeholder="Company Location"
                                 onChange={handleInputChange}
                                 className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
                             />

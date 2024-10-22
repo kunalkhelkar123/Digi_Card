@@ -214,7 +214,7 @@ END:VCARD
                             </div>
                             <div className="flex-shrink-0">
                                 <a
-                                    href="https://maps.app.goo.gl/aM2JAq6nMGER83H56"
+                                    href={`${user.companyLocation}`}
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="text-red-500 border-2 border-red-500 rounded-full p-2 transition-transform transform hover:scale-110 hover:bg-red-500 hover:text-white flex items-center justify-center"

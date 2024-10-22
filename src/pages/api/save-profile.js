@@ -29,10 +29,12 @@ export default function handler(req, res) {
             twitter,
             designation,
             companyName,
+            companyLocation,
             website,
             linkedin,
         } = req.body;
 
+        console.log("companyoactin ==> " , companyLocation)
         const profilePicture = req.files['profilePicture'][0].filename;
         const backgroundPhoto = req.files['backgroundPhoto'][0].filename;
 
@@ -88,12 +90,13 @@ export default function handler(req, res) {
                         twitter, 
                         designation, 
                         companyName, 
+                        companyLocation,
                         website, 
                         linkedin, 
                         profilePicture, 
                         qrCode,
                         backgroundPhoto
-                    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+                    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)`,
                     [
                         name, 
                         address, 
@@ -105,6 +108,7 @@ export default function handler(req, res) {
                         twitter, 
                         designation, 
                         companyName, 
+                        companyLocation,
                         website, 
                         linkedin, 
                         profilePicture, 
@@ -112,6 +116,7 @@ export default function handler(req, res) {
                         backgroundPhoto,
                     ]
                 );
+                
                 res.status(200).json({ message: 'Profile saved and QR code generated!' });
             });
         } catch (error) {
