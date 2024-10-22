@@ -11,14 +11,24 @@ export const config = {
     },
 };
 
+// Set up multer with size limit for files
+const upload = multer({
+    limits: {
+        fileSize: 5 * 1024 * 1024, // 5 MB limit
+    },
+}).fields([
+    { name: 'profilePicture', maxCount: 1 },
+    { name: 'backgroundPhoto', maxCount: 1 }
+]);
+
 export default function handler(req, res) {
-    // Setup multer to handle file uploads
-    multer.fields([
-        { name: 'profilePicture', maxCount: 1 },
-        { name: 'backgroundPhoto', maxCount: 1 }
-    ])(req, res, async (err) => {
+    // Handle file uploads
+    upload(req, res, async (err) => {
         if (err) {
             console.error('Multer error:', err);
+            if (err.code === 'LIMIT_FILE_SIZE') {
+                return res.status(400).send({ error: 'File size exceeds 5MB' });
+            }
             return res.status(500).send({ error: 'File upload error' });
         }
 
@@ -118,6 +128,7 @@ export default function handler(req, res) {
                             qrCode,
                             backgroundPhoto
                         ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+
                         [
                             name, 
                             address, 
