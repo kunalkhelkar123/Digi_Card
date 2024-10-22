@@ -8,7 +8,6 @@ import { createCanvas, loadImage } from 'canvas';
 
 
 const upload = multer({
-    storage: storage,
     limits: {
       fileSize: 1024 * 1024 * 5, // Limit file size to 5.1MB
       fieldSize: 1024 * 1024 * 5 // Limit field size to 5MB
