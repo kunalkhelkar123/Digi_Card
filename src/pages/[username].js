@@ -13,7 +13,7 @@ export async function getServerSideProps({ query }) {
     console.log("check 2")
 
     const sanitizedUsername = username.replace('.vcf', ''); // Remove .vcf for DB query
-    console.log("check 3")
+    console.log("check 3 sanitizedUsername ",sanitizedUsername)
 
     const [rows] = await connection.query('SELECT * FROM users WHERE name = ?', [sanitizedUsername]);
     console.log("check 4")

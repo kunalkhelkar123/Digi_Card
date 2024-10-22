@@ -15,17 +15,17 @@ export default function Footer() {
                                 <ul className="Listing space-y-4">
                                     <li className="flex items-start">
                                         <i className="fas fa-map-marked-alt text-white mr-2"></i>
-                                        <span>DigiCarda: Your Digital Card Always
-                                            <span className="block">By Mindlabz Software Solutions Private Limited Pune</span>
+                                        <span>DigiSwipe: Your Digital Card Always
+                                            <span className="block">By VJanalytics Private Limited Pune</span>
                                             <span className='block'>Office Number 203, Mont Vert Spectra</span> </span>
                                     </li>
                                     <li className="flex items-start">
                                         <i className="fas fa-phone-alt text-white mr-2"></i>
-                                        <span>Call Us: <span className=""><a href="tel:+919960044986" className="text-white hover:text-gray-300">+91 9960044986</a></span></span>
+                                        <span>Call Us: <span className=""><a href="tel:+91 9960044986" className="text-white hover:text-gray-300">+91 9960044986</a></span></span>
                                     </li>
                                     <li className="flex items-start">
                                         <i className="far fa-envelope text-white mr-2"></i>
-                                        <span>Email: <span className=""><a href="mailto:info@digicarda.com" className="text-white hover:text-gray-300">info@mindlabz.com</a></span></span>
+                                        <span>Email: <span className=""><a href="mailto:info@digiswipe.in" className="text-white hover:text-gray-300">info@mindlabz.com</a></span></span>
                                     </li>
                                 </ul>
                             </div>
