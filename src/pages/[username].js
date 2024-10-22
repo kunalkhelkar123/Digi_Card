@@ -154,7 +154,9 @@ END:VCARD
                                 marginLeft: '-25px',
                                 marginRight: '-25px',
                                 marginTop: '-114px',
-                                backgroundImage: `url(/uploads/${user.backgroundPhoto})`, // Corrected syntax for backgroundImage
+                                // backgroundImage: `url(/uploads/${user.backgroundPhoto})`, // Corrected syntax for backgroundImage
+                                backgroundImage: `url(/api/get-image?fileName=/${user.backgroundPhoto})`, // Corrected syntax for backgroundImage
+
                                 backgroundRepeat: 'no-repeat',
                                 backgroundSize: 'cover', // Optional: Ensure the background image covers the entire div
                             }}>
