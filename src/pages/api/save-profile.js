@@ -6,11 +6,13 @@ import path from 'path';
 import { createCanvas, loadImage } from 'canvas';
 
 
+console.log("check inside save-profile 1")
+
 const upload = multer({
     storage: storage,
     limits: {
-      fileSize: 1024 * 1024 * 2.1, // Limit file size to 2.1MB
-      fieldSize: 1024 * 1024 // Limit field size to 1MB
+      fileSize: 1024 * 1024 * 5, // Limit file size to 2.1MB
+      fieldSize: 1024 * 1024 * 5 // Limit field size to 1MB
     }
   })
 
@@ -55,10 +57,12 @@ export default function handler(req, res) {
         } = req.body;
 
         console.log('companyLocation ==> ', companyLocation);
+        console.log("check inside save-profile 2")
 
         // Check if files exist
         const profilePicture = req.files['profilePicture'] ? req.files['profilePicture'][0].filename : null;
         const backgroundPhoto = req.files['backgroundPhoto'] ? req.files['backgroundPhoto'][0].filename : null;
+        console.log("check inside save-profile 3")
 
         // Ensure both files are uploaded
         if (!profilePicture || !backgroundPhoto) {
