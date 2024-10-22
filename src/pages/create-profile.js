@@ -40,11 +40,11 @@ export default function CreateProfile() {
             body: data,
         })
             .then(
-                // alert('Profile created successfully!'),
-                // // window.location.reload() 
-                // setTimeout(() => {
-                //     window.location.reload(); // or router.back();
-                // }, 3000)
+                alert('Profile created successfully!'),
+                // window.location.reload() 
+                setTimeout(() => {
+                    window.location.reload(); // or router.back();
+                }, 3000),
                 setShowSuccessPopup(true)
             )
 
