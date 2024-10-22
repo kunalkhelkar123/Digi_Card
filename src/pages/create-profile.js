@@ -31,14 +31,14 @@ export default function CreateProfile() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setTimeout(() => {
-            toast.success('Profile created successfully!')
+        // setTimeout(() => {
+        //     toast.success('Profile created successfully!')
 
-        }, 1000),
+        // }, 1000),
 
-            setTimeout(() => {
-                window.location.reload(); // or router.back();
-            }, 3000),
+        //     setTimeout(() => {
+        //         window.location.reload(); // or router.back();
+        //     }, 3000),
             setShowSuccessPopup(true)
         const data = new FormData();
         for (let key in formData) {

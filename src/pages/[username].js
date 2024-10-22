@@ -13,16 +13,16 @@ export async function getServerSideProps({ query }) {
     console.log("check 2")
 
     const sanitizedUsername = username.replace('.vcf', ''); // Remove .vcf for DB query
-    console.log("check 3 sanitizedUsername ",sanitizedUsername)
+    console.log("check 3 sanitizedUsername ", sanitizedUsername)
 
     const [rows] = await connection.query('SELECT * FROM users WHERE name = ?', [sanitizedUsername]);
     console.log("check 4 ")
-    
+
     const user = rows.length > 0 ? rows[0] : null;
-console.log("QR path ==> ",user.qrCode)
+    console.log("QR path ==> ", user.qrCode)
 
 
-console.log("qr code path2  ==>",`${process.env.BASE_URL2}/${user.qrCode}`)
+    console.log("qr code path2  ==>", `${process.env.BASE_URL2}/${user.qrCode}`)
     return { props: { user, isVCF: username.endsWith('.vcf') } }; // Pass the vCard flag
 }
 
@@ -160,10 +160,11 @@ END:VCARD
                             }}>
                             <Image
                                 // src={`/uploads/${user.profilePicture}`}
-                                src={`${process.env.BASE_URL}/uploads/${user.profilePicture}`}
+                                // src={`/uploads/${user.profilePicture}`}
+                                src={`/api/get-image?fileName=${user.profilePicture}`}
                                 alt="Profile"
                                 className="w-24 h-24  mx-auto rounded-full container3"
-                                
+
                                 width={100}
                                 height={100}
                                 style={{
@@ -184,9 +185,9 @@ END:VCARD
                                     .map(word => word.charAt(0).toUpperCase() + word.slice(1)) // Capitalize first letter of each word
                                     .join(' ')}  {/* Join the words back with spaces */}
                             </p>
-                            
-                            
-                            <a rel="noopener noreferrer"  target='_blank' href={`https://${user.website}`} ><p className="text-gray-600 font-bold hover:text-black  text-xl ">{user.companyName}</p></a>
+
+
+                            <a rel="noopener noreferrer" target='_blank' href={`https://${user.website}`} ><p className="text-gray-600 font-bold hover:text-black  text-xl ">{user.companyName}</p></a>
                         </div>
 
 
@@ -381,7 +382,7 @@ END:VCARD
                                 <div className="bg-white p-4 rounded ">
                                     {/* <h2 className="text-lg qrcode  text-black">Your QR Code</h2> */}
                                     <Image src={`https://digiswipe.in/${user.qrCode}`} alt={`https://digiswipe.in/${user.qrCode}`} height={500} width={500} className="mb-4 qrcode" />
-                                    
+
                                     <button
                                         onClick={handleDownload}
                                         className="bg-blue-500 ml-8 text-white px-4 py-2 rounded"

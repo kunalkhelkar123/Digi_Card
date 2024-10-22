@@ -1,6 +1,7 @@
 import React from 'react';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import Link from 'next/link';
+import Image from 'next/image';
 export default function Footer() {
     return (
         <div id="contact-us" className="ContactDetail py-12 bg-blue-800 text-white">
@@ -12,6 +13,7 @@ export default function Footer() {
                     <div className="flex flex-col md:flex-row md:space-x-8">
                         <div className="md:w-1/2 mb-8 md:mb-0">
                             <div className="LeftSide ml-20">
+
                                 <ul className="Listing space-y-4">
                                     <li className="flex items-start">
                                         <i className="fas fa-map-marked-alt text-white mr-2"></i>
@@ -30,9 +32,23 @@ export default function Footer() {
                                 </ul>
                             </div>
                         </div>
+                        <div className="flex-shrink-0 mt-10 sm:mt-6 md:mt-4 lg:mt-2 mb-5 ml-16 sm:ml-0">
+                            <Link href="/">
+                                <Image
+                                    className="h-16 w-auto sm:h-12 md:h-14 lg:h-16 xl:h-20"
+                                    src="/images/Digiswipelogo.jpg"
+                                    height={100}
+                                    width={100}
+                                    alt="Company Logo"
+                                />
+                            </Link>
+                        </div>
+
+
+
                         <div className="md:w-1/2 flex items-center justify-center">
                             <Link href="/contact" passHref>
-                                <button className="bg-green-500 text-white px-6 py-2 rounded hover:bg-green-600 transition duration-200">
+                                <button className="bg-green-500 mb-10 text-white px-6 py-2 rounded hover:bg-green-600 transition duration-200">
                                     Contact Us
                                 </button>
                             </Link>
