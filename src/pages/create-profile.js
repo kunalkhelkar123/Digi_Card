@@ -56,7 +56,9 @@ export default function CreateProfile() {
             const response = await fetch('/api/save-profile', {
                 method: 'POST',
                 body: data,
-            }).then(setShowSuccessPopup(true))
+            }).then(()=>{setShowSuccessPopup(true);
+                console.log("check inside create-profile 3")
+            })
 
             
 
@@ -69,7 +71,7 @@ export default function CreateProfile() {
                 toast.error('Failed to create profile. Please try again.');
             }
         } catch (error) {
-            console.log("check inside create-profile 3")
+            console.log("check inside create-profile 4")
             // Handle any errors that occurred during the API request
             toast.error('An error occurred. Please try again.');
             console.error(error); // Log the error for debugging
