@@ -34,7 +34,7 @@ export default function handler(req, res) {
             linkedin,
         } = req.body;
 
-        console.log("companyoactin ==> " , companyLocation)
+        console.log("companyLocation ==> " , companyLocation)
         const profilePicture = req.files['profilePicture'][0].filename;
         const backgroundPhoto = req.files['backgroundPhoto'][0].filename;
 
