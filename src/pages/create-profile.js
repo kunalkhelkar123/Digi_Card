@@ -30,6 +30,15 @@ export default function CreateProfile() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setTimeout(() => {
+            toast.success('Profile created successfully!')
+
+        }, 1000),
+
+            setTimeout(() => {
+                window.location.reload(); // or router.back();
+            }, 3000),
+            setShowSuccessPopup(true)
         const data = new FormData();
         for (let key in formData) {
             data.append(key, formData[key]);
@@ -39,19 +48,10 @@ export default function CreateProfile() {
             method: 'POST',
             body: data,
         })
-            
-      
-                // window.location.reload() 
-                setTimeout(() => {
-                    toast.success('Profile created successfully!')
-                     
-                }, 1000),
 
-                setTimeout(() => {
-                    window.location.reload(); // or router.back();
-                }, 3000),
-                setShowSuccessPopup(true)
-            
+        // window.location.reload() 
+
+
 
 
     };
