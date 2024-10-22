@@ -151,13 +151,14 @@ END:VCARD
                                 marginLeft: '-25px',
                                 marginRight: '-25px',
                                 marginTop: '-114px',
-                                backgroundImage: `url(/uploads/${user.backgroundPhoto})`, // Corrected syntax for backgroundImage
+                                backgroundImage: `${process.env.BASE_URL}/url(/uploads/${user.backgroundPhoto})`, // Corrected syntax for backgroundImage
+                                // backgroundImage:{`${process.env.BASE_URLBASE_URL}/uploads/${user.backgroundPhoto}`},
                                 backgroundRepeat: 'no-repeat',
                                 backgroundSize: 'cover', // Optional: Ensure the background image covers the entire div
                             }}>
                             <Image
                                 // src={`/uploads/${user.profilePicture}`}
-                                src={`${process.env.REACT_APP_BASE_URL}/uploads/${user.profilePicture}`}
+                                src={`${process.env.BASE_URL}/uploads/${user.profilePicture}`}
                                 alt="Profile"
                                 className="w-24 h-24  mx-auto rounded-full container3"
                                 
