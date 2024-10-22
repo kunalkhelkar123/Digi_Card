@@ -1,5 +1,5 @@
 import connection from '../../lib/db';
-import multer from '../../../multer-config'; // Assuming you have a configured multer file
+import multer from '../../../multer-config'; // Ensure you have this configured correctly
 import QRCode from 'qrcode';
 import fs from 'fs';
 import path from 'path';
@@ -11,25 +11,19 @@ export const config = {
     },
 };
 
-// Set up multer with size limit for files
-const upload = multer({
-    limits: {
-        fileSize: 5 * 1024 * 1024, // 5 MB limit
-    },
-}).fields([
-    { name: 'profilePicture', maxCount: 1 },
-    { name: 'backgroundPhoto', maxCount: 1 }
-]);
-
+// Handler function for saving the profile
 export default function handler(req, res) {
-    // Handle file uploads
-    upload(req, res, async (err) => {
+    // Setup multer to handle file uploads
+    multer.fields([
+        { name: 'profilePicture', maxCount: 1 },
+        { name: 'backgroundPhoto', maxCount: 1 }
+    ])(req, res, async (err) => {
         if (err) {
             console.error('Multer error:', err);
             if (err.code === 'LIMIT_FILE_SIZE') {
-                return res.status(400).send({ error: 'File size exceeds 5MB' });
+                return res.status(400).json({ error: 'File size exceeds 5MB' });
             }
-            return res.status(500).send({ error: 'File upload error' });
+            return res.status(500).json({ error: 'File upload error' });
         }
 
         // Log files to confirm upload
