@@ -42,7 +42,7 @@ export default function handler(req, res) {
         // Generate QR Code path and final image path
         const qrCodePath = `uploads/${Date.now()}-${name}-qr.png`;
         const qrCodeFullPath = path.join(process.cwd(), 'public', qrCodePath);
-        const profilePicturePath = path.join(process.cwd(), 'public/uploads', profilePicture);
+        const profilePicturePath = path.join(process.cwd(), '/uploads', profilePicture);
 
         try {
             // Generate the QR code with enhanced clarity
