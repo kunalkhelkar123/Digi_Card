@@ -22,7 +22,6 @@ export async function getServerSideProps({ query }) {
     console.log("QR path ==> ", user.qrCode)
 
 
-    console.log("qr code path2  ==>", `${process.env.BASE_URL2}/${user.qrCode}`)
     return { props: { user, isVCF: username.endsWith('.vcf') } }; // Pass the vCard flag
 }
 

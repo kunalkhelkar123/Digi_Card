@@ -45,14 +45,14 @@ export default function Banner() {
             <div className="relative z-10 w-full md:w-1/2 flex justify-center mt-8 md:mt-0">
              
 
-                <Image
+                {/* <Image
                     src="/images/sliderimg.png" // Replace with your demo card image path
                     alt="Demo Business Card"
                     // layout="responsive" // This will make the image responsive
                     width={-100} // Width in pixels for aspect ratio calculation
                     height={-200} // Height in pixels for aspect ratio calculation
                     className="mt-20"
-                />
+                /> */}
 
             </div>
         </div>
