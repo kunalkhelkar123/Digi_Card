@@ -383,7 +383,10 @@ END:VCARD
                             <div className="qr-code-modal  fixed top-0 left-0 right-0 bottom-0 bg-gray-900 bg-opacity-75 flex justify-center items-center">
                                 <div className="bg-white p-4 rounded ">
                                     {/* <h2 className="text-lg qrcode  text-black">Your QR Code</h2> */}
-                                    <Image src={`https://digiswipe.in/${user.qrCode}`} alt={`https://digiswipe.in/${user.qrCode}`} height={500} width={500} className="mb-4 qrcode" />
+                                    <Image src={`/api/get-image?fileName=${user.qrCode}`} alt={`https://digiswipe.in/${user.qrCode}`} height={500} width={500} className="mb-4 qrcode" />
+                                    {/* src={`https://digiswipe.in/${user.qrCode}`} */}
+                                    {/* src={`/api/get-image?fileName=${user.profilePicture}`} */}
+
 
                                     <button
                                         onClick={handleDownload}

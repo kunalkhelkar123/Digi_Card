@@ -42,7 +42,7 @@ export default function handler(req, res) {
         const profileUrl = `${process.env.BASE_URL}/${name}`;
 
         // Generate QR Code path and final image path
-        const qrCodePath = `uploads/${Date.now()}-${name}-qr.png`;
+        const qrCodePath = `${Date.now()}-qr.png`;
         const qrCodeFullPath = path.join(process.cwd(), 'public', qrCodePath);
         const profilePicturePath = path.join(process.cwd(), '/uploads', profilePicture);
 
