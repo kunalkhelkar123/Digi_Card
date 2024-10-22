@@ -20,6 +20,9 @@ export async function getServerSideProps({ query }) {
     
     const user = rows.length > 0 ? rows[0] : null;
 console.log("QR path ==> ",user.qrCode)
+
+
+console.log("qr code path2  ==>",`${process.env.BASE_URL}/${user.qrCode}`)
     return { props: { user, isVCF: username.endsWith('.vcf') } }; // Pass the vCard flag
 }
 
@@ -378,6 +381,7 @@ END:VCARD
                                 <div className="bg-white p-4 rounded ">
                                     {/* <h2 className="text-lg qrcode  text-black">Your QR Code</h2> */}
                                     <Image src={`${process.env.BASE_URL}/${user.qrCode}`} alt="QR Code" height={500} width={500} className="mb-4 qrcode" />
+                                    
                                     <button
                                         onClick={handleDownload}
                                         className="bg-blue-500 ml-8 text-white px-4 py-2 rounded"
