@@ -36,13 +36,8 @@ export default function CreateProfile() {
 
     // Function to handle form submission
     const handleSubmit = async (e) => {
-
-
         console.log("formData.profile pic ", formData.profilePicture);
         console.log("formData.backgroundPhoto pic ", formData.backgroundPhoto)
-
-
-
         e.preventDefault(); // Prevent default form submission
 
         // Show a success popup immediately upon submission
@@ -258,10 +253,12 @@ export default function CreateProfile() {
                                 id="profilePicture"
                                 type="file"
                                 name="profilePicture"
+                                accept="image/jpeg, image/jpg, image/png, image/webp, image/gif, image/bmp"  // Accept only image types
                                 onChange={handleFileChange}
                                 className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
                             />
                         </div>
+
 
                         {/* Background Photo upload */}
                         <div>
@@ -269,6 +266,7 @@ export default function CreateProfile() {
                             <input
                                 id="backgroundPhoto"
                                 type="file"
+                                accept="image/jpeg, image/jpg, image/png, image/webp, image/gif, image/bmp"  // Accept only image types
                                 name="backgroundPhoto"
                                 onChange={handleFileChange}
                                 className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
