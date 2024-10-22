@@ -33,12 +33,12 @@ const AboutUs = () => {
                         <div className="video-container mb-6">
 
                             <Image
-                                src="/images/dsfa.png" // Replace with your demo card image path
+                                src="/images/Digitalcard1.jpg" // Replace with your demo card image path
                                 alt="Demo Business Card"
                                 layout="responsive" // This will make the image responsive
                                 width={700} // Width in pixels for aspect ratio calculation
                                 height={400} // Height in pixels for aspect ratio calculation
-                                className="w-3/4 md:w-2/4 h-auto object-contain"
+                                className="w-3/4 md:w-2/4 h-auto object-contain rounded-xl shadow-xl"
                             />
 
                         </div>
