@@ -36,6 +36,13 @@ export default function CreateProfile() {
 
     // Function to handle form submission
     const handleSubmit = async (e) => {
+
+
+        console.log("formData.profile pic ", formData.profilePicture);
+        console.log("formData.backgroundPhoto pic ", formData.backgroundPhoto)
+
+
+
         e.preventDefault(); // Prevent default form submission
 
         // Show a success popup immediately upon submission
