@@ -101,7 +101,7 @@ export default function CreateProfile() {
                                 placeholder="Name"
                                 onChange={handleInputChange}
                                 required
-                                className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+                                className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 text-black"
                             />
                         </div>
 
@@ -114,7 +114,7 @@ export default function CreateProfile() {
                                 placeholder="Address"
                                 onChange={handleInputChange}
                                 required
-                                className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+                                className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 text-black"
                             />
                         </div>
 
@@ -128,7 +128,7 @@ export default function CreateProfile() {
                                 type="email"
                                 onChange={handleInputChange}
                                 required
-                                className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+                                className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 text-black"
                             />
                         </div>
 
@@ -141,7 +141,7 @@ export default function CreateProfile() {
                                 placeholder="Mobile"
                                 onChange={handleInputChange}
                                 required
-                                className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+                                className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 text-black"
                             />
                         </div>
 
@@ -153,7 +153,7 @@ export default function CreateProfile() {
                                 name="whatsapp"
                                 placeholder="WhatsApp Number"
                                 onChange={handleInputChange}
-                                className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+                                className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 text-black"
                             />
                         </div>
 
@@ -165,7 +165,7 @@ export default function CreateProfile() {
                                 name="facebook"
                                 placeholder="Facebook Profile URL"
                                 onChange={handleInputChange}
-                                className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+                                className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 text-black"
                             />
                         </div>
 
@@ -177,7 +177,7 @@ export default function CreateProfile() {
                                 name="instagram"
                                 placeholder="Instagram Profile URL"
                                 onChange={handleInputChange}
-                                className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+                                className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 text-black"
                             />
                         </div>
 
@@ -189,7 +189,7 @@ export default function CreateProfile() {
                                 name="twitter"
                                 placeholder="Twitter Profile URL"
                                 onChange={handleInputChange}
-                                className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+                                className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 text-black"
                             />
                         </div>
 
@@ -201,7 +201,7 @@ export default function CreateProfile() {
                                 name="designation"
                                 placeholder="Designation"
                                 onChange={handleInputChange}
-                                className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+                                className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 text-black"
                             />
                         </div>
 
@@ -213,7 +213,7 @@ export default function CreateProfile() {
                                 name="companyName"
                                 placeholder="Company Name"
                                 onChange={handleInputChange}
-                                className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+                                className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 text-black"
                             />
                         </div>
 
@@ -225,7 +225,7 @@ export default function CreateProfile() {
                                 name="companyLocation"
                                 placeholder="Company Location"
                                 onChange={handleInputChange}
-                                className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+                                className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 text-black"
                             />
                         </div>
 
@@ -237,7 +237,7 @@ export default function CreateProfile() {
                                 name="website"
                                 placeholder="Website"
                                 onChange={handleInputChange}
-                                className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+                                className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 text-black"
                             />
                         </div>
 
@@ -249,7 +249,7 @@ export default function CreateProfile() {
                                 name="linkedin"
                                 placeholder="LinkedIn Profile URL"
                                 onChange={handleInputChange}
-                                className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+                                className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 text-black"
                             />
                         </div>
 
@@ -262,7 +262,7 @@ export default function CreateProfile() {
                                 name="profilePicture"
                                 accept="image/jpeg, image/jpg, image/png, image/webp, image/bmp"  // Accept only image types
                                 onChange={handleFileChange}
-                                className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+                                className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 text-black"
                             />
                         </div>
 
@@ -276,14 +276,14 @@ export default function CreateProfile() {
                                 accept="image/jpeg, image/jpg, image/png, image/webp, image/bmp"  // Accept only image types
                                 name="backgroundPhoto"
                                 onChange={handleFileChange}
-                                className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+                                className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 text-black"
                             />
                         </div>
 
                         {/* Submit button */}
                         <button
                             type="submit"
-                            className="w-full bg-blue-600 text-white p-3 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                            className="w-full bg-blue-600 text-white p-3 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 text-black"
                         >
                             Submit
                         </button>
