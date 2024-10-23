@@ -19,7 +19,6 @@ export async function getServerSideProps({ query }) {
     console.log("check 4 ")
 
     const user = rows.length > 0 ? rows[0] : null;
-    console.log("QR path ==> ", user.qrCode)
 
 
     return { props: { user, isVCF: username.endsWith('.vcf') } }; // Pass the vCard flag
@@ -178,8 +177,8 @@ END:VCARD
                         </div>
 
                         <div className="mb-6 mt-10">
-                            <h2 className="text-2xl font-bold mb-2">{user.name}</h2>
-                            <p className="text-gray-600 font-bold text-xl">
+                            <h2 className="text-2xl font-bold mb-2  text-black ">{user.name}</h2>
+                            <p className="text-black font-bold text-xl">
                                 {user.designation
                                     // .toLowerCase() // Convert the string to lowercase first
                                     .split(' ') // Split by spaces to get each word
