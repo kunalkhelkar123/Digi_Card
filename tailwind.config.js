@@ -11,7 +11,14 @@ module.exports = {
         background: "var(--background)",
         foreground: "var(--foreground)",
       },
+      fontFamily: {
+        prociono: ['Prociono', 'serif'], // Adding Prociono font family
+      },
+      fontFamily: {
+        'libre-baskerville': ['"Libre Baskerville"', 'serif'],
+      },
     },
   },
   plugins: [],
 };
+

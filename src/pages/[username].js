@@ -17,7 +17,7 @@ export async function getServerSideProps({ query }) {
 
     // const [rows] = await connection.query('SELECT * FROM users WHERE name = ?', [sanitizedUsername]);
     const [rows] = await connection.query('SELECT * FROM users WHERE userName = ?', [sanitizedUsername]);
-   
+
     console.log("check 4 ")
 
 
@@ -137,14 +137,18 @@ END:VCARD
         <>
 
             <div
+
                 style={{
                     background: 'repeating-linear-gradient(45deg, black, #413d48 70px)', // Background texture
                     backgroundAttachment: 'fixed', // Makes the background stick to the screen
-                    height: '100vh', // Ensures the background covers the full viewport height
-                    overflowY: 'auto', // Allows content to scroll
+                    height: '120vh', // Ensures the background covers the full viewport height
+                    overflowX: 'auto', // Allows content to scroll
+                    overflowY: 'hidden',
+                    paddingBottom: '800px',
                 }}
             >
-                <div className="container mx-auto p-9" style={{ maxWidth: '480px' }}>
+
+                <div className="container mx-auto p-9" style={{ maxWidth: '525px', marginBottom: '100px' }}>
                     <div className="bg-white shadow-lg p-6 text-center relative"> {/* Set relative position here */}
                         {/* Background Image Section */}
                         <div
@@ -158,10 +162,43 @@ END:VCARD
                                     : 'none',
                                 backgroundRepeat: 'no-repeat',
                                 backgroundSize: 'cover',
-                                height: '200px', // Height of the background image container
+                                height: '250px', // Height of the background image container
                                 position: 'relative', // Make sure this has relative positioning
                             }}
                         >
+
+
+
+                            {/* {white shape } */}
+
+
+
+
+                            <div
+                                style={{
+                                    position: 'absolute',
+                                    // bottom: '-100px', // Position the profile image so it's partially over the background
+                                    // left: '50%',
+
+                                    // width:'550px',
+                                    // height:'120px',
+                                    top: '150px',
+                                    // maxWidth: '525px'
+                                    // transform: 'translateX(-50%)', // Center the image horizontally
+                                    // zIndex: '10', // Make sure the profile image is on top of the background
+                                }}
+                            >
+                                <Image
+                                    src={`/images/white-shape3.png`}
+                                    alt="Profile"
+                                    className=" ml-0.5 h-24 mt-2"
+
+                                    width={453}
+
+                                    height={100}
+
+                                />
+                            </div>
                             {/* Profile Image on top of background */}
                             <div
                                 style={{
@@ -175,12 +212,13 @@ END:VCARD
                                 <Image
                                     src={`/api/get-image?fileName=${user.profilePicture}`}
                                     alt="Profile"
-                                    className="w-24 h-24  mx-auto rounded-full container3"
+                                    className="w-24 h-24 mx-auto rounded-full border-4 shadow-lg container3"
+
                                     width={150}
                                     height={150}
                                     style={{
-                                        width: '13rem',
-                                        height: '13rem',
+                                        width: '11rem',
+                                        height: '11rem',
                                         borderRadius: '50%',
                                         border: '5px solid white', // Optional: Add a white border around the profile image for a clean look
                                     }}
@@ -190,8 +228,8 @@ END:VCARD
 
                         {/* Rest of the content */}
                         <div className="mb-6 mt-28"> {/* Adjust the margin to push the content below */}
-                            <h2 className="text-2xl font-bold  mb-2 text-black">{user.name}</h2>
-                            <p className="text-black font-bold text-xl">
+                            <h2 className="text-2xl font-bold  mb-2 text-black  ">{user.name}</h2>
+                            <p className="text-black font-bold text-l tracking-wide ">
                                 {user.designation
                                     .split(' ') // Split by spaces to get each word
                                     .map((word) => word.charAt(0).toUpperCase() + word.slice(1)) // Capitalize first letter of each word
@@ -199,13 +237,14 @@ END:VCARD
                             </p>
 
                             <a rel="noopener noreferrer" target="_blank" href={`https://${user.website}`}>
-                                <p className="text-gray-600 font-bold hover:text-black text-xl">
+                                <p className="text-gray-600 font-bold hover:text-black text-l tracking-wide">
                                     {user.companyName}
                                 </p>
                             </a>
+
                         </div>
 
-                        <div className="flex flex-wrap justify-center space-x-5 mb-6 mt-10">
+                        <div className="flex flex-wrap justify-center space-x-5 mb-6 ">
                             <div className="flex-shrink-0">
                                 <a
                                     href={`tel:+91${user.mobile}`}
@@ -221,7 +260,7 @@ END:VCARD
                                     href={`https://api.whatsapp.com/send?text=Hi, ${user.name},&phone=91${user.mobile}`}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="text-green-500 border-2 border-green-500 rounded-full p-2 transition-transform transform hover:scale-110 hover:bg-green-500 hover:text-white flex items-center justify-center"
+                                    className="text-white bg-green-500 border-2 border-green-500 rounded-full p-2 transition-transform transform hover:scale-110 hover:bg-white hover:text-green-500 flex items-center justify-center"
                                 >
                                     <FaWhatsapp className="w-4 h-4 md:w-6 md:h-6" title="WhatsApp" />
                                 </a>
@@ -257,7 +296,7 @@ END:VCARD
                             </div>
                         </div>
 
-                        <div className="flex justify-center mt-2">
+                        <div className="flex justify-center ">
                             <a href={`/${user.name}.vcf`} rel="noopener noreferrer">
                                 <button className="bg-gray-700 text-white px-4 py-2 rounded-lg flex items-center hover:bg-black">
                                     <FaUserPlus className="mr-2" />
@@ -266,7 +305,7 @@ END:VCARD
                             </a>
                         </div>
 
-                        <div className="flex justify-center space-x-4 text-2xl mt-8">
+                        <div className="flex justify-center space-x-4 text-xl mt-4 pb-4 ">
                             <a
                                 href={`${user.facebook}`}
                                 target="_blank"

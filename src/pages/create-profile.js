@@ -204,7 +204,7 @@ export default function Createprofile() {
                                 type="number"
                                 placeholder="Enter mobile number"
                                 onChange={handleInputChange}
-                                maxLength={5}
+                                maxLength={10}
                                 required
                                 className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 text-black"
                             />
@@ -232,7 +232,7 @@ export default function Createprofile() {
                             <input
                                 id="designation"
                                 name="designation"
-                                maxLength={30}
+                                maxLength={50}
                                 required
                                 placeholder="Designation"
                                 onChange={handleInputChange}
@@ -255,12 +255,12 @@ export default function Createprofile() {
 
                         {/* Company Location input */}
                         <div>
-                            <label htmlFor="companyLocation" className="block text-sm font-medium text-gray-700">Company Location</label>
+                            <label htmlFor="companyLocation" className="block text-sm font-medium text-gray-700">Company Location URL or Link</label>
                             <input
                                 id="companyLocation"
                                 name="companyLocation"
                                 maxLength={200} required
-                                placeholder="Company location"
+                                placeholder="Company location URL or Link"
                                 onChange={handleInputChange}
                                 className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 text-black"
                             />
