@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import Navbar from './NavbarTwo';
-
+import Footer from './Footer';
 
 export default function Contact() {
     const [formData, setFormData] = useState({
@@ -136,6 +136,9 @@ export default function Contact() {
                         <p className="text-sm text-gray-500 mt-4">By submitting this form, you agree to our terms and conditions.</p>
                     </div>
                 </div>
-            </div></>
+                
+            </div>
+            <Footer/>
+            </>
     );
 }

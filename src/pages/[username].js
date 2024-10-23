@@ -15,8 +15,11 @@ export async function getServerSideProps({ query }) {
     const sanitizedUsername = username.replace('.vcf', ''); // Remove .vcf for DB query
     console.log("check 3 sanitizedUsername ", sanitizedUsername)
 
-    const [rows] = await connection.query('SELECT * FROM users WHERE name = ?', [sanitizedUsername]);
+    // const [rows] = await connection.query('SELECT * FROM users WHERE name = ?', [sanitizedUsername]);
+    const [rows] = await connection.query('SELECT * FROM users WHERE userName = ?', [sanitizedUsername]);
+   
     console.log("check 4 ")
+
 
     const user = rows.length > 0 ? rows[0] : null;
 
@@ -132,64 +135,75 @@ END:VCARD
     // Render user profile information if not a VCF request
     return (
         <>
+
             <div
                 style={{
-                    // height: '100vh', // Full height of the viewport
-                    background: 'repeating-linear-gradient(45deg, black, #413d48 70px)', // Corrected syntax for background
-                    // backgroundPosition: 'center', // Centers the image (not necessary for gradients, but included if needed)
-                    // backgroundRepeat: 'no-repeat', // Not applicable for gradients but can be kept
+                    background: 'repeating-linear-gradient(45deg, black, #413d48 70px)', // Background texture
+                    backgroundAttachment: 'fixed', // Makes the background stick to the screen
+                    height: '100vh', // Ensures the background covers the full viewport height
+                    overflowY: 'auto', // Allows content to scroll
                 }}
             >
-
-                <div className="container mx-auto p-9 "
-                    style={{
-                        maxWidth: '480px', // You can keep this for maximum width
-                        // height: '100vh', // Full height of the viewport
-                    }}>
-                    <div className="bg-white shadow-lg  p-6 text-center " >
-                        <div className="mb-4 container2"
+                <div className="container mx-auto p-9" style={{ maxWidth: '480px' }}>
+                    <div className="bg-white shadow-lg p-6 text-center relative"> {/* Set relative position here */}
+                        {/* Background Image Section */}
+                        <div
+                            className="mb-4 container2"
                             style={{
                                 marginLeft: '-25px',
                                 marginRight: '-25px',
-                                marginTop: '-114px',
-                                // backgroundImage: `url(/uploads/${user.backgroundPhoto})`, // Corrected syntax for backgroundImage
-                                backgroundImage: `url(/api/get-image?fileName=/${user.backgroundPhoto})`, // Corrected syntax for backgroundImage
-
+                                marginTop: '-24px',
+                                backgroundImage: user?.backgroundPhoto
+                                    ? `url(/api/get-image?fileName=${user.backgroundPhoto})`
+                                    : 'none',
                                 backgroundRepeat: 'no-repeat',
-                                backgroundSize: 'cover', // Optional: Ensure the background image covers the entire div
-                            }}>
-                            <Image
-                                // src={`/uploads/${user.profilePicture}`}
-                                // src={`/uploads/${user.profilePicture}`}
-                                src={`/api/get-image?fileName=${user.profilePicture}`}
-                                alt="Profile"
-                                className="w-24 h-24  mx-auto rounded-full container3"
-
-                                width={100}
-                                height={100}
+                                backgroundSize: 'cover',
+                                height: '200px', // Height of the background image container
+                                position: 'relative', // Make sure this has relative positioning
+                            }}
+                        >
+                            {/* Profile Image on top of background */}
+                            <div
                                 style={{
-                                    marginTop: '90px',
-                                    width: '13rem',
-                                    height: '13rem',
+                                    position: 'absolute',
+                                    bottom: '-100px', // Position the profile image so it's partially over the background
+                                    left: '50%',
+                                    transform: 'translateX(-50%)', // Center the image horizontally
+                                    zIndex: '10', // Make sure the profile image is on top of the background
                                 }}
-                            />
-
+                            >
+                                <Image
+                                    src={`/api/get-image?fileName=${user.profilePicture}`}
+                                    alt="Profile"
+                                    className="w-24 h-24  mx-auto rounded-full container3"
+                                    width={150}
+                                    height={150}
+                                    style={{
+                                        width: '13rem',
+                                        height: '13rem',
+                                        borderRadius: '50%',
+                                        border: '5px solid white', // Optional: Add a white border around the profile image for a clean look
+                                    }}
+                                />
+                            </div>
                         </div>
 
-                        <div className="mb-6 mt-10">
-                            <h2 className="text-2xl font-bold mb-2  text-black ">{user.name}</h2>
+                        {/* Rest of the content */}
+                        <div className="mb-6 mt-28"> {/* Adjust the margin to push the content below */}
+                            <h2 className="text-2xl font-bold  mb-2 text-black">{user.name}</h2>
                             <p className="text-black font-bold text-xl">
                                 {user.designation
-                                    // .toLowerCase() // Convert the string to lowercase first
                                     .split(' ') // Split by spaces to get each word
-                                    .map(word => word.charAt(0).toUpperCase() + word.slice(1)) // Capitalize first letter of each word
-                                    .join(' ')}  {/* Join the words back with spaces */}
+                                    .map((word) => word.charAt(0).toUpperCase() + word.slice(1)) // Capitalize first letter of each word
+                                    .join(' ')} {/* Join the words back with spaces */}
                             </p>
 
-
-                            <a rel="noopener noreferrer" target='_blank' href={`https://${user.website}`} ><p className="text-gray-600 font-bold hover:text-black  text-xl ">{user.companyName}</p></a>
+                            <a rel="noopener noreferrer" target="_blank" href={`https://${user.website}`}>
+                                <p className="text-gray-600 font-bold hover:text-black text-xl">
+                                    {user.companyName}
+                                </p>
+                            </a>
                         </div>
-
 
                         <div className="flex flex-wrap justify-center space-x-5 mb-6 mt-10">
                             <div className="flex-shrink-0">
@@ -197,7 +211,7 @@ END:VCARD
                                     href={`tel:+91${user.mobile}`}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="text-blue-600 border-2 border-blue-800 hover:border-blue-600  rounded-full p-2 transition-transform transform hover:scale-110 hover:bg-blue-600 hover:text-white flex items-center justify-center"
+                                    className="text-blue-600 border-2 border-blue-800 hover:border-blue-600 rounded-full p-2 transition-transform transform hover:scale-110 hover:bg-blue-600 hover:text-white flex items-center justify-center"
                                 >
                                     <FaPhone className="w-4 h-4 md:w-6 md:h-6 text-blue-800 hover:text-white" title="Call" />
                                 </a>
@@ -205,7 +219,6 @@ END:VCARD
                             <div className="flex-shrink-0">
                                 <a
                                     href={`https://api.whatsapp.com/send?text=Hi, ${user.name},&phone=91${user.mobile}`}
-                                    //https://api.whatsapp.com/send?text=Hi,%20Kunal%20Gajananrao%20Khelkar,&phone=919146219186
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="text-green-500 border-2 border-green-500 rounded-full p-2 transition-transform transform hover:scale-110 hover:bg-green-500 hover:text-white flex items-center justify-center"
@@ -226,7 +239,6 @@ END:VCARD
                             <div className="flex-shrink-0">
                                 <a
                                     href={`mailto:${user.email}`}
-
                                     rel="noopener noreferrer"
                                     className="text-gray-600 border-2 border-gray-600 rounded-full p-2 transition-transform transform hover:scale-110 hover:bg-gray-600 hover:text-white flex items-center justify-center"
                                 >
@@ -245,46 +257,14 @@ END:VCARD
                             </div>
                         </div>
 
-
-
-                        {/* <div className="whatsapp_share mb-6 ml-5 mt-10">
-                            <form onSubmit={(e) => e.preventDefault()} className="flex flex-col md:flex-row items-center">
-                                <label className="mr-2 text-l font-semibold">+91</label>
-                                <input
-                                    type="number"
-                                    value={phone}
-                                    onChange={(e) => setPhone(e.target.value)}
-                                    placeholder="Enter phone number"
-                                    className="p-1 border border-gray-300 rounded-lg mr-2 w-full md:w-44 focus:outline-none focus:ring-2 focus:ring-green-500 transition duration-200"
-                                    maxLength="10"
-                                />
-                                <button
-                                    type="button"
-                                    className="bg-green-600 text-white px-4 py-2 rounded-lg flex items-center mt-2 md:mt-0 hover:bg-green-700 transition duration-200"
-                                    onClick={handleWhatsAppShare}
-                                >
-                                    <FaWhatsapp className="mr-2" /> Share via WhatsApp
-                                </button>
-                            </form>
-                        </div> */}
-
                         <div className="flex justify-center mt-2">
-                            <a
-                                href={`/${user.name}.vcf`}
-                                // target="_blank"
-                                rel="noopener noreferrer"
-                            >
-                                <button
-                                    className="bg-gray-700 text-white px-4 py-2 rounded-lg flex items-center hover:bg-black "
-                                >
+                            <a href={`/${user.name}.vcf`} rel="noopener noreferrer">
+                                <button className="bg-gray-700 text-white px-4 py-2 rounded-lg flex items-center hover:bg-black">
                                     <FaUserPlus className="mr-2" />
                                     Save contact
                                 </button>
                             </a>
                         </div>
-
-
-
 
                         <div className="flex justify-center space-x-4 text-2xl mt-8">
                             <a
@@ -312,33 +292,29 @@ END:VCARD
                                 <FaTwitter />
                             </a>
                         </div>
-                        <div className="fixed bottom-16 right-2 z-10 ">
+
+                        <div className="fixed bottom-16 right-2 z-10">
                             <a
                                 href={`/${user.name}.vcf`}
                                 className="relative pulse-ring2 pulse-button bg-black text-white px-6 py-3 rounded-full flex items-center justify-center transition duration-200 overflow-hidden"
                             >
-                                {/* Pulse ring */}
                                 <span className="absolute inset-0 pulse-ring"></span>
-                                <FaUserPlus className="mr-2 " />
+                                <FaUserPlus className="mr-2" />
                                 <div className="relative text-center z-10">
                                     <span className="block text-sm md:text-base">Save</span>
                                     <span className="block text-sm md:text-base">Contact</span>
                                 </div>
                             </a>
                         </div>
-
-
-
-
                     </div>
                 </div>
-                {/* <UserFooter/> */}
+
                 <div className="bg-gray-200 text-white py-2 fixed bottom-0 left-0 right-0">
                     <div className="container mx-auto flex justify-around items-center">
                         <div className="menu_item">
                             <a href={`tel:+91${user.mobile}`} target="_blank" rel="noopener noreferrer" className="flex flex-col items-center">
-                                <FaPhone className="text-xl  text-black" />
-                                <div className="link_btn  text-sm  text-black">Call Now</div>
+                                <FaPhone className="text-xl text-black" />
+                                <div className="link_btn text-sm text-black">Call Now</div>
                             </a>
                         </div>
                         <div className="menu_item">
@@ -348,70 +324,21 @@ END:VCARD
                                 rel="noopener noreferrer"
                                 className="flex flex-col items-center"
                             >
-                                <FaWhatsapp className="text-xl  text-black" />
-                                <div className="link_btn  text-l  text-black">Whatsapp</div>
+                                <FaWhatsapp className="text-xl text-black" />
+                                <div className="link_btn text-l text-black">Whatsapp</div>
                             </a>
                         </div>
-                        {/* <div 
-          className="menu_item cursor-pointer flex flex-col items-center" 
-          onClick={() => window.location.hash = '#home'} 
-          id="share_box_pop"
-        >
-          <FaShareAlt className="text-xl" /> 
-          Share
-        </div> */}
-                        {/* <div
-                            className="menu_item cursor-pointer flex flex-col items-center"
-                            onClick={() => window.location.hash = '#home'}
-                        >
-                            <FaQrcode className="text-xl  text-black" id="qr_box_pop" />
-                                <div className="link_btn text-l  text-black">QR Code</div>
-                                
-                        </div> */}
 
-                        <div
-                            className="menu_item cursor-pointer flex flex-col items-center"
-                            onClick={handleQrCodeClick} // Show QR code on click
-                        >
+                        <div className="menu_item cursor-pointer flex flex-col items-center" onClick={handleQrCodeClick}>
                             <FaQrcode className="text-xl text-black" id="qr_box_pop" />
-                            <div className="link_btn text-l text-black">QR Code</div>
+                            <div className="link_btn text-black">Scan QR</div>
                         </div>
-
-                        {showQrCode && (
-                            <div className="qr-code-modal  fixed top-0 left-0 right-0 bottom-0 bg-gray-900 bg-opacity-75 flex justify-center items-center">
-                                <div className="bg-white p-4 rounded ">
-                                    {/* <h2 className="text-lg qrcode  text-black">Your QR Code</h2> */}
-                                    <Image src={`/api/get-image?fileName=${user.qrCode}`} alt={`https://digiswipe.in/${user.qrCode}`} height={500} width={500} className="mb-4 qrcode" />
-                                    {/* src={`https://digiswipe.in/${user.qrCode}`} */}
-                                    {/* src={`/api/get-image?fileName=${user.profilePicture}`} */}
-
-
-                                    <button
-                                        onClick={handleDownload}
-                                        className="bg-blue-500 ml-8 text-white px-4 py-2 rounded"
-                                    >
-                                        Download QR Code
-                                    </button>
-                                    <button
-                                        onClick={() => setShowQrCode(false)}
-                                        className="ml-12 bg-red-500 text-white px-4 py-2 rounded"
-                                    >
-                                        Close
-                                    </button>
-                                </div>
-                            </div>
-                        )}
                     </div>
                 </div>
-            </div ></>
+            </div>
 
 
-
-
-
-
-
-
+        </>
 
     );
 }

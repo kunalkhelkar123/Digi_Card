@@ -5,7 +5,7 @@ import Image from 'next/image';
 export default function Footer() {
     return (
         <div id="contact-us" className="ContactDetail py-12 bg-blue-800 text-white">
-            <div className="container mx-auto px-4">
+            <div className="container mx-auto px-4 ">
                 <div className="HeadingSection text-center mb-8">
                     <h2 className="text-3xl font-bold">Contact Us</h2>
                 </div>
@@ -27,7 +27,7 @@ export default function Footer() {
                                     </li>
                                     <li className="flex items-start">
                                         <i className="far fa-envelope text-white mr-2"></i>
-                                        <span>Email: <span className=""><a href="mailto:info@digiswipe.in" className="text-white hover:text-gray-300">info@mindlabz.com</a></span></span>
+                                        <span>Email: <span className=""><a href="mailto:info@digiswipe.in" className="text-white hover:text-gray-300">info@digiswipe.in</a></span></span>
                                     </li>
                                 </ul>
                             </div>
@@ -56,8 +56,8 @@ export default function Footer() {
                     </div>
                 </div>
                 {/* Copyright Section */}
-                <div className="text-center mt-12">
-                    <p className="text-gray-300 mb-2">
+                <div className="text-center mt-12 ">
+                    <p className="text-gray-300 -mb-10">
                         © {new Date().getFullYear()} <a href="http://vjanalytics.com/" className="text-gray-300 hover:text-white">VJanalytics</a>. All rights reserved.
                     </p>
                 </div>

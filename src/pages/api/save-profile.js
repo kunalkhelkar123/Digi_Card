@@ -22,6 +22,7 @@ export default function handler(req, res) {
             name,
             address,
             email,
+            userName,
             mobile,
             whatsapp,
             facebook,
@@ -34,7 +35,7 @@ export default function handler(req, res) {
             linkedin,
         } = req.body;
 
-        console.log("companyLocation ==> " , companyLocation)
+        // console.log("userName ==> " , userName)
         const profilePicture = req.files['profilePicture'][0].filename;
         const backgroundPhoto = req.files['backgroundPhoto'][0].filename;
 
@@ -81,6 +82,7 @@ export default function handler(req, res) {
                 await connection.query(
                     `INSERT INTO users (
                         name, 
+                        userName,
                         address, 
                         email, 
                         mobile, 
@@ -96,28 +98,29 @@ export default function handler(req, res) {
                         profilePicture, 
                         qrCode,
                         backgroundPhoto
-                    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)`,
+                    ) VALUES (?, ?, ?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)`,
                     [
-                        name, 
-                        address, 
-                        email, 
-                        mobile, 
-                        whatsapp, 
-                        facebook, 
-                        instagram, 
-                        twitter, 
-                        designation, 
-                        companyName, 
+                        name,
+                        userName,
+                        address,
+                        email,
+                        mobile,
+                        whatsapp,
+                        facebook,
+                        instagram,
+                        twitter,
+                        designation,
+                        companyName,
                         companyLocation,
-                        website, 
-                        linkedin, 
-                        profilePicture, 
+                        website,
+                        linkedin,
+                        profilePicture,
                         qrCodePath,
                         backgroundPhoto,
                     ]
                 );
-                
-                res.status(200).json({ message: 'Profile saved and QR code generated!' });
+
+                res.status(200).json({ message: 'Profile saved and QR code generated!', success: true, });
             });
         } catch (error) {
             console.error(error);
