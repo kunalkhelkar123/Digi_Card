@@ -1,11 +1,11 @@
-import { useEffect, useCallback } from 'react';
+import { useEffect, useCallback, useState } from 'react';
 import Link from 'next/link'; // Import Link from Next.js
 import Image from 'next/image'; // Import Image from Next.js for optimized images
 import connection from '../lib/db';
 import Navbar from './NavbarTwo';
 import UserFooter from './UserFooter';
 import { FaPhone, FaUserPlus, FaFacebookF, FaInstagram, FaTwitter, FaWhatsapp, FaShareAlt, FaQrcode, FaMapMarkerAlt, FaEnvelope, FaGlobe } from 'react-icons/fa';
-import { useState } from 'react';
+
 
 export async function getServerSideProps({ query }) {
     const { username } = query;
@@ -16,7 +16,12 @@ export async function getServerSideProps({ query }) {
     const user = rows.length > 0 ? rows[0] : null;
     return { props: { user, isVCF: username.endsWith('.vcf') } }; // Pass the vCard flag
 }
+
+
+
 export default function UserProfile({ user, isVCF }) {
+    const [countriecode, setCountriecode] = useState('');
+    const [whatsappnum, setWhatsappnum] = useState('');
     const [showQrCode, setShowQrCode] = useState(false);
     const [phone, setPhone] = useState('');
     const handleWhatsAppShare = () => {
@@ -273,20 +278,62 @@ END:VCARD
                             </div>
                         </div>
 
-                        <div className="flex justify-center ">
+                        {/* {share details on whatsapp} */}
+                        <div
+                            style={{ marginLeft: '70px', marginRight: '50px', boxShadow: '0px 1px 8px 1px' }}
+                            className="sharedetails flex justify-center  items-center mt-10 rounded-lg px-0  shadow-sm sm:shadow-md md:shadow-lg lg:shadow-lg"
+                        >
+                            <input
+                                type="text"
+                                placeholder=""
+                                value={"  +91"}
+                                onChange={(e) => {
+                                    setCountriecode(e.target.value);
+                                }}
+                                className="w-10 h-10 text-sm outline-none appearance-none"
+                            />
+                            <input
+                                type="number"
+                                placeholder="Enter mobile number"
+                                style={{
+                                    borderColor: 'white',
+                                }}
+                                className="ml-2 w-32 h-10 text-sm outline-none appearance-none flex-grow"
+                                onChange={(e) => {
+                                    setWhatsappnum(e.target.value);
+                                }}
+                            />
+
+                            <a
+                                target="_blank"
+                                href={`https://api.whatsapp.com/send?text=Hello%2C%0D%0APleasure+connecting+with+you%21%21+Below+are+my+details%3A%0D%0A%0D%0ADigital+Business+Card%2FProfile%3A%0D%0Ahttps%3A%2F%2Fdigiswipe.in%2F${user.userName}%0D%0A%0D%0ASave+to+Contacts+Directly%3A%0D%0Ahttps%3A%2F%2Fdigiswipe.in%2F${user.userName}.vcf+%0D%0A%0D%0A%2ANote%3A+If+this+is+our+first+chat%2C+reply+hi+and+then+click+the+links+above.+%28Wapp+Policy%29%2A+%0D%0A%0D%0ARegards%2C+%0D%0A${user.name}+%0D%0A${user.designation}%0D%0A${user.companyName}+%0D%0A%0D%0APowered+by%3A+digiswipe.in+&phone=${countriecode}${whatsappnum}`}
+                            >
+                                <button className="bg-green-600 text-white h-10 w-20 shadow-xl flex items-center hover:bg-green-600 ml-2">
+                                    <FaWhatsapp className="mr-1 ml-2" />
+                                    Share
+                                </button>
+                            </a>
+                        </div>
+
+
+
+
+
+                        {/* {save contact } */}
+                        <div className="flex justify-center mt-10 ">
                             <a href={`/${user.userName}.vcf`} rel="noopener noreferrer">
-                                <button  className="bg-gray-700 text-white px-4 py-2 shadow-xl flex items-center hover:bg-black">
+                                <button className="bg-gray-700 text-white px-4 py-2 shadow-xl flex items-center hover:bg-black">
                                     <FaUserPlus className="mr-2" />
                                     Save contact
                                 </button>
 
-                                
+
                             </a>
 
                         </div>
                         {/* <button onClick={downloadVCard()}>save contact </button> */}
 
-                        <div className="flex justify-center space-x-4 text-xl mt-4 pb-4 ">
+                        <div className="flex justify-center space-x-4 text-xl mt-8 pb-4 ">
                             <a
                                 href={`${user.facebook}`}
                                 target="_blank"
@@ -312,6 +359,7 @@ END:VCARD
                                 <FaTwitter />
                             </a>
                         </div>
+
 
                         <div className="fixed bottom-16 right-2 z-10">
                             <a
@@ -386,18 +434,19 @@ END:VCARD
 
 
             <div
-            className='contactform'
+                className='contactform'
                 style={{
                     background: 'repeating-linear-gradient(45deg, black, #413d48 70px)',
                     backgroundAttachment: 'fixed',
                     height: '120vh',
                     overflowX: 'auto',
                     overflowY: 'hidden',
-                    paddingBottom: '600px',
-                   marginTop:'-100px'
+                    paddingBottom: '900px',
+                    marginTop: '-150px',
+                    // marginBottom:'100px'
                 }}
             >
-                <div className="flex justify-center items-center min-h-screen">
+                <div className="flex justify-center items-center min-h-screen mt-40">
                     <form className="bg-white shadow-lg rounded-lg p-8 max-w-md w-full">
                         <div className='bg-gray-800 -ml-8 -mr-8 '> <h3 className="text-xl  mb-6 -mt-8 p-4   text-center text-white">Contact Us</h3></div>
                         <div className="mb-4">
@@ -412,7 +461,7 @@ END:VCARD
                         </div>
 
                         <div className="mb-4">
-                            
+
                             <input
                                 type="text"
                                 id="c_contact"
@@ -454,14 +503,14 @@ END:VCARD
                                 Send!
                             </button>
                         </div>
-                        
+
                         <div className="text-center mt-10">
                             <button
                                 type="submit"
                                 name="email_to_client"
                                 className="w-60 bg-black text-white p-2 rounded-full font-semibold hover:bg-gray-800 transition-colors"
                             >
-                               CREATE YOUR DIGICARD
+                                CREATE YOUR DIGICARD
                             </button>
                         </div>
                     </form>
@@ -469,13 +518,14 @@ END:VCARD
             </div>
 
 
- <style jsx>{`
-        @media (max-width: 1024px) {
+            <style jsx>{`
+        @media (max-width: 1037px) {
             /* Tablet view */
             .contactform {
-                margin-top: -500px !important; /* Reduce space for tablets */
+                margin-top: -400px !important; /* Reduce space for tablets */
                 padding:30px
             }
+               
         }
       
     `}</style>
@@ -483,3 +533,5 @@ END:VCARD
 
     );
 }
+
+// href=`https://api.whatsapp.com/send?text=Hello%2C%0D%0APleasure+connecting+with+you%21%21+Below+are+my+details%3A%0D%0A%0D%0ADigital+Business+Card%2FProfile%3A%0D%0Ahttps%3A%2F%2Fdigiswipe.in%2F${formData.userName}%0D%0A%0D%0ASave+to+Contacts+Directly%3A%0D%0Ahttps%3A%2F%2Fdigiswipe.in%2F${formData.userName}.vcf+%0D%0A%0D%0A%2ANote%3A+If+this+is+our+first+chat%2C+reply+hi+and+then+click+the+links+above.+%28Wapp+Policy%29%2A+%0D%0A%0D%0ARegards%2C+%0D%0A${formData.name}+%0D%0A${formData.designation}%0D%0A${formData.companyName}+%0D%0A%0D%0APowered+by%3A+digiswipe.in+&phone=`
