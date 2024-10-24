@@ -21,13 +21,13 @@ const handler = async (req, res) => {
                 to: "kunalkhelkar2000@gmail.com",
                 subject: "Enquiry from Digi_Card ",
                 html: `
-                <h4>Name ${name}</h4>
-                <h4>Email ${email}</h4>
-                <h4>Phone number ${phone}</h4>
-                <h4>Address ${address}</h4>
-                <h4>Message ${message}</h4>
-                <h4>Query ${query}</h4>
-                <h4>From  ${name}</h4>                
+                <h4>Name :=>  ${name}</h4>
+                <h4>Email :=>  ${email}</h4>
+                <h4>Phone number :=>   ${phone}</h4>
+                <h4>Address :=>  ${address}</h4>
+                <h4>Message :=>  ${message}</h4>
+                <h4>Query :=>  ${query}</h4>
+                <h4>From  :=>  ${name}</h4>                
                 `
             }
             transporter.sendMail(mailOption, (err, info) => {

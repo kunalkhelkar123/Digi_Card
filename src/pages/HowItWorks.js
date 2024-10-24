@@ -9,9 +9,9 @@ export default function HowItWorks() {
 
                 <div className="flex flex-col md:flex-row md:justify-between mb-40">
                     {/* Card 1: Create your Card */}
-                    <div className="bg-white p-6 rounded-xl shadow-lg mb-8 md:mb-0 md:w-1/4 h-64 transform transition duration-300 hover:scale-105 hover:bg-green-400">
+                    <div className="bg-white p-6 rounded-xl shadow-lg mb-8 md:mb-0 md:w-1/4 h-64 transform transition duration-300 hover:scale-105 hover:bg-green-300">
                         <div className="flex flex-col items-center text-center h-full justify-center">
-                            <div className="text-green-500 text-4xl mb-4">
+                            <div className="text-green-500  text-4xl mb-4">
                                 <i className="fa fa-edit"></i>
                             </div>
                             <div className="text-xl font-semibold mb-2">

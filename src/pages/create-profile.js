@@ -268,7 +268,7 @@ export default function Createprofile() {
 
                         {/* Website input */}
                         <div>
-                            <label htmlFor="website" className="block text-sm font-medium text-gray-700">Website</label>
+                            <label htmlFor="website" className="block text-sm font-medium text-gray-700">Company Website </label>
                             <input
                                 id="website"
                                 name="website"

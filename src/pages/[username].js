@@ -23,15 +23,55 @@ export default function UserProfile({ user, isVCF }) {
     const [countriecode, setCountriecode] = useState('');
     const [whatsappnum, setWhatsappnum] = useState('');
     const [showQrCode, setShowQrCode] = useState(false);
-    const [phone, setPhone] = useState('');
-    const handleWhatsAppShare = () => {
-        if (phone) {
-            const whatsappUrl = `https://api.whatsapp.com/send?text=Hi, ${user.name},&phone=91${user.mobile}`
-            window.open(whatsappUrl, '_blank');
-        } else {
-            alert('Please enter a valid phone number');
-        }
+
+
+
+    const [formData, setFormData] = useState({
+        name: '',
+        email: '',
+        phone: '',
+        address: '',
+        message: '',
+        query: '',
+    });
+
+    const handleInputChange = (e) => {
+        setFormData({ ...formData, [e.target.name]: e.target.value });
     };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            console.log("check 1");
+        
+            const response = await fetch('/api/send-mail', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json', // Specify JSON content type
+                },
+                body: JSON.stringify(formData), // Send formData directly as JSON
+            });
+        
+            console.log("check 4");
+        
+            const data2 = await response.json(); // Parse the JSON response
+        
+            if (data2.success) {
+                // Save the JWT token to sessionStorage
+                alert('Query submitted successfully!');
+                setFormData({ name: '', email: '', phone: '', address: '', message: '', query: '' });
+            } else {
+                console.log("Message sending  failed!");
+                alert('Message sending  failed!');
+            }
+        } catch (error) {
+            console.error('Error occurred while submitting form:', error);
+        }
+        
+    }
+
+
+  
     const handleDownload = () => {
         // Create an anchor element to download the QR code
         const link = document.createElement('a');
@@ -218,7 +258,7 @@ END:VCARD
                                     .join(' ')} {/* Join the words back with spaces */}
                             </p>
 
-                            <a rel="noopener noreferrer" target="_blank" href={`https://${user.website}`}>
+                            <a rel="noopener noreferrer" target="_blank" href={`${user.website}`}>
                                 <p className="text-gray-600 font-bold hover:text-black text-l tracking-wider">
                                     {user.companyName}
                                 </p>
@@ -447,13 +487,15 @@ END:VCARD
                 }}
             >
                 <div className="flex justify-center items-center min-h-screen mt-40">
-                    <form className="bg-white shadow-lg rounded-lg p-8 max-w-md w-full">
+                    <form onSubmit={handleSubmit} className="bg-white shadow-lg rounded-lg p-8 max-w-md w-full">
                         <div className='bg-gray-800 -ml-8 -mr-8 '> <h3 className="text-xl  mb-6 -mt-8 p-4   text-center text-white">Contact Us</h3></div>
                         <div className="mb-4">
                             <input
                                 type="text"
-                                id="c_name"
-                                name="c_name"
+                                id="name"
+                                name="name"
+                                value={formData.name}
+                            onChange={handleInputChange}
                                 placeholder="Enter Your Name"
                                 className="w-full p-2 border border-gray-300  focus:ring-2 focus:ring-gray-500 focus:outline-none"
                                 required
@@ -463,9 +505,11 @@ END:VCARD
                         <div className="mb-4">
 
                             <input
-                                type="text"
-                                id="c_contact"
-                                name="c_contact"
+                                type="number"
+                                id="phone"
+                                name="phone"
+                                value={formData.phone}
+                            onChange={handleInputChange}
                                 maxLength="13"
                                 placeholder="Enter Your Mobile No"
                                 className="w-full p-2 border border-gray-300  focus:ring-2 focus:ring-gray-500 focus:outline-none"
@@ -476,8 +520,10 @@ END:VCARD
                         <div className="mb-4">
                             <input
                                 type="email"
-                                id="c_email"
-                                name="c_email"
+                                id="email"
+                                name="email"
+                                value={formData.email}
+                            onChange={handleInputChange}
                                 placeholder="Enter Your Email Address"
                                 className="w-full p-2 border border-gray-300  focus:ring-2 focus:ring-gray-500 focus:outline-none"
                             />
@@ -485,8 +531,10 @@ END:VCARD
 
                         <div className="mb-6">
                             <textarea
-                                id="c_msg"
-                                name="c_msg"
+                                id="message"
+                                name="message"
+                                value={formData.message}
+                            onChange={handleInputChange}
                                 placeholder="Enter your Message or Query"
                                 className="w-full p-2 border border-gray-300  focus:ring-2 focus:ring-gray-500 focus:outline-none"
                                 rows="2"
@@ -497,7 +545,7 @@ END:VCARD
                         <div className="text-center">
                             <button
                                 type="submit"
-                                name="email_to_client"
+                                name="submit"
                                 className="w-40 bg-gray-700 text-white p-2 rounded-md tracking-wider hover:bg-black transition-colors"
                             >
                                 Send!
@@ -505,13 +553,13 @@ END:VCARD
                         </div>
 
                         <div className="text-center mt-10">
-                            <button
-                                type="submit"
+                            <a href='/create-profile'><button
+                                type="button"
                                 name="email_to_client"
                                 className="w-60 bg-black text-white p-2 rounded-full font-semibold hover:bg-gray-800 transition-colors"
                             >
                                 CREATE YOUR DIGICARD
-                            </button>
+                            </button></a>
                         </div>
                     </form>
                 </div>
