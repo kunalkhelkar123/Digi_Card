@@ -8,25 +8,14 @@ import { FaPhone, FaUserPlus, FaFacebookF, FaInstagram, FaTwitter, FaWhatsapp, F
 import { useState } from 'react';
 
 export async function getServerSideProps({ query }) {
-    console.log("check 1")
     const { username } = query;
-    console.log("check 2")
-
     const sanitizedUsername = username.replace('.vcf', ''); // Remove .vcf for DB query
     console.log("check 3 sanitizedUsername ", sanitizedUsername)
-
     // const [rows] = await connection.query('SELECT * FROM users WHERE name = ?', [sanitizedUsername]);
     const [rows] = await connection.query('SELECT * FROM users WHERE userName = ?', [sanitizedUsername]);
-
-    console.log("check 4 ")
-
-
     const user = rows.length > 0 ? rows[0] : null;
-
-
     return { props: { user, isVCF: username.endsWith('.vcf') } }; // Pass the vCard flag
 }
-
 export default function UserProfile({ user, isVCF }) {
     const [showQrCode, setShowQrCode] = useState(false);
     const [phone, setPhone] = useState('');
@@ -38,9 +27,6 @@ export default function UserProfile({ user, isVCF }) {
             alert('Please enter a valid phone number');
         }
     };
-
-
-
     const handleDownload = () => {
         // Create an anchor element to download the QR code
         const link = document.createElement('a');
@@ -50,7 +36,6 @@ export default function UserProfile({ user, isVCF }) {
         link.click();
         document.body.removeChild(link);
     };
-
 
     // Function to generate and download vCard
     const downloadVCard = useCallback(() => {
@@ -167,13 +152,7 @@ END:VCARD
                             }}
                         >
 
-
-
                             {/* {white shape } */}
-
-
-
-
                             <div
                                 style={{
                                     position: 'absolute',
@@ -192,9 +171,7 @@ END:VCARD
                                     src={`/images/white-shape3.png`}
                                     alt="Profile"
                                     className=" ml-0.5 h-24 mt-2"
-
                                     width={453}
-
                                     height={100}
 
                                 />
@@ -206,7 +183,7 @@ END:VCARD
                                     bottom: '-100px', // Position the profile image so it's partially over the background
                                     left: '50%',
                                     transform: 'translateX(-50%)', // Center the image horizontally
-                                    zIndex: '10', // Make sure the profile image is on top of the background
+                                    // zIndex: '10', // Make sure the profile image is on top of the background
                                 }}
                             >
                                 <Image
@@ -237,7 +214,7 @@ END:VCARD
                             </p>
 
                             <a rel="noopener noreferrer" target="_blank" href={`https://${user.website}`}>
-                                <p className="text-gray-600 font-bold hover:text-black text-l tracking-wide">
+                                <p className="text-gray-600 font-bold hover:text-black text-l tracking-wider">
                                     {user.companyName}
                                 </p>
                             </a>
@@ -250,9 +227,9 @@ END:VCARD
                                     href={`tel:+91${user.mobile}`}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="text-blue-600 border-2 border-blue-800 hover:border-blue-600 rounded-full p-2 transition-transform transform hover:scale-110 hover:bg-blue-600 hover:text-white flex items-center justify-center"
+                                    className=" hover:text-blue border-2 bg-blue-600 border-white hover:border-blue-600 rounded-full p-2 transition-transform transform hover:scale-120 hover:bg-white hover:text-white flex items-center justify-center"
                                 >
-                                    <FaPhone className="w-4 h-4 md:w-6 md:h-6 text-blue-800 hover:text-white" title="Call" />
+                                    <FaPhone className="w-4 h-4 md:w-6 md:h-6 text-white hover:text-blue-800" title="Call" />
                                 </a>
                             </div>
                             <div className="flex-shrink-0">
@@ -260,7 +237,7 @@ END:VCARD
                                     href={`https://api.whatsapp.com/send?text=Hi, ${user.name},&phone=91${user.mobile}`}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="text-white bg-green-500 border-2 border-green-500 rounded-full p-2 transition-transform transform hover:scale-110 hover:bg-white hover:text-green-500 flex items-center justify-center"
+                                    className="text-white bg-green-500 border-2 border-green-500 rounded-full p-2 transition-transform transform hover:scale-120 hover:bg-white hover:text-green-500 flex items-center justify-center"
                                 >
                                     <FaWhatsapp className="w-4 h-4 md:w-6 md:h-6" title="WhatsApp" />
                                 </a>
@@ -270,7 +247,7 @@ END:VCARD
                                     href={`${user.companyLocation}`}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="text-red-500 border-2 border-red-500 rounded-full p-2 transition-transform transform hover:scale-110 hover:bg-red-500 hover:text-white flex items-center justify-center"
+                                    className="text-white border-2 hover:border-red-600 rounded-full p-2 transition-transform transform hover:scale-120 hover:bg-white bg-red-500 hover:text-red-500 flex items-center justify-center"
                                 >
                                     <FaMapMarkerAlt className="w-4 h-4 md:w-6 md:h-6" title="Location" />
                                 </a>
@@ -279,7 +256,7 @@ END:VCARD
                                 <a
                                     href={`mailto:${user.email}`}
                                     rel="noopener noreferrer"
-                                    className="text-gray-600 border-2 border-gray-600 rounded-full p-2 transition-transform transform hover:scale-110 hover:bg-gray-600 hover:text-white flex items-center justify-center"
+                                    className="text-white border-2 hover:border-gray-600 rounded-full bg-gray-800 p-2 transition-transform transform hover:scale-120 hover:bg-white hover:text-gray-600 flex items-center justify-center"
                                 >
                                     <FaEnvelope className="w-4 h-4 md:w-6 md:h-6" title="Email" />
                                 </a>
@@ -289,7 +266,7 @@ END:VCARD
                                     href={`https://${user.website}`}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="text-blue-600 border-2 border-blue-600 rounded-full p-2 transition-transform transform hover:scale-110 hover:bg-blue-600 hover:text-white flex items-center justify-center"
+                                    className="text-white border-2 border-blue-600 rounded-full p-2 bg-blue-600 transition-transform transform hover:scale-120 hover:bg-white hover:text-blue-600 flex items-center justify-center"
                                 >
                                     <FaGlobe className="w-4 h-4 md:w-6 md:h-6" title="Website" />
                                 </a>
@@ -297,20 +274,24 @@ END:VCARD
                         </div>
 
                         <div className="flex justify-center ">
-                            <a href={`/${user.name}.vcf`} rel="noopener noreferrer">
-                                <button className="bg-gray-700 text-white px-4 py-2 rounded-lg flex items-center hover:bg-black">
+                            <a href={`/${user.userName}.vcf`} rel="noopener noreferrer">
+                                <button  className="bg-gray-700 text-white px-4 py-2 shadow-xl flex items-center hover:bg-black">
                                     <FaUserPlus className="mr-2" />
                                     Save contact
                                 </button>
+
+                                
                             </a>
+
                         </div>
+                        {/* <button onClick={downloadVCard()}>save contact </button> */}
 
                         <div className="flex justify-center space-x-4 text-xl mt-4 pb-4 ">
                             <a
                                 href={`${user.facebook}`}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="text-blue-600 border-2 border-blue-600 rounded-full p-2 transition-transform transform hover:scale-110 hover:bg-blue-600 hover:text-white"
+                                className="text-white border-2 border-blue-600 rounded-full p-2 transition-transform transform hover:scale-120 hover:bg-white bg-blue-600 hover:text-blue-600"
                             >
                                 <FaFacebookF />
                             </a>
@@ -318,7 +299,7 @@ END:VCARD
                                 href={`${user.instagram}`}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="text-pink-600 border-2 border-pink-600 rounded-full p-2 transition-transform transform hover:scale-110 hover:bg-pink-600 hover:text-white"
+                                className="text-white border-2 border-red-600 rounded-full p-2 transition-transform transform hover:scale-120 hover:bg-white  bg-red-600 hover:text-red-600"
                             >
                                 <FaInstagram />
                             </a>
@@ -326,7 +307,7 @@ END:VCARD
                                 href={`${user.twitter}`}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="text-blue-400 border-2 border-blue-400 rounded-full p-2 transition-transform transform hover:scale-110 hover:bg-blue-600 hover:text-white"
+                                className="text-white border-2 border-blue-600 rounded-full p-2 transition-transform transform hover:scale-120 hover:bg-white  bg-blue-600 hover:text-blue-600"
                             >
                                 <FaTwitter />
                             </a>
@@ -334,7 +315,7 @@ END:VCARD
 
                         <div className="fixed bottom-16 right-2 z-10">
                             <a
-                                href={`/${user.name}.vcf`}
+                                href={`/${user.userName}.vcf`}
                                 className="relative pulse-ring2 pulse-button bg-black text-white px-6 py-3 rounded-full flex items-center justify-center transition duration-200 overflow-hidden"
                             >
                                 <span className="absolute inset-0 pulse-ring"></span>
@@ -372,11 +353,132 @@ END:VCARD
                             <FaQrcode className="text-xl text-black" id="qr_box_pop" />
                             <div className="link_btn text-black">Scan QR</div>
                         </div>
+                        {showQrCode && (
+                            <div className="qr-code-modal z-[1000] fixed top-0 left-0 right-0 bottom-0 bg-gray-900 bg-opacity-75 flex justify-center items-center">
+                                <div className="bg-white p-4 rounded ">
+                                    {/* <h2 className="text-lg qrcode  text-black">Your QR Code</h2> */}
+                                    <Image src={`/api/get-image?fileName=${user.qrCode}`} alt={`https://digiswipe.in/${user.qrCode}`} height={500} width={500} className="mb-4 qrcode" />
+                                    {/* src={`https://digiswipe.in/${user.qrCode}`} */}
+                                    {/* src={`/api/get-image?fileName=${user.profilePicture}`} */}
+
+
+                                    <button
+                                        onClick={handleDownload}
+                                        className="bg-blue-500 ml-8 text-white px-4 py-2 rounded"
+                                    >
+                                        Download QR Code
+                                    </button>
+                                    <button
+                                        onClick={() => setShowQrCode(false)}
+                                        className="ml-12 bg-red-500 text-white px-4 py-2 rounded"
+                                    >
+                                        Close
+                                    </button>
+                                </div>
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>
 
 
+            {/* {contact formm   } */}
+
+
+            <div
+            className='contactform'
+                style={{
+                    background: 'repeating-linear-gradient(45deg, black, #413d48 70px)',
+                    backgroundAttachment: 'fixed',
+                    height: '120vh',
+                    overflowX: 'auto',
+                    overflowY: 'hidden',
+                    paddingBottom: '600px',
+                   marginTop:'-100px'
+                }}
+            >
+                <div className="flex justify-center items-center min-h-screen">
+                    <form className="bg-white shadow-lg rounded-lg p-8 max-w-md w-full">
+                        <div className='bg-gray-800 -ml-8 -mr-8 '> <h3 className="text-xl  mb-6 -mt-8 p-4   text-center text-white">Contact Us</h3></div>
+                        <div className="mb-4">
+                            <input
+                                type="text"
+                                id="c_name"
+                                name="c_name"
+                                placeholder="Enter Your Name"
+                                className="w-full p-2 border border-gray-300  focus:ring-2 focus:ring-gray-500 focus:outline-none"
+                                required
+                            />
+                        </div>
+
+                        <div className="mb-4">
+                            
+                            <input
+                                type="text"
+                                id="c_contact"
+                                name="c_contact"
+                                maxLength="13"
+                                placeholder="Enter Your Mobile No"
+                                className="w-full p-2 border border-gray-300  focus:ring-2 focus:ring-gray-500 focus:outline-none"
+                                required
+                            />
+                        </div>
+
+                        <div className="mb-4">
+                            <input
+                                type="email"
+                                id="c_email"
+                                name="c_email"
+                                placeholder="Enter Your Email Address"
+                                className="w-full p-2 border border-gray-300  focus:ring-2 focus:ring-gray-500 focus:outline-none"
+                            />
+                        </div>
+
+                        <div className="mb-6">
+                            <textarea
+                                id="c_msg"
+                                name="c_msg"
+                                placeholder="Enter your Message or Query"
+                                className="w-full p-2 border border-gray-300  focus:ring-2 focus:ring-gray-500 focus:outline-none"
+                                rows="2"
+                                required
+                            ></textarea>
+                        </div>
+
+                        <div className="text-center">
+                            <button
+                                type="submit"
+                                name="email_to_client"
+                                className="w-40 bg-gray-700 text-white p-2 rounded-md tracking-wider hover:bg-black transition-colors"
+                            >
+                                Send!
+                            </button>
+                        </div>
+                        
+                        <div className="text-center mt-10">
+                            <button
+                                type="submit"
+                                name="email_to_client"
+                                className="w-60 bg-black text-white p-2 rounded-full font-semibold hover:bg-gray-800 transition-colors"
+                            >
+                               CREATE YOUR DIGICARD
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+
+ <style jsx>{`
+        @media (max-width: 1024px) {
+            /* Tablet view */
+            .contactform {
+                margin-top: -500px !important; /* Reduce space for tablets */
+                padding:30px
+            }
+        }
+      
+    `}</style>
         </>
 
     );
