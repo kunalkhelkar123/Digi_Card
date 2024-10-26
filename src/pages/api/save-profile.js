@@ -40,7 +40,7 @@ export default function handler(req, res) {
         const backgroundPhoto = req.files['backgroundPhoto'][0].filename;
 
         // Create the profile URL
-        const profileUrl = `${process.env.BASE_URL}/${name}`;
+        const profileUrl = `${process.env.BASE_URL}/${userName}`;
 
         // Generate QR Code path and final image path
         const qrCodePath = `${Date.now()}-qr.png`;
