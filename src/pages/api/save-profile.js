@@ -12,6 +12,13 @@ export const config = {
 };
 
 export default function handler(req, res) {
+
+ 
+
+    const current_Date = new Date();
+    const registrationDate  = current_Date.toLocaleDateString();
+    console.log("formattedDateTime", registrationDate );
+    
     multer.fields([
         { name: 'profilePicture', maxCount: 1 },
         { name: 'backgroundPhoto', maxCount: 1 },
@@ -97,8 +104,9 @@ export default function handler(req, res) {
                         linkedin, 
                         profilePicture, 
                         qrCode,
-                        backgroundPhoto
-                    ) VALUES (?, ?, ?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)`,
+                        backgroundPhoto,
+                        registrationDate 
+                    ) VALUES (?, ?, ?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?)`,
                     [
                         name,
                         userName,
@@ -117,6 +125,7 @@ export default function handler(req, res) {
                         profilePicture,
                         qrCodePath,
                         backgroundPhoto,
+                        registrationDate 
                     ]
                 );
 

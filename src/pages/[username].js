@@ -8,6 +8,8 @@ import { FaPhone, FaUserPlus, FaFacebookF, FaInstagram, FaTwitter, FaWhatsapp, F
 
 
 export async function getServerSideProps({ query }) {
+
+
     const { username } = query;
     const sanitizedUsername = username.replace('.vcf', ''); // Remove .vcf for DB query
     console.log("check 3 sanitizedUsername ", sanitizedUsername)
@@ -334,8 +336,7 @@ END:VCARD
                             <a
                                 target="_blank"
                                 href={`https://api.whatsapp.com/send?text=Hello%2C%0D%0APleasure+connecting+with+you%21%21+Below+are+my+details%3A%0D%0A%0D%0ADigital+Business+Card%2FProfile%3A%0D%0Ahttps%3A%2F%2Fdigiswipe.in%2F${user.userName}%0D%0A%0D%0ASave+to+Contacts+Directly%3A%0D%0Ahttps%3A%2F%2Fdigiswipe.in%2F${user.userName}.vcf+%0D%0A%0D%0A%2ANote%3A+If+this+is+our+first+chat%2C+reply+hi+and+then+click+the+links+above.+%28Wapp+Policy%29%2A+%0D%0A%0D%0ARegards%2C+%0D%0A${user.name}+%0D%0A${user.designation}%0D%0A${user.companyName}+%0D%0A%0D%0APowered+by%3A+digiswipe.in+&phone=${countriecode}${whatsappnum}`}
-                            >
-                                {console.log("whatsapp link ",`https://api.whatsapp.com/send?text=Hello%2C%0D%0APleasure+connecting+with+you%21%21+Below+are+my+details%3A%0D%0A%0D%0ADigital+Business+Card%2FProfile%3A%0D%0Ahttps%3A%2F%2Fdigiswipe.in%2F${user.userName}%0D%0A%0D%0ASave+to+Contacts+Directly%3A%0D%0Ahttps%3A%2F%2Fdigiswipe.in%2F${user.userName}.vcf+%0D%0A%0D%0A%2ANote%3A+If+this+is+our+first+chat%2C+reply+hi+and+then+click+the+links+above.+%28Wapp+Policy%29%2A+%0D%0A%0D%0ARegards%2C+%0D%0A${user.name}+%0D%0A${user.designation}%0D%0A${user.companyName}+%0D%0A%0D%0APowered+by%3A+digiswipe.in+&phone=${countriecode}${whatsappnum}`)}
+                            >                    
                                 <button className="bg-green-600 text-white h-10 w-20 shadow-xl flex items-center hover:bg-green-600 ml-2">
                                     <FaWhatsapp className="mr-1 ml-2" />
                                     Share
