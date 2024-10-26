@@ -545,7 +545,7 @@ END:VCARD
                         </div>
 
                         <div className="text-center mt-10">
-                            <Link to='/create-profile'><button
+                            <Link href="/create-profile"> <button
                                 type="button"
                                 name="email_to_client"
                                 className="w-60 bg-black text-white p-2 rounded-full font-semibold hover:bg-gray-800 transition-colors"
