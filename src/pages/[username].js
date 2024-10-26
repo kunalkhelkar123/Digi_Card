@@ -17,15 +17,10 @@ export async function getServerSideProps({ query }) {
     return { props: { user, isVCF: username.endsWith('.vcf') } }; // Pass the vCard flag
 }
 
-
-
 export default function UserProfile({ user, isVCF }) {
     const [countriecode, setCountriecode] = useState('');
     const [whatsappnum, setWhatsappnum] = useState('');
     const [showQrCode, setShowQrCode] = useState(false);
-
-
-
     const [formData, setFormData] = useState({
         name: '',
         email: '',
@@ -38,7 +33,6 @@ export default function UserProfile({ user, isVCF }) {
     const handleInputChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
-
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
@@ -51,11 +45,8 @@ export default function UserProfile({ user, isVCF }) {
                 },
                 body: JSON.stringify(formData), // Send formData directly as JSON
             });
-        
             console.log("check 4");
-        
-            const data2 = await response.json(); // Parse the JSON response
-        
+            const data2 = await response.json(); // Parse the JSON response        
             if (data2.success) {
                 // Save the JWT token to sessionStorage
                 alert('Query submitted successfully!');
@@ -67,11 +58,9 @@ export default function UserProfile({ user, isVCF }) {
         } catch (error) {
             console.error('Error occurred while submitting form:', error);
         }
-        
     }
 
 
-  
     const handleDownload = () => {
         // Create an anchor element to download the QR code
         const link = document.createElement('a');
@@ -161,11 +150,9 @@ END:VCARD
         }, 1);
         return; // Optional loading message
     }
-
     // Render user profile information if not a VCF request
     return (
         <>
-
             <div
 
                 style={{
@@ -404,13 +391,18 @@ END:VCARD
                         <div className="fixed bottom-16 right-2 z-10">
                             <a
                                 href={`/${user.userName}.vcf`}
-                                className="relative pulse-ring2 pulse-button bg-black text-white px-6 py-3 rounded-full flex items-center justify-center transition duration-200 overflow-hidden"
+                                className="  bg-black text-white px-6 py-3 rounded-full flex items-center justify-center transition duration-200 overflow-hidden"
                             >
                                 <span className="absolute inset-0 pulse-ring"></span>
-                                <FaUserPlus className="mr-2" />
-                                <div className="relative text-center z-10">
-                                    <span className="block text-sm md:text-base">Save</span>
-                                    <span className="block text-sm md:text-base">Contact</span>
+                                {/* <FaUserPlus className="mr-2" /> */}
+                                <div className=" text-center z-10">
+                                    <span style={{
+                                        fontSize:'15px'
+                                    }} className="block  text-sm md:text-base">Save</span>
+                                    <span style={{
+                                        fontSize:'15px',
+                                        
+                                    }} className="block text-sm md:text-base">Contact</span>
                                 </div>
                             </a>
                         </div>
@@ -553,13 +545,13 @@ END:VCARD
                         </div>
 
                         <div className="text-center mt-10">
-                            <a href='/create-profile'><button
+                            <Link to='/create-profile'><button
                                 type="button"
                                 name="email_to_client"
                                 className="w-60 bg-black text-white p-2 rounded-full font-semibold hover:bg-gray-800 transition-colors"
                             >
                                 CREATE YOUR DIGICARD
-                            </button></a>
+                            </button></Link>
                         </div>
                     </form>
                 </div>
