@@ -65,7 +65,7 @@ export default function UserProfile({ user, isVCF }) {
         // Create an anchor element to download the QR code
         const link = document.createElement('a');
         link.href = `/${user.qrCode}` // Using the path from the user object
-        link.download = 'qr_code.png'; // Name of the downloaded file
+        link.download = `Business_Profilr_QR_${user.name}.png`; // Name of the downloaded file
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
