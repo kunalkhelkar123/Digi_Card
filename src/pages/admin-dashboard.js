@@ -75,6 +75,7 @@ export default function AdminDashboard() {
         setFormData({
             id: user.id,
             name: user.name,
+            userName: user.userName,
             address: user.address,
             email: user.email,
             mobile: user.mobile,
@@ -331,6 +332,16 @@ export default function AdminDashboard() {
                                     name="name"
                                     className="border border-gray-300 rounded-md p-2 w-full"
                                     value={selectedUser.name}
+                                    onChange={handleInputChange}
+                                />
+                            </div>
+                            <div>
+                                <label className="block font-medium">UserName:</label>
+                                <input
+                                    type="text"
+                                    name="name"
+                                    className="border border-gray-300 rounded-md p-2 w-full"
+                                    value={selectedUser.userName}
                                     onChange={handleInputChange}
                                 />
                             </div>
