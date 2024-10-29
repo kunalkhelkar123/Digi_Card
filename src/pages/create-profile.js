@@ -1,4 +1,6 @@
 import { useEffect, useState } from 'react';
+import Cropper from "react-image-crop"; // Import the Cropper component
+import "react-image-crop/dist/ReactCrop.css"; // Import the Cropper styles
 import Navbar from './NavbarTwo';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -7,6 +9,7 @@ import Footer from './Footer';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { FaClipboard } from 'react-icons/fa';
+
 export default function Createprofile() {
     // State to hold form data including file uploads
     const [formData, setFormData] = useState({
@@ -29,10 +32,12 @@ export default function Createprofile() {
     });
     const [isuserNameexist, setuserNameexist] = useState(false)
     const [showSuccessPopup, setShowSuccessPopup] = useState(false);
+    const [isSpaceInUserName, setIsSpaceInUserName] = useState(false);
+    const [crop, setCrop] = useState({ unit: "%", width: 30, aspect: 1 });
+    const [image, setImage] = useState(null); // To hold the image file
+    const [preview, setPreview] = useState(null); // For image preview
 
-
-
-
+    // Function to check if username already exists
     const checkUserName = async (e) => {
         const userName = e.target.value;
         const checkResponse = await fetch('/api/checkUserNameexists', {
@@ -45,35 +50,91 @@ export default function Createprofile() {
         const checkResult = await checkResponse.json();
         if (checkResult.exists) {
             setuserNameexist(true)
-            // alert("Username already exist")
-            toast.error("Username already exist ")
+            toast.error("Username already exists.")
             console.log("checkResponse username exist true  ", checkResult.exists)
         } else {
             setuserNameexist(false)
             console.log("checkResponse username exist false  ", checkResult.exists)
-
         }
-
     }
-    // Function to handle text inputs
+
+    // Check for spaces in username
+    const checkSpaceInUserName = (e) => {
+        const { value } = e.target;
+        if (value.includes(" ")) {
+            setIsSpaceInUserName(true);
+        } else {
+            setIsSpaceInUserName(false);
+            // If no space, run other validations
+            setFormData({ ...formData, [e.target.name]: e.target.value });
+            checkUserName(e);
+        }
+    }
+
+    // Handle input changes
     const handleInputChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
-    // Function to handle file inputs
-    const handleFileChange = (e) => {
-        setFormData({ ...formData, [e.target.name]: e.target.files[0] }); // Ensure correct file assignment
-    };
-    // Function to handle form submission
-    const reloadpage = () => {
-        window.location.reload()
 
+    // Handle file changes with cropping and size validation
+    const handleFileChange = (e) => {
+        const file = e.target.files[0];
+
+        // Check file size (5 MB limit)
+        if (file && file.size > 5 * 1024 * 1024) {
+            toast.error("File size should be less than 5MB!");
+            return;
+        }
+
+        const reader = new FileReader();
+        reader.onloadend = () => {
+            setPreview(reader.result); // Set preview to display the uploaded image
+            setImage(reader.result); // Set the image for cropping
+        };
+        if (file) {
+            reader.readAsDataURL(file); // Read file as data URL
+            setFormData({ ...formData, [e.target.name]: file }); // Ensure correct file assignment
+        }
+    };
+
+    // Function to handle image cropping
+    const handleCropComplete = (crop) => {
+        if (image && crop.width && crop.height) {
+            const croppedImageUrl = getCroppedImg(image, crop);
+            setFormData({ ...formData, profilePicture: croppedImageUrl }); // Update formData with cropped image
+        }
+    };
+
+    // Function to get cropped image from original image
+    const getCroppedImg = (imageSrc, crop) => {
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        const image = new Image();
+        image.src = imageSrc;
+        canvas.width = crop.width;
+        canvas.height = crop.height;
+
+        ctx.drawImage(
+            image,
+            crop.x,
+            crop.y,
+            crop.width,
+            crop.height,
+            0,
+            0,
+            crop.width,
+            crop.height
+        );
+
+        return canvas.toDataURL('image/jpeg'); // Return the cropped image as a data URL
+    };
+
+    // Function to reload the page
+    const reloadpage = () => {
+        window.location.reload();
     }
 
-
-
-
-
-
+    // Handle form submission
     const handleSubmit = async (e) => {
         e.preventDefault(); // Prevent default form submission
 
@@ -87,38 +148,35 @@ export default function Createprofile() {
             }
 
             try {
-                console.log("check inside create-profile 2");
-
-                // Send the form data to the API endpoint for processing
-                const response = await fetch('/api/save-profile', {
-                    method: 'POST',
-                    body: data,
-                });
-
-                // Parse the JSON response
-                const checkResult = await response.json();
-
-                // Check if the request was successful
-                if (checkResult.success) {
-                    toast.success('profile created successfully!'); // Success notification
-                    setShowSuccessPopup(true);
-
-                    // Optionally, you can reload the page or navigate to another route here
-                    // setTimeout(() => window.location.reload(), 3000);
+                if (!isSpaceInUserName) {
+                    console.log("check inside create-profile 2");
+                    const response = await fetch('/api/save-profile', {
+                        method: 'POST',
+                        body: data,
+                    });
+                    const checkResult = await response.json();
+                    if (checkResult.success) {
+                        console.log("Profile created successfully!");
+                        toast.success('Profile created successfully!'); // Success notification
+                        setShowSuccessPopup(true);
+                    } else {
+                        console.log("Failed to create profile. Please try again.");
+                        toast.error('Failed to create profile. Please try again.');
+                    }
                 } else {
-                    toast.error('Failed to create profile. Please try again.');
+                    console.log("Username cannot contain space.");
+                    toast.error('Username cannot contain space.');
                 }
             } catch (error) {
                 console.log("check inside create-profile 4");
-                // Handle any errors that occurred during the API request
                 toast.error('An error occurred. Please try again.');
                 console.error(error); // Log the error for debugging
             }
         } else {
+            console.log("Username already exists.");
             toast.error('Username already exists.');
         }
     };
-
 
     return (
         <>
@@ -148,7 +206,7 @@ export default function Createprofile() {
                             />
                         </div>
                         {/* UserName input */}
-                        <div>
+                        {/* <div>
                             <label htmlFor="userName" className="block text-sm font-medium text-gray-700">Username</label>
                             <input
                                 id="userName"
@@ -164,7 +222,36 @@ export default function Createprofile() {
                                 className={isuserNameexist ? 'w-full p-3 border border-red-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-400 text-black' : 'w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 text-black'}
                             />
                             {isuserNameexist && <p className='text-red-600  text-sm' >  username already exists</p>}
+                        </div> */}
+
+
+
+                        <div>
+                            <label htmlFor="userName" className="block text-sm font-medium text-gray-700">Username</label>
+                            <input
+                                id="userName"
+                                name="userName"
+                                placeholder="Enter your username"
+                                onChange={(e) => {
+                                    handleInputChange(e)
+                                    checkSpaceInUserName(e)
+                                }}
+                                maxLength={20}
+                                required
+                                className={
+                                    isuserNameexist || isSpaceInUserName
+                                        ? 'w-full p-3 border border-red-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-400 text-black'
+                                        : 'w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 text-black'
+                                }
+                            />
+                            {isuserNameexist && (
+                                <p className='text-red-600 text-sm'>Username already exists</p>
+                            )}
+                            {isSpaceInUserName && (
+                                <p className='text-red-600 text-sm'>Username cannot contain spaces</p>
+                            )}
                         </div>
+
 
                         {/* Address input */}
                         <div>
@@ -338,7 +425,7 @@ export default function Createprofile() {
 
                         {/* profile Picture upload */}
                         <div>
-                            <label htmlFor="profilePicture" className="block text-sm font-medium text-gray-700">profile Picture</label>
+                            <label htmlFor="profilePicture" className="block text-sm font-medium text-gray-700">Profile Picture</label>
                             <input
                                 id="profilePicture"
                                 type="file"
@@ -349,6 +436,17 @@ export default function Createprofile() {
                                 className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 text-black"
                             />
                         </div>
+                        {preview && (
+                            <div>
+                                <Cropper
+                                    src={preview}
+                                    crop={crop}
+                                    onImageLoaded={setImage}
+                                    onComplete={handleCropComplete}
+                                    onChange={setCrop}
+                                />
+                            </div>
+                        )}
 
 
                         {/* Background Photo upload */}
@@ -443,7 +541,7 @@ export default function Createprofile() {
 
                 </div>
             </div>
-            <Footer/>
+            <Footer />
 
             <ToastContainer />
         </>

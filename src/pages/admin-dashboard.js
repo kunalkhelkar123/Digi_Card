@@ -153,9 +153,13 @@ export default function AdminDashboard() {
             },
             body: JSON.stringify({ userId }), // Stringify the object
         });
+        ;
+
 
         if (response.ok) {
-            setUsers(users.filter(user => user.id !== userId)); // Remove user from state
+            const deleteUser = await response.json();
+            window.location.reload();
+            setUsers(users.filter(user => deleteUser.id !== userId)); // Remove user from state
             setIsModalOpen(false); // Close modal if user was deleted
         } else {
             const error = await response.json(); // Parse the error response
@@ -169,7 +173,7 @@ export default function AdminDashboard() {
         setIsUpdating(false); // Reset updating state
     };
     const current_Date = new Date();
-    const registrationDate  = current_Date.toLocaleDateString();
+    const registrationDate = current_Date.toLocaleDateString();
 
     // Filter users based on the selected timeframe
     const filteredUsers = users.filter(user => {
@@ -270,15 +274,15 @@ export default function AdminDashboard() {
             <div className="overflow-x-auto bg-white rounded-lg shadow-md">
                 <table className="min-w-full">
                     <thead>
-                        <tr>
-                            <th className="border px-2 py-2 text-sm text-left text-gray-600">Sr. No</th>
-                            <th className="border px-2 py-2 text-sm text-left text-gray-600">Name</th>
-                            <th className="border px-2 py-2 text-sm text-left text-gray-600">Address</th>
-                            <th className="border px-2 py-2 text-left text-sm  text-gray-600">Mobile</th>
-                            <th className="border px-2 py-2  text-sm text-left text-gray-600">Email</th>
-                            <th className="border px-2 py-2  text-sm text-left text-gray-600">Registration Date</th>
-                            <th className="border px-2 py-2 text-sm  text-left text-gray-600">Status</th>
-                            <th className="border px-24 py-2 text-sm  text-left text-gray-600">Action</th>
+                        <tr style={{ backgroundColor: 'lightgray' }}  >
+                            <th className="border px-2 py-2 text-sm text-left text-black">Sr. No</th>
+                            <th className="border px-2 py-2 text-sm text-left text-balck">Name</th>
+                            <th className="border px-2 py-2 text-sm text-left text-black">Address</th>
+                            <th className="border px-2 py-2 text-left text-sm  text-black">Mobile</th>
+                            <th className="border px-2 py-2  text-sm text-left text-black">Email</th>
+                            <th className="border px-2 py-2  text-sm text-left text-black">Registration Date</th>
+                            <th className="border px-2 py-2 text-sm  text-left text-black">Status</th>
+                            <th className="border px-24 py-2 text-sm  text-left text-black">Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -339,7 +343,7 @@ export default function AdminDashboard() {
                                 <label className="block font-medium">UserName:</label>
                                 <input
                                     type="text"
-                                    name="name"
+                                    name="userName"
                                     className="border border-gray-300 rounded-md p-2 w-full"
                                     value={selectedUser.userName}
                                     onChange={handleInputChange}

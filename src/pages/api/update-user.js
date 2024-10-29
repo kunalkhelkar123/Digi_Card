@@ -23,6 +23,7 @@ export default function handler(req, res) {
         const {
             id, // Ensure this is included
             name,
+            userName,
             address,
             email,
             mobile,
@@ -74,6 +75,10 @@ export default function handler(req, res) {
         if (name) {
             updates.push('name = ?');
             values.push(name);
+        }
+        if (userName) {
+            updates.push('userName = ?');
+            values.push(userName);
         }
         if (address) {
             updates.push('address = ?');
