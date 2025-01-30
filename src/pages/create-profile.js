@@ -81,18 +81,18 @@ export default function Createprofile() {
         const file = e.target.files[0];
 
         // Check file size (5 MB limit)
-        if (file && file.size > 5 * 1024 * 1024) {
-            toast.error("File size should be less than 5MB!");
-            return;
-        }
+        // if (file && file.size > 5 * 1024 * 1024) {
+        //     toast.error("File size should be less than 5MB!");
+        //     return;
+        // }
 
-        const reader = new FileReader();
-        reader.onloadend = () => {
-            setPreview(reader.result); // Set preview to display the uploaded image
-            setImage(reader.result); // Set the image for cropping
-        };
+        // const reader = new FileReader();
+        // reader.onloadend = () => {
+        //     setPreview(reader.result); // Set preview to display the uploaded image
+        //     setImage(reader.result); // Set the image for cropping
+        // };
         if (file) {
-            reader.readAsDataURL(file); // Read file as data URL
+            // reader.readAsDataURL(file); // Read file as data URL
             setFormData({ ...formData, [e.target.name]: file }); // Ensure correct file assignment
         }
     };
@@ -148,6 +148,7 @@ export default function Createprofile() {
             }
 
             try {
+                console.log("profilelellelelelelel==>    ",formData.profilePicture)
                 if (!isSpaceInUserName) {
                     console.log("check inside create-profile 2");
                     const response = await fetch('/api/save-profile', {

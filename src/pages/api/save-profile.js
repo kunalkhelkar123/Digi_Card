@@ -13,8 +13,6 @@ export const config = {
 
 export default function handler(req, res) {
 
- 
-
     const current_Date = new Date();
     const registrationDate  = current_Date.toLocaleDateString();
     console.log("formattedDateTime", registrationDate );
@@ -45,6 +43,9 @@ export default function handler(req, res) {
         // console.log("userName ==> " , userName)
         const profilePicture = req.files['profilePicture'][0].filename;
         const backgroundPhoto = req.files['backgroundPhoto'][0].filename;
+
+        console.log("profilePicture", profilePicture);
+        console.log("backgroundPhoto", backgroundPhoto);
 
         // Create the profile URL
         const profileUrl = `${process.env.BASE_URL}/${userName}`;

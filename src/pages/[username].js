@@ -32,14 +32,34 @@ export default function UserProfile({ user, isVCF }) {
         query: '',
     });
 
+    const current_Date = new Date(); // Get the current date
+    const subscription_start_date = current_Date.toLocaleDateString(); // Format the start date
+    
+    // Create a new date object for the subscription end date by copying current_Date
+    const subscription_end_date = new Date();
+    
+    // Add exactly 90 days to the start date
+    subscription_end_date.setDate(current_Date.getDate() + 3);
+    
+    // Format the end date to a readable format
+    const formatted_subscription_end_date = subscription_end_date.toLocaleDateString();
+    
+    console.log("Subscription Start Date:", subscription_start_date);
+    console.log("Subscription End Date:", formatted_subscription_end_date);
+    
+
     const handleInputChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
+
+
+
+
             console.log("check 1");
-        
+
             const response = await fetch('/api/send-mail', {
                 method: 'POST',
                 headers: {
@@ -67,7 +87,7 @@ export default function UserProfile({ user, isVCF }) {
         // Create an anchor element to download the QR code
         const link = document.createElement('a');
         link.href = `/${user.qrCode}` // Using the path from the user object
-        link.download = `Business_Profilr_QR_${user.name}.png`; // Name of the downloaded file
+        link.download = `Business_Profilr_QR_${user.name}.jpeg`; // Name of the downloaded file
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
@@ -115,7 +135,6 @@ END:VCARD
                 <Navbar />
                 <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
                     <h1 className="text-3xl font-bold text-red-600">User Not Found!</h1>
-
                     <br />
 
                     <Link href="/contact" className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-200">
@@ -336,18 +355,13 @@ END:VCARD
                             <a
                                 target="_blank"
                                 href={`https://api.whatsapp.com/send?text=Hello%2C%0D%0APleasure+connecting+with+you%21%21+Below+are+my+details%3A%0D%0A%0D%0ADigital+Business+Card%2FProfile%3A%0D%0Ahttps%3A%2F%2Fdigiswipe.in%2F${user.userName}%0D%0A%0D%0ASave+to+Contacts+Directly%3A%0D%0Ahttps%3A%2F%2Fdigiswipe.in%2F${user.userName}.vcf+%0D%0A%0D%0A%2ANote%3A+If+this+is+our+first+chat%2C+reply+hi+and+then+click+the+links+above.+%28Wapp+Policy%29%2A+%0D%0A%0D%0ARegards%2C+%0D%0A${user.name}+%0D%0A${user.designation}%0D%0A${user.companyName}+%0D%0A%0D%0APowered+by%3A+digiswipe.in+&phone=${countriecode}${whatsappnum}`}
-                            >                    
+                            >
                                 <button className="bg-green-600 text-white h-10 w-20 shadow-xl flex items-center hover:bg-green-600 ml-2">
                                     <FaWhatsapp className="mr-1 ml-2" />
                                     Share
                                 </button>
                             </a>
                         </div>
-
-
-
-
-
                         {/* {save contact } */}
                         <div className="flex justify-center mt-10 ">
                             <a href={`/${user.userName}.vcf`} rel="noopener noreferrer">
@@ -399,11 +413,11 @@ END:VCARD
                                 {/* <FaUserPlus className="mr-2" /> */}
                                 <div className=" text-center z-10">
                                     <span style={{
-                                        fontSize:'15px'
+                                        fontSize: '15px'
                                     }} className="block  text-sm md:text-base">Save</span>
                                     <span style={{
-                                        fontSize:'15px',
-                                        
+                                        fontSize: '15px',
+
                                     }} className="block text-sm md:text-base">Contact</span>
                                 </div>
                             </a>
@@ -489,7 +503,7 @@ END:VCARD
                                 id="name"
                                 name="name"
                                 value={formData.name}
-                            onChange={handleInputChange}
+                                onChange={handleInputChange}
                                 placeholder="Enter Your Name"
                                 className="w-full p-2 border border-gray-300  focus:ring-2 focus:ring-gray-500 focus:outline-none"
                                 required
@@ -503,7 +517,7 @@ END:VCARD
                                 id="phone"
                                 name="phone"
                                 value={formData.phone}
-                            onChange={handleInputChange}
+                                onChange={handleInputChange}
                                 maxLength="13"
                                 placeholder="Enter Your Mobile No"
                                 className="w-full p-2 border border-gray-300  focus:ring-2 focus:ring-gray-500 focus:outline-none"
@@ -517,7 +531,7 @@ END:VCARD
                                 id="email"
                                 name="email"
                                 value={formData.email}
-                            onChange={handleInputChange}
+                                onChange={handleInputChange}
                                 placeholder="Enter Your Email Address"
                                 className="w-full p-2 border border-gray-300  focus:ring-2 focus:ring-gray-500 focus:outline-none"
                             />
@@ -528,7 +542,7 @@ END:VCARD
                                 id="message"
                                 name="message"
                                 value={formData.message}
-                            onChange={handleInputChange}
+                                onChange={handleInputChange}
                                 placeholder="Enter your Message or Query"
                                 className="w-full p-2 border border-gray-300  focus:ring-2 focus:ring-gray-500 focus:outline-none"
                                 rows="2"
