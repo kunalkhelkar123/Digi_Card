@@ -1,0 +1,1 @@
+self.__NEXT_FONT_MANIFEST='{"pages":{"/_app":[],"/DigitalBusinessCardFeatures":[],"/Footer":[],"/contact":[],"/create-profile":[],"/":[]},"app":{},"appUsingSizeAdjust":false,"pagesUsingSizeAdjust":true}';
