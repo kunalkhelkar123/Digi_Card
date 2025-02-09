@@ -44,6 +44,8 @@ export default function AdminDashboard() {
         const fetchUsers = async () => {
             const response = await fetch('/api/get-user-profiles');
             const data = await response.json();
+            console.log("users ",data.users)
+
             setUsers(data.users);
         };
         fetchUsers();
@@ -189,8 +191,8 @@ export default function AdminDashboard() {
                 return registrationDate >= weekStart && registrationDate <= now;
             case 'monthly':
                 return registrationDate.getMonth() === now.getMonth() && registrationDate.getFullYear() === now.getFullYear();
-            case 'yearly':
-                return registrationDate.getFullYear() === now.getFullYear();
+            // case 'yearly':
+            //     return registrationDate.getFullYear() === now.getFullYear();
             case 'custom':
                 const start = new Date(startDate);
                 const end = new Date(endDate);
