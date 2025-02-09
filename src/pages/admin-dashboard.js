@@ -44,7 +44,7 @@ export default function AdminDashboard() {
         const fetchUsers = async () => {
             const response = await fetch('/api/get-user-profiles');
             const data = await response.json();
-            console.log("users ",data.users)
+            console.log("users ", data.users)
 
             setUsers(data.users);
         };
@@ -202,13 +202,65 @@ export default function AdminDashboard() {
         }
     });
 
+
+
+
+    const handleLogout = () => {
+        sessionStorage.removeItem('token'); // Remove the token from session storage
+        window.location.href = "/admin"; // Redirect to the login page
+    };
+    
+
+   
+    const handleDatabaseBackup = async () => {
+        try {
+        alert("Downloading Database Backup...");
+          const response = await fetch("/api/get-database-backup");
+          if (!response.ok) {
+            throw new Error("Failed to download backup");
+          }
+    
+          const blob = await response.blob();
+          const url = window.URL.createObjectURL(blob);
+          const a = document.createElement("a");
+          a.href = url;
+          a.download = "database_backup.sql";
+          document.body.appendChild(a);
+          a.click();
+          window.URL.revokeObjectURL(url);
+        } catch (error) {
+          console.error("Error downloading backup:", error);
+        }
+      };
+
+
     return (
         <div className="min-h-screen bg-gray-100 p-6 "   >
-            <h1 className="text-3xl font-bold text-center text-gray-800 mb-6">Admin Dashboard</h1>
+            <div className="flex flex-col sm:flex-row justify-between items-center mb-6 gap-4 sm:gap-0">
+                <h1 className="text-2xl sm:text-3xl font-bold text-gray-800 text-center sm:text-left">
+                    Admin Dashboard
+                </h1>
+                <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 w-full sm:w-auto">
+                    <button
+                        onClick={handleDatabaseBackup}
+                        className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition duration-200 w-full sm:w-auto"
+                    >
+                        Download DataBase Backup
+                    </button>
+                    <button
+                        onClick={handleLogout}
+                        className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition duration-200 w-full sm:w-auto"
+                    >
+                        Log Out
+                    </button>
+                </div>
+            </div>
+
+
             {/* Refresh Button */}
-            <div className="flex justify-end mb-4" >
+            <div className="flex justify-end mb-4">
                 <button
-                    onClick={() => window.location.reload()} // Refresh the page
+                    onClick={() => window.location.reload()}
                     className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition duration-200"
                 >
                     Refresh

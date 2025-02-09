@@ -10,11 +10,11 @@ export default async function handler(req, res) {
         try {
             // Parse the request body as JSON
             const { username, userpassword } = req.body;
-            console.log("Username and password received: ", username, userpassword);
+            // console.log("Username and password received: ", username, userpassword);
 
             // Basic validation for credentials
             if (username === 'admin@gmail.com' && userpassword === 'Mindlabzsoftware@2024') {
-                console.log("Credentials matched");
+                // console.log("Credentials matched");
 
                 // Create a JWT token (expires in 1 hour)
                 const token = jwt.sign({ username }, JWT_SECRET, { expiresIn: '1h' });

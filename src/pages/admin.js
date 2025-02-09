@@ -25,7 +25,7 @@ export default function AdminLogin() {
             if (data.success) {
                 // Save the JWT token to sessionStorage
                 sessionStorage.setItem('token', data.token);
-                console.log("tokenn from session ==>", sessionStorage.getItem("token"))
+                // console.log("tokenn from session ==>", sessionStorage.getItem("token"))
                 alert('Login successful!');
     
                 // Redirect to the dashboard
