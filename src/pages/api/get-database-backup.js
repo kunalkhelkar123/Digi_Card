@@ -1,19 +1,47 @@
 import { exec } from "child_process";
-import path from "path";
 import fs from "fs";
+import path from "path";
 
-export default function handler(req, res) {
-    const backupPath = "/var/backups/test_backup.sql";
-
-    // Check if the file exists
-    if (!fs.existsSync(backupPath)) {
-        return res.status(404).json({ error: "Backup file not found" });
+export default async function handler(req, res) {
+    if (req.method !== "GET") {
+        return res.status(405).json({ error: "Method Not Allowed" });
     }
 
-    // Send the file for download
-    res.setHeader("Content-Disposition", "attachment; filename=database_backup.sql");
-    res.setHeader("Content-Type", "application/sql");
+    const backupFileName = `backup_${Date.now()}.sql`;
+    const backupDir = "/var/backups"; // ✅ Corrected directory path
 
-    const fileStream = fs.createReadStream(backupPath);
-    fileStream.pipe(res);
+    // Ensure the backup directory exists
+    if (!fs.existsSync(backupDir)) {
+        fs.mkdirSync(backupDir, { recursive: true });
+    }
+
+    const backupFilePath = path.join(backupDir, backupFileName);
+
+    // ✅ Corrected MySQL dump command
+    const dbHost = "localhost";
+    const dbUser = "root";
+    const dbPassword = "123@Kkkkkkkkkkk";
+    const dbName = "digiswipe";
+    const mysqldumpPath = "/usr/bin/mysqldump"; // Check correct path with `which mysqldump`
+
+    const command = `${mysqldumpPath} -h ${dbHost} -u ${dbUser} --password=${dbPassword} ${dbName} > ${backupFilePath}`;
+
+    exec(command, (error) => {
+        if (error) {
+            console.error("Backup failed:", error);
+            return res.status(500).json({ message: "Backup failed", error: error.message });
+        }
+
+        res.setHeader("Content-Disposition", `attachment; filename=${backupFileName}`);
+        res.setHeader("Content-Type", "application/octet-stream");
+
+        const fileStream = fs.createReadStream(backupFilePath);
+        fileStream.pipe(res);
+
+        fileStream.on("end", () => {
+            fs.unlink(backupFilePath, (unlinkErr) => {
+                if (unlinkErr) console.error("Failed to delete backup file:", unlinkErr);
+            });
+        });
+    });
 }
