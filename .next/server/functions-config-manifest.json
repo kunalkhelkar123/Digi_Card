@@ -1,1 +1,1 @@
-{"version":1,"functions":{"/api/save-profile":{},"/api/update-user":{},"/[username]":{}}}
+{"version":1,"functions":{"/api/update-user":{},"/[username]":{},"/api/save-profile":{}}}
