@@ -10,7 +10,7 @@ export default function Banner() {
             }}
         >
             {/* Black Overlay for effect */}
-            <div className="absolute inset-0 bg-black bg-opacity-20"></div>
+            {/* <div className="absolute inset-0 text-red-800 bg-black bg-opacity-20">Heading</div> */}
 
             {/* Content section */}
             <div className="relative z-10 w-full md:w-1/2 text-center md:text-left mt-12 md:mt-0">

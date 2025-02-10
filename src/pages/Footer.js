@@ -75,9 +75,9 @@ import Image from 'next/image';
 export default function Footer() {
     return (
         // Main container for the "Contact Us" footer section with styling
-        <div id="contact-us" className="ContactDetail py-12 bg-blue-800 text-white">
+        <div id="contact-us" className="ContactDetail pt-12 pb-12 bg-blue-800 text-white ">
             {/* Inner container for centralizing the content */}
-            <div className="container mx-auto px-4">
+            <div className="container mx-auto px-4  flex flex-col justify-center align-top">
                 {/* Section heading */}
                 <div className="HeadingSection text-center mb-8">
                     <h2 className="text-3xl font-bold">Contact Us</h2>
@@ -90,7 +90,7 @@ export default function Footer() {
                         
                         {/* Left side with address and contact information */}
                         <div className="md:w-1/2 mb-8 md:mb-0">
-                            <div className="LeftSide ml-20">
+                            <div className="LeftSide">
                                 {/* List of contact details */}
                                 <ul className="Listing space-y-4">
                                     
@@ -120,7 +120,7 @@ export default function Footer() {
                         </div>
 
                         {/* Logo section */}
-                        <div className="flex-shrink-0 mt-10 sm:mt-6 md:mt-4 lg:mt-2 mb-5 ml-16 sm:ml-0">
+                        <div className="flex-shrink-0 mt-10 sm:mt-6 md:mt-4 lg:mt-2 mb-5 ml-16 sm:ml-0 flex justify-center items-center">
                             <Link href="/">
                                 <Image
                                     className="h-16 w-auto sm:h-12 md:h-14 lg:h-16 xl:h-20"
@@ -144,7 +144,7 @@ export default function Footer() {
                 </div>
 
                 {/* Copyright Section */}
-                <div className="text-center mt-12">
+                <div className="text-center mt-12 ml-[33px] sm:ml-0">
                     <p className="text-gray-300 -mb-10">
                         © {new Date().getFullYear()} <a href="http://vjanalytics.com/" className="text-gray-300 hover:text-white">VJanalytics</a>. All rights reserved.
                     </p>
