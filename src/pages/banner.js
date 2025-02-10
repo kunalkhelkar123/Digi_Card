@@ -4,7 +4,7 @@ import Image from 'next/image';
 export default function Banner() {
     return (
         <div
-            className="relative bg-cover bg-center h-screen flex flex-col md:flex-row items-center justify-between px-8 md:px-16"
+            className="relative bg-cover bg-center h-screen flex flex-col md:flex-row items-center justify-between  md:px-16"
             style={{
                 backgroundImage: "url('/images/BannerImage1.jpg')", // Replace with your actual background image path
             }}
