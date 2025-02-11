@@ -4,13 +4,13 @@ import Image from 'next/image';
 export default function Banner() {
     return (
         <div
-            className="relative bg-cover bg-center h-screen flex flex-col md:flex-row items-center justify-between px-8 md:px-16"
+            className="relative bg-cover bg-center h-screen flex flex-col md:flex-row items-center justify-between  md:px-16"
             style={{
                 backgroundImage: "url('/images/BannerImage1.jpg')", // Replace with your actual background image path
             }}
         >
             {/* Black Overlay for effect */}
-            <div className="absolute inset-0 bg-black bg-opacity-20"></div>
+            {/* <div className="absolute inset-0 text-red-800 bg-black bg-opacity-20">Heading</div> */}
 
             {/* Content section */}
             <div className="relative z-10 w-full md:w-1/2 text-center md:text-left mt-12 md:mt-0">

@@ -12,7 +12,7 @@ const AboutUs = () => {
                         <div className="HeadingSection mb-6">
                             <div className="HeadingSmall text-blue-800 font-semibold mb-2">About Us</div>
                             <div className="HeadingMain">
-                                <h2 className="text-3xl font-bold mb-4">Share via Link, QR or Scan</h2>
+                                <h2 className="text-3xl text-blue-800 font-bold mb-4">Share via Link, QR or Scan</h2>
                             </div>
                             <p className="text-gray-700 mb-4">
                                 Share your card digitally via link on WhatsApp, SMS, Email, or Social Media, or share your QR or Scan. Treat this card as a Mini Website and attach a PDF Brochure, Online Appointment, WhatsApp Catalogue, or any other link. One link for everything. Your Digital Visiting Card can be easily updated with our user-friendly dashboard, so you wont need to re-print a business card again. This is the last Business Card you will ever need.
@@ -21,7 +21,7 @@ const AboutUs = () => {
 
 
                         <Link href="/create-profile" passHref>
-                            <button className="ml-40 bg-green-500 text-white px-6 py-2 rounded hover:bg-green-600 transition duration-200">
+                            <button className="bg-green-500 text-white sm:ml-0 ml-10 px-6 pt-2 pb-2 rounded hover:bg-green-600 transition duration-200">
                                 <i className="fab fa-whatsapp mr-2"></i>Create Your Card
                             </button>
                         </Link>
@@ -30,7 +30,7 @@ const AboutUs = () => {
 
                     {/* Right Section */}
                     <div className="md:w-1/2">
-                        <div className="video-container mb-6">
+                        <div className="video-container mb-6 pt-2 ">
 
                             <Image
                                 src="/images/Digitalcard2.jpg" // Replace with your demo card image path

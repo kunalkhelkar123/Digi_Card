@@ -4,7 +4,7 @@ import Image from 'next/image';
 
 export default function DigitalBusinessCardFeatures() {
     return (
-        <div className="DigitalBusinessCard py-12 mt-10">
+        <div className="DigitalBusinessCard  pb-12 mt-10">
             <div className="container mx-auto px-4">
                 <div className="HeadingSection text-center mb-12">
                     <h2 className="text-3xl font-bold">Digital Business Card Features</h2>
@@ -18,7 +18,7 @@ export default function DigitalBusinessCardFeatures() {
                                     <i className="fas fa-share-alt"></i>
                                 </p>
                                 <p className="text ml-4"> {/* Adjusted margin for text */}
-                                    <span className="heading font-semibold text-lg text-gray-800"> 3 Ways To Share: </span>
+                                    <span className="heading font-semibold text-lg text-blue-800"> 3 Ways To Share: </span>
                                     Digitally via Link, Tap Or Scan. Share your card via Link on WhatsApp or Scan QR Code to share your Digital Visiting Card.
                                 </p>
                             </div>
@@ -28,7 +28,7 @@ export default function DigitalBusinessCardFeatures() {
                                     <i className="fas fa-mobile-alt"></i>
                                 </p>
                                 <p className="text ml-4"> {/* Adjusted margin for text */}
-                                    <span className="heading font-semibold text-lg text-gray-800"> One Click Action Buttons: </span>
+                                    <span className="heading font-semibold text-lg text-blue-800"> One Click Action Buttons: </span>
                                     Click to Call, WhatsApp, Mail, Save Contact & navigate to your location in just 1 click.
                                 </p>
                             </div>
@@ -38,7 +38,7 @@ export default function DigitalBusinessCardFeatures() {
                                     <i className="fab fa-facebook-f"></i>
                                 </p>
                                 <p className="text ml-4"> {/* Adjusted margin for text */}
-                                    <span className="heading font-semibold text-lg text-gray-800">Social Media Integration: </span>   Through social media channels, customers can view your Facebook, Instagram, Twitter & YouTube accounts.
+                                    <span className="heading font-semibold text-lg text-blue-800">Social Media Integration: </span>   Through social media channels, customers can view your Facebook, Instagram, Twitter & YouTube accounts.
                                 </p>
                             </div>
                             <hr className="border-gray-300" />
@@ -46,7 +46,7 @@ export default function DigitalBusinessCardFeatures() {
 
                         {/* Video Section */}
                         <div className="flex justify-center items-center w-full md:w-1/3 px-4">
-                            <div className="video-container relative pb-[56.25%] w-full">
+                            <div className="video-container relative pt-[10%] pb-[10.25%] w-full">
 
 
                                 <Image
@@ -69,7 +69,7 @@ export default function DigitalBusinessCardFeatures() {
                                     <i className="fas fa-qrcode"></i>
                                 </p>
                                 <p className="text ml-4"> {/* Adjusted margin for text */}
-                                    <span className="heading font-semibold text-lg text-gray-800">Your digital QR Code: </span>
+                                    <span className="heading font-semibold text-lg text-blue-800">Your digital QR Code: </span>
                                     You can use QR Code anywhere like on paper Visiting Card, On Product Packaging, Brochure, Zoom Meetings, or anywhere. Anyone who scans the QR Code will open your card on their phone.
                                 </p>
                             </div>
@@ -79,7 +79,7 @@ export default function DigitalBusinessCardFeatures() {
                                     <i className="fas fa-cube"></i>
                                 </p>
                                 <p className="text ml-4"> {/* Adjusted margin for text */}
-                                    <span className="heading font-semibold text-lg text-gray-800">Products & Services Section: </span>
+                                    <span className="heading font-semibold text-lg text-blue-800">Products & Services Section: </span>
                                     Through this, you can exhibit your full list of products or services that you offer to your valuable customers.
                                 </p>
                             </div>
@@ -89,7 +89,7 @@ export default function DigitalBusinessCardFeatures() {
                                     <i className="fab fa-youtube"></i>
                                 </p>
                                 <p className="text ml-4"> {/* Adjusted margin for text */}
-                                    <span className="heading font-semibold text-lg text-gray-800">Video Integration: </span>
+                                    <span className="heading font-semibold text-lg text-blue-800">Video Integration: </span>
                                     Your customers can watch your videos in the digital visiting card itself through YouTube without any hassle.
                                 </p>
                             </div>
