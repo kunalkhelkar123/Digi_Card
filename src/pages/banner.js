@@ -4,9 +4,10 @@ import Image from 'next/image';
 export default function Banner() {
     return (
         <div
-            className="relative bg-cover bg-center h-screen flex flex-col md:flex-row items-center justify-between pt-[130px] pb-[190px] md:px-16"
+            className="relative bg-cover bg-center h-screen flex flex-col md:flex-row items-center  justify-between sm-pt-0 pt-[280px] sm-pb-0 pb-[590px] md:px-16"
             style={{
-                backgroundImage: "url('/images/DG!.jpg')", // Replace with your actual background image path
+                backgroundImage: "url('/images/DG!.jpg')", 
+                opacity:40, // Replace with your actual background image path
             }}
         >
             {/* Black Overlay for effect */}
