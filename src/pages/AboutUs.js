@@ -21,7 +21,7 @@ const AboutUs = () => {
 
 
                         <Link href="/create-profile" passHref>
-                            <button className="bg-green-500 text-white sm:ml-0 ml-10 px-6 pt-2 pb-2 rounded hover:bg-green-600 transition duration-200">
+                            <button className="bg-green-500 text-white sm:ml-0 ml-[100px] px-6 pt-2 pb-2 rounded hover:bg-green-600 transition duration-200">
                                 <i className="fab fa-whatsapp mr-2"></i>Create Your Card
                             </button>
                         </Link>
