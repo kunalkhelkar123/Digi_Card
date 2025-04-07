@@ -1,0 +1,34 @@
+/* /styles/globals.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Regular400:wght@400;700&display=swap');
+
+/* globals.css */
+body {
+  font-family: 'YourFontName', sans-serif;
+  /* Apply your font globally */
+}
+
+/* Default: no margin-left for smaller screens */
+.heading-margin {
+  margin-left: 0;
+}
+
+/* Apply margin-left: 100px for screens wider than 768px */
+@media (min-width: 768px) {
+  .heading-margin {
+    margin-left: 100px;
+  }
+}
+
+@media (min-width: 1024px) {
+
+  /* Center the headings and link only on desktop view */
+  .center-desktop {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 0;
+  }
+}
