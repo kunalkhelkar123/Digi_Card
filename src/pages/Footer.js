@@ -120,7 +120,7 @@ export default function Footer() {
                         </div>
 
                         {/* Logo section */}
-                        <div className="flex-shrink-0 mt-10 sm:mt-6 md:mt-4 lg:mt-2 mb-5 ml-16 sm:ml-0 flex justify-center items-center">
+                        <div className="flex-shrink-0 mt-10 sm:mt-6 md:mt-4 lg:mt-2 mb-5 ml-[7px] sm:ml-0 flex justify-center items-center">
                             <Link href="/">
                                 <Image
                                     className="h-16 w-auto sm:h-12 md:h-14 lg:h-16 xl:h-20"
