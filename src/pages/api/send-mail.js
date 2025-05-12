@@ -11,8 +11,11 @@ const handler = async (req, res) => {
             const transporter = nodemailer.createTransport({
                 service: 'gmail',
                 auth: {
-                    user: 'kunalkhelkar123@gmail.com',
-                    pass: 'kzfp gofh ling sbgp'
+                    // user: 'kunalkhelkar123@gmail.com',
+                    // pass: 'kzfp gofh ling sbgp'
+
+                     user: '',
+                    pass: ''
                 }
             })
             console.log("check 3");
